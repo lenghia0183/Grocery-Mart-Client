@@ -1,0 +1,49 @@
+"use client";
+
+import React, { useState } from "react";
+import ImageNext, { ImageProps, StaticImageData } from "next/image";
+import images from "@/asset/images";
+
+interface ImagePropsExtended extends ImageProps {
+  fallback?: StaticImageData;
+}
+
+const Image = ({
+  src,
+  alt = "Image",
+  className,
+  fallback = images.fallBack,
+  loading = "lazy",
+  style,
+  onLoad,
+  onError,
+  ...props
+}: ImagePropsExtended) => {
+  const [imgSrc, setImgSrc] = useState(src || fallback);
+
+  const handleError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    setImgSrc(fallback);
+    if (onError) {
+      onError(event);
+    }
+  };
+
+  const validSrc = imgSrc || fallback;
+
+  return (
+    <ImageNext
+      src={validSrc}
+      alt={alt}
+      className={className}
+      loading={loading}
+      style={style}
+      onLoad={onLoad}
+      onError={handleError}
+      {...props}
+    />
+  );
+};
+
+export default Image;
