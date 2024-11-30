@@ -75,9 +75,6 @@ const hoverBorderColorSafelist: string[] = colorMap.map(
   (colorClass: ColorClass) => `hover:border-${colorClass}`
 );
 
-console.log(textColorSafelist);
-console.log(colors);
-
 export {
   colors,
   bgColorSafelist,
