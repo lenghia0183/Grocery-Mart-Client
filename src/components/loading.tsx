@@ -4,6 +4,7 @@ import clsx from "clsx";
 interface LoadingProps {
   width?: string;
   height?: string;
+  size?: number;
   thickness?: string;
   color?: string;
   speed?: string;
@@ -13,15 +14,22 @@ interface LoadingProps {
 const Loading: FC<LoadingProps> = ({
   width = "40px",
   height = "40px",
+  size = 1,
+
   thickness = "4px",
   color = "text-blue-500",
   speed = ".75s",
   className = "",
 }) => {
+  const sizeStyle = {
+    width: width || `${size}em`,
+    height: height || `${size}em`,
+  };
+
   return (
     <div
       className={`flex items-center justify-center ${className}`}
-      style={{ width, height }}
+      style={{ ...sizeStyle }}
     >
       <div
         className={clsx("rounded-full", color)}

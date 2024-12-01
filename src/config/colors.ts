@@ -11,7 +11,9 @@ type Colors = {
 const colors: Colors = {
   blue: {
     DEFAULT: "#77dae6",
-    500: "#77dae6",
+    200: "#efeff7",
+    300: "#77dae6",
+    500: "#0a58ca",
     hover: "#66b8e1",
   },
 
