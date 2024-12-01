@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { ReactComponent as Gift } from "../asset/icons/gift.svg";
+import Gift from "../asset/icons/gift.svg";
 
 type IconProps = {
   name: string;
@@ -25,7 +25,7 @@ const Icon: React.FC<IconProps> = ({
   width,
   height,
   className = "",
-  color = "gray",
+  color = "text-gray",
   strokeWidth,
   ...props
 }) => {

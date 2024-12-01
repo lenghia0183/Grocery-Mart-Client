@@ -2,6 +2,8 @@ import React from "react";
 import Logo from "./Logo";
 import Button from "./Button";
 
+import Icon from "./Icon";
+
 const Header: React.FC = () => {
   return (
     <header className="bg-blue-200 shadow-sm shadow-slate-300">
@@ -16,7 +18,7 @@ const Header: React.FC = () => {
             Coffee
           </Button>
           <Button href="/" variant="text" className="text-lg px-[15px]">
-            Trà
+            Trà đào
           </Button>
           <Button href="/" variant="text" className="text-lg px-[15px]">
             Cacao
