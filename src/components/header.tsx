@@ -2,9 +2,8 @@ import React from "react";
 import Logo from "./Logo";
 import Button from "./Button";
 
-import Icon from "./Icon";
-
 const Header: React.FC = () => {
+  console.log("haha");
   return (
     <header className="bg-blue-200 shadow-sm shadow-slate-300">
       <div className="container py-6 flex">
