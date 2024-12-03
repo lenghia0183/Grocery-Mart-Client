@@ -4,6 +4,8 @@ import Gift from "../asset/icons/gift.svg";
 import Search from "../asset/icons/search.svg";
 import Heart from "../asset/icons/heart.svg";
 import Cart from "../asset/icons/cart.svg";
+import Password from "../asset/icons/password.svg";
+import Email from "../asset/icons/email.svg";
 
 import { createTailwindClass } from "@/utils";
 
@@ -26,6 +28,8 @@ export const icons: Record<
   search: Search,
   heart: Heart,
   cart: Cart,
+  password: Password,
+  email: Email,
 };
 
 const Icon: React.FC<IconProps> = ({
@@ -71,5 +75,6 @@ const Icon: React.FC<IconProps> = ({
     </span>
   );
 };
+Icon.displayName = "Icon";
 
 export default Icon;

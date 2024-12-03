@@ -154,4 +154,5 @@ const IconButton: React.FC<IconButtonProps> = ({
   );
 };
 
+IconButton.displayName = "IconButton";
 export default IconButton;

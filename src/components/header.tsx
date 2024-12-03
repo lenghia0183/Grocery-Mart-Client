@@ -79,4 +79,5 @@ const Header: React.FC = () => {
   );
 };
 
+Header.displayName = "Header";
 export default Header;

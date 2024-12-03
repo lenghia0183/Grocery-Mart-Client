@@ -62,4 +62,5 @@ const Loading: FC<LoadingProps> = ({
   );
 };
 
+Loading.displayName = "Loading";
 export default Loading;

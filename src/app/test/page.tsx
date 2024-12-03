@@ -44,13 +44,17 @@ export default function Test() {
               label="Username"
               type="text"
               placeholder="Tên người dùng"
-              rightIcon={<Icon name="cart" />}
+              rightIcon={<Icon name="email" />}
             />
             <TextField
               name="email"
               label="Email"
               type="email"
-              vertical={true}
+              vertical={false}
+              rightIcon={<Icon name="email" size={4} />}
+              iconOnClick={() => {
+                console.log("Clicked");
+              }}
             />
             <button
               type="submit"

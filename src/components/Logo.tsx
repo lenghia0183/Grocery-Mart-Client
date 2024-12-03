@@ -23,4 +23,6 @@ function Logo(): JSX.Element {
     </Link>
   );
 }
+
+Logo.displayName = "Logo";
 export default Logo;
