@@ -34,14 +34,23 @@ const colors: Colors = {
     hover: "#292e39", // Hover color
   },
 
+  white: {
+    DEFAULT: "#FFFFFF",
+    400: "#b9babe",
+    500: "#FFFFFF",
+  },
+
   gray: {
-    DEFAULT: "#d2d1d6", // Màu xám sáng nhất
-    100: "#f5f5f5", // Màu xám sáng nhẹ
-    200: "#eeeeee", // Màu xám sáng
-    300: "#d2d1d6", // Màu xám trung bình
-    400: "#a4a5ad", // Màu xám trung bình
-    500: "#9e9da8", // Màu xám tối
-    hover: "#b9babe", // Hover color (xám nhạt)
+    DEFAULT: "#d2d1d6",
+    400: "#d2d1d6",
+    500: "#9e9da8",
+  },
+
+  red: {
+    DEFAULT: "#f44336",
+    500: "#f44336",
+    hover: "#d32f2f",
+    400: "#f44336",
   },
 };
 
