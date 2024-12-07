@@ -1,9 +1,8 @@
 "use client";
 
 import clsx from "clsx";
+import { useField } from "formik";
 import { useId } from "react";
-
-import { useFormContext } from "react-hook-form";
 
 interface TextFieldProps {
   name: string;
@@ -23,6 +22,8 @@ interface TextFieldProps {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   labelWidth?: string;
+  allow?: RegExp;
+  prevent?: RegExp;
 }
 
 const TextField = ({
@@ -43,24 +44,35 @@ const TextField = ({
   leftIcon,
   rightIcon,
   labelWidth = "80px",
+  allow,
+  prevent,
 }: TextFieldProps) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
-
   const inputId = useId();
-
-  const { onChange: innerOnChange, onBlur: innerOnBlur, ref } = register(name);
+  const [field, meta, helpers] = useField(name);
+  const { setValue, setTouched } = helpers;
+  const error = meta.error && meta.touched ? meta.error : "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newValue = e.target.value;
+    if (allow) {
+      newValue = newValue.replace(allow, "");
+    }
+    setValue(newValue);
     if (onChange) onChange(e);
-    innerOnChange(e);
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setTouched(true);
     if (onBlur) onBlur(e);
-    innerOnBlur(e);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (prevent) {
+      const char = e.key;
+      if (!prevent.test(char)) {
+        e.preventDefault();
+      }
+    }
   };
 
   const handleDivClick = () => {
@@ -88,9 +100,9 @@ const TextField = ({
           className={clsx(
             "flex items-center border p-2 rounded-md bg-transparent",
             {
-              "border-red-400": errors[name],
+              "border-red-400": error,
               "hover:border-blue-300 group-focus-within:border-blue-300":
-                !errors[name],
+                !error,
             }
           )}
           onClick={handleDivClick}
@@ -105,12 +117,12 @@ const TextField = ({
               "outline-none placeholder-gray-500 w-full bg-transparent",
               inputClassName
             )}
-            {...register(name)}
+            onKeyPress={handleKeyPress}
+            value={field.value}
             id={inputId}
             name={name}
             placeholder={placeholder}
             type={type}
-            ref={ref}
             onClick={onClick}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -121,11 +133,7 @@ const TextField = ({
             </span>
           )}
         </div>
-        {errors[name] && (
-          <span className="text-red-400 text-xs">
-            {errors[name]?.message as string}
-          </span>
-        )}
+        {error && <span className="text-red-400 text-xs">{error}</span>}
       </div>
     );
   } else {
@@ -151,9 +159,9 @@ const TextField = ({
           className={clsx(
             "flex-grow flex items-center border p-2 rounded-md bg-transparent",
             {
-              "border-red-400": errors[name],
+              "border-red-400": error,
               "hover:border-blue-300 group-focus-within:border-blue-300":
-                !errors[name],
+                !error,
             }
           )}
         >
@@ -167,12 +175,12 @@ const TextField = ({
               "outline-none placeholder-gray-500 w-full bg-transparent",
               inputClassName
             )}
-            {...register(name)}
+            value={field.value}
             id={inputId}
             name={name}
             placeholder={placeholder}
             type={type}
-            ref={ref}
+            onKeyPress={handleKeyPress}
             onClick={onClick}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -183,11 +191,7 @@ const TextField = ({
             </span>
           )}
         </div>
-        {errors[name] && (
-          <span className="text-red-400 text-xs">
-            {errors[name]?.message as string}
-          </span>
-        )}
+        {error && <span className="text-red-400 text-xs">{error}</span>}
       </div>
     );
   }

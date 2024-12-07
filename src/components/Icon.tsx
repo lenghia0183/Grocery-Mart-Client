@@ -75,6 +75,7 @@ const Icon: React.FC<IconProps> = ({
     </span>
   );
 };
+
 Icon.displayName = "Icon";
 
 export default Icon;
