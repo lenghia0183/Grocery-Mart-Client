@@ -6,9 +6,9 @@ export interface CheckBoxProps {
   name: string;
   label: string;
   size?: number;
-  onChange?: (checked: boolean) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked?: boolean;
-  disabled?: boolean; // Added disabled prop
+  disabled?: boolean;
 }
 
 const CheckBox: React.FC<CheckBoxProps> = ({
@@ -17,19 +17,19 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   onChange,
   checked,
   size = 20,
-  disabled = false, // Default to false if not passed
+  disabled = false,
 }) => {
   const [field, meta, helpers] = useField({ name, type: "checkbox" });
   const id = useId();
   const error = meta.error && meta.touched ? meta.error : "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (disabled) return; // Prevent changes if disabled
+    if (disabled) return;
 
     const isChecked = e.target.checked;
     helpers.setValue(isChecked);
     if (onChange) {
-      onChange(isChecked);
+      onChange(e);
     }
   };
 
@@ -45,6 +45,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
           type="checkbox"
           id={id}
           {...field}
+          value={name}
           checked={checked ?? field.checked}
           onChange={handleChange}
           disabled={disabled}
@@ -80,5 +81,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
     </>
   );
 };
+
+CheckBox.displayName = "Checkbox";
 
 export default CheckBox;

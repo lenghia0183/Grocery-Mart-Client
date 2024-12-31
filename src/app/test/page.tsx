@@ -2,12 +2,10 @@
 
 import Header from "@/components/Header";
 
-import { object, string } from "yup";
 import { Form, Formik } from "formik";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
-
-const validationSchema = object({});
+import CheckBoxGroup from "@/components/CheckBoxGroup";
 
 export default function Test() {
   return (
@@ -16,14 +14,26 @@ export default function Test() {
 
       <div className="container">
         <Formik
-          initialValues={{ test: true }}
-          validationSchema={validationSchema}
+          initialValues={{
+            testArr: [{ test1: true }, { test2: true }],
+          }}
           onSubmit={(values) => {
             console.log(values);
           }}
         >
           <Form>
-            <CheckBox name="test" label="test" disabled={true} />
+            <CheckBoxGroup name="testArr" vertical={true}>
+              <div>
+                <div>
+                  <CheckBox name="test1" label="test1" />
+                </div>
+              </div>
+              <div>
+                <div>
+                  <CheckBox name="test2" label="test2" />
+                </div>
+              </div>
+            </CheckBoxGroup>
             <Button>Submit</Button>
           </Form>
         </Formik>
