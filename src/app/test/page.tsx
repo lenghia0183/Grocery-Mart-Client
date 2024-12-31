@@ -2,19 +2,12 @@
 
 import Header from "@/components/Header";
 
-import TextField from "@/components/TextField";
 import { object, string } from "yup";
 import { Form, Formik } from "formik";
 import Button from "@/components/Button";
-import { TEXTFIELD_ALLOW } from "../constants/regexes";
-import TextArea from "@/components/TextArea";
-import Radio from "@/components/Radio";
-import RadioGroup from "@/components/RadioGroup";
+import CheckBox from "@/components/CheckBox";
 
-const validationSchema = object({
-  username: string().required("Tên người dùng là bắt buộc"),
-  gioiTinh: string().required("Giới tính là bắt buộc"),
-});
+const validationSchema = object({});
 
 export default function Test() {
   return (
@@ -23,30 +16,14 @@ export default function Test() {
 
       <div className="container">
         <Formik
-          initialValues={{ username: "" }}
+          initialValues={{ test: true }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
             console.log(values);
           }}
         >
           <Form>
-            <TextField
-              name="username"
-              label="Username"
-              placeholder="Enter your username"
-              allow={TEXTFIELD_ALLOW.NUMERIC}
-            />
-
-            <RadioGroup name="gioiTinh" vertical={true}>
-              <Radio value="nam" label="nam" />
-
-              <div>
-                <div>
-                  <Radio value="nu" label="nu" />
-                </div>
-              </div>
-            </RadioGroup>
-
+            <CheckBox name="test" label="test" disabled={true} />
             <Button>Submit</Button>
           </Form>
         </Formik>

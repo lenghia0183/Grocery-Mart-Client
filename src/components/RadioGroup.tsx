@@ -20,7 +20,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta] = useField(name);
-  console.log("error", meta.error);
+
   const error = meta.error ? meta.error : "";
 
   const renderChildren = (children: ReactNode): ReactNode => {

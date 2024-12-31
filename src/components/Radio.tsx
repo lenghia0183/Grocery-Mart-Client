@@ -29,8 +29,6 @@ const Radio: React.FC<RadioProps> = ({
   hideInput = false,
   labelClassName = "",
 }) => {
-  console.log("name", name);
-
   const id = React.useId();
   const { setFieldValue } = useFormikContext();
   const [field] = useField({ name });
