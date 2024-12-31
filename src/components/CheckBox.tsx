@@ -53,7 +53,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
         />
         <div
           className={clsx(
-            "border-2 flex items-center justify-center relative",
+            "border-2 flex items-center justify-center relative rounded-md",
             {
               "border-gray-500 bg-gray-300": disabled,
               "border-dark": !disabled,

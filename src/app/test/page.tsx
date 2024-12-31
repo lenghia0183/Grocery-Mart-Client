@@ -1,11 +1,10 @@
 "use client";
 
-import Header from "@/components/Header";
-
 import { Form, Formik } from "formik";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import CheckBoxGroup from "@/components/CheckBoxGroup";
+import Header from "@/components/header";
 
 export default function Test() {
   return (
@@ -25,7 +24,7 @@ export default function Test() {
             <CheckBoxGroup name="testArr" vertical={true}>
               <div>
                 <div>
-                  <CheckBox name="test1" label="test1" />
+                  <CheckBox name="test1" label="test1" size={100} />
                 </div>
               </div>
               <div>

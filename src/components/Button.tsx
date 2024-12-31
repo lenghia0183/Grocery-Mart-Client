@@ -1,7 +1,8 @@
 import React from "react";
 import clsx from "clsx";
-import Loading from "@/components/Loading";
+
 import Link from "next/link";
+import Loading from "./Loading";
 
 interface ButtonProps {
   children: React.ReactNode;
