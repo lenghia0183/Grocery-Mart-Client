@@ -5,6 +5,8 @@ import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import CheckBoxGroup from "@/components/CheckBoxGroup";
 import Header from "@/components/header";
+import Autocomplete from "@/components/AutoComplete";
+import TextField from "@/components/TextField";
 
 export default function Test() {
   return (
@@ -33,6 +35,10 @@ export default function Test() {
                 </div>
               </div>
             </CheckBoxGroup>
+
+            <TextField name="test" label="test" className="mb-4" />
+            <Autocomplete />
+
             <Button>Submit</Button>
           </Form>
         </Formik>

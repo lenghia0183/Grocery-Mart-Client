@@ -6,6 +6,7 @@ import Heart from "../asset/icons/heart.svg";
 import Cart from "../asset/icons/cart.svg";
 import Password from "../asset/icons/password.svg";
 import Email from "../asset/icons/email.svg";
+import ArrowDown from "../asset/icons/arrowDown.svg";
 
 import { createTailwindClass } from "@/utils";
 
@@ -30,6 +31,7 @@ export const icons: Record<
   cart: Cart,
   password: Password,
   email: Email,
+  arrowDown: ArrowDown,
 };
 
 const Icon: React.FC<IconProps> = ({

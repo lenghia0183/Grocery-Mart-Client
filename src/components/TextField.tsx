@@ -17,8 +17,8 @@ interface TextFieldProps {
   inputClassName?: string;
   labelClassName?: string;
   className?: string;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   labelWidth?: string;
@@ -40,7 +40,7 @@ const TextField = ({
   labelClassName,
   className,
   width,
-  height,
+  height = "45px",
   leftIcon,
   rightIcon,
   labelWidth = "80px",
@@ -87,7 +87,6 @@ const TextField = ({
       <div
         style={{
           width: width,
-          height: height,
         }}
         className={clsx("group", className)}
       >
@@ -97,8 +96,11 @@ const TextField = ({
           </label>
         )}
         <div
+          style={{
+            height: height,
+          }}
           className={clsx(
-            "flex items-center border p-2 rounded-md bg-transparent",
+            "flex items-center border border-gray-500 p-2 rounded-md bg-transparent",
             {
               "border-red-400": error,
               "hover:border-blue-300 group-focus-within:border-blue-300":
