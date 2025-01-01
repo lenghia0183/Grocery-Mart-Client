@@ -7,12 +7,16 @@ import OptionList from "./OptionList";
 export interface IAutoCompleteProps {
   width?: string;
   height?: string;
+  label?: string;
 }
 
-const Autocomplete: React.FC<IAutoCompleteProps> = ({ height = "45px" }) => {
+const Autocomplete: React.FC<IAutoCompleteProps> = ({
+  height = "45px",
+  label,
+}) => {
   const [options, setOptions] = useState(["options", "option-1"]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null); // Tham chiếu đến container
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -36,9 +40,16 @@ const Autocomplete: React.FC<IAutoCompleteProps> = ({ height = "45px" }) => {
   };
 
   return (
-    <div className="relative" ref={containerRef} onClick={handleToggleDropdown}>
-      <Input height={height} isOpen={isOpen} />
-      <OptionList options={options} isOpen={isOpen} />
+    <div>
+      <label className="text-md mb-2">{label}</label>
+      <div
+        className="relative"
+        ref={containerRef}
+        onClick={handleToggleDropdown}
+      >
+        <Input height={height} isOpen={isOpen} />
+        <OptionList options={options} isOpen={isOpen} />
+      </div>
     </div>
   );
 };

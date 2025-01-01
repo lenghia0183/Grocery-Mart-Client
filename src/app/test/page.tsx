@@ -37,7 +37,7 @@ export default function Test() {
             </CheckBoxGroup>
 
             <TextField name="test" label="test" className="mb-4" />
-            <Autocomplete />
+            <Autocomplete label="test" />
 
             <Button>Submit</Button>
           </Form>
