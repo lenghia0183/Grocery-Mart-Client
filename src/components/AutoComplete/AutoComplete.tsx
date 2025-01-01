@@ -16,6 +16,7 @@ const Autocomplete: React.FC<IAutoCompleteProps> = ({
 }) => {
   const [options, setOptions] = useState(["options", "option-1"]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isFocus, setIsFocus] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,15 +40,26 @@ const Autocomplete: React.FC<IAutoCompleteProps> = ({
     setIsOpen(!isOpen);
   };
 
+  const handleFocus = () => {
+    setIsFocus(true);
+  };
+
   return (
     <div>
       <label className="text-md mb-2">{label}</label>
       <div
-        className="relative"
+        className="relative group"
         ref={containerRef}
         onClick={handleToggleDropdown}
+        onFocus={handleFocus}
       >
-        <Input height={height} isOpen={isOpen} />
+        <Input
+          height={height}
+          isOpen={isOpen}
+          isFocus={isFocus}
+          className="group-hover:border-blue-300"
+          iconClassName="group-hover:text-blue-300 group-hover:border-blue-300"
+        />
         <OptionList options={options} isOpen={isOpen} />
       </div>
     </div>
