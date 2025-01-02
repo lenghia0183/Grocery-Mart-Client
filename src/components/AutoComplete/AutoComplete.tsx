@@ -11,7 +11,7 @@ export interface IAutoCompleteProps<T> {
   options: T[];
   getOptionLabel: (option: T) => string;
   getOptionSubLabel?: (option: T) => string;
-  asyncRequest: (inputValue: string) => Promise<T[]>;
+  asyncRequest?: (inputValue: string) => Promise<T[]>;
   asyncRequestHelper?: (data: T[]) => T[];
 }
 
