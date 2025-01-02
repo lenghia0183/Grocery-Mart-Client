@@ -70,6 +70,10 @@ const Autocomplete = <T,>({
     setIsFocus(true);
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   return (
     <div>
       <label className="text-md mb-2">{label}</label>
@@ -83,6 +87,8 @@ const Autocomplete = <T,>({
           height={height}
           isOpen={isOpen}
           isLoading={isLoading}
+          handleInputChange={handleInputChange}
+          inputValue={inputValue}
           isFocus={isFocus}
           className="group-hover:border-blue-300"
           iconClassName="group-hover:text-blue-300 group-hover:border-blue-300"

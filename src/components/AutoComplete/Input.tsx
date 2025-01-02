@@ -11,6 +11,8 @@ export interface IInputProps {
   isFocus?: boolean;
   className?: string;
   iconClassName?: string;
+  inputValue?: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<IInputProps> = ({
@@ -20,6 +22,8 @@ const Input: React.FC<IInputProps> = ({
   isOpen,
   iconClassName,
   className,
+  inputValue,
+  handleInputChange,
 }) => {
   return (
     <div className="flex">
@@ -33,6 +37,8 @@ const Input: React.FC<IInputProps> = ({
         style={{
           height: height,
         }}
+        onChange={handleInputChange}
+        value={inputValue}
       />
       <div
         style={{
