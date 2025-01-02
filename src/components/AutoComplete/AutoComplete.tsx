@@ -11,6 +11,8 @@ export interface IAutoCompleteProps<T> {
   options: T[];
   getOptionLabel: (option: T) => string;
   getOptionSubLabel?: (option: T) => string;
+  asyncRequest: (inputValue: string) => Promise<T[]>;
+  asyncRequestHelper?: (data: T[]) => T[];
 }
 
 const Autocomplete = <T,>({
@@ -19,9 +21,13 @@ const Autocomplete = <T,>({
   options: initialOptions,
   getOptionLabel,
   getOptionSubLabel = () => "",
+  asyncRequestHelper = (data) => data,
+  asyncRequest,
 }: IAutoCompleteProps<T>): JSX.Element => {
-  const [options] = useState<T[]>(initialOptions);
+  const [options, setOptions] = useState<T[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -41,6 +47,20 @@ const Autocomplete = <T,>({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchData = async () => {
+    if (!asyncRequest) return;
+
+    const result = await asyncRequest(inputValue);
+    const transformedData = asyncRequestHelper(result);
+    setOptions(transformedData);
+    setIsLoading(false);
+  };
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -62,6 +82,7 @@ const Autocomplete = <T,>({
         <Input
           height={height}
           isOpen={isOpen}
+          isLoading={isLoading}
           isFocus={isFocus}
           className="group-hover:border-blue-300"
           iconClassName="group-hover:text-blue-300 group-hover:border-blue-300"
