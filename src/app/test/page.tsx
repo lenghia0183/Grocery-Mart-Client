@@ -9,6 +9,11 @@ import Autocomplete from "@/components/AutoComplete";
 import TextField from "@/components/TextField";
 
 export default function Test() {
+  const options = [
+    { id: 1, name: "Option 1" },
+    { id: 2, name: "Option 2" },
+  ];
+
   return (
     <main className="">
       <Header />
@@ -37,7 +42,11 @@ export default function Test() {
             </CheckBoxGroup>
 
             <TextField name="test" label="test" className="mb-4" />
-            <Autocomplete label="test" />
+            <Autocomplete
+              label="test"
+              options={options}
+              getOptionLabel={(option) => option.name}
+            />
 
             <Button>Submit</Button>
           </Form>

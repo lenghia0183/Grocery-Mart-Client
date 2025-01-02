@@ -4,17 +4,21 @@ import React, { useState, useRef, useEffect } from "react";
 import Input from "./Input";
 import OptionList from "./OptionList";
 
-export interface IAutoCompleteProps {
+export interface IAutoCompleteProps<T> {
   width?: string;
   height?: string;
   label?: string;
+  options: T[];
+  getOptionLabel: (option: T) => string;
 }
 
-const Autocomplete: React.FC<IAutoCompleteProps> = ({
+const Autocomplete = <T,>({
   height = "45px",
   label,
-}) => {
-  const [options, setOptions] = useState(["options", "option-1"]);
+  options: initialOptions,
+  getOptionLabel,
+}: IAutoCompleteProps<T>): JSX.Element => {
+  const [options] = useState<T[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -60,7 +64,7 @@ const Autocomplete: React.FC<IAutoCompleteProps> = ({
           className="group-hover:border-blue-300"
           iconClassName="group-hover:text-blue-300 group-hover:border-blue-300"
         />
-        <OptionList options={options} isOpen={isOpen} />
+        <OptionList options={options.map(getOptionLabel)} isOpen={isOpen} />
       </div>
     </div>
   );
