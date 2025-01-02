@@ -10,6 +10,7 @@ export interface IAutoCompleteProps<T> {
   label?: string;
   options: T[];
   getOptionLabel: (option: T) => string;
+  getOptionSubLabel?: (option: T) => string;
 }
 
 const Autocomplete = <T,>({
@@ -17,6 +18,7 @@ const Autocomplete = <T,>({
   label,
   options: initialOptions,
   getOptionLabel,
+  getOptionSubLabel = () => "",
 }: IAutoCompleteProps<T>): JSX.Element => {
   const [options] = useState<T[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -64,7 +66,15 @@ const Autocomplete = <T,>({
           className="group-hover:border-blue-300"
           iconClassName="group-hover:text-blue-300 group-hover:border-blue-300"
         />
-        <OptionList options={options.map(getOptionLabel)} isOpen={isOpen} />
+        <OptionList
+          options={options.map((option) => {
+            const subLabel = getOptionSubLabel(option);
+            return subLabel
+              ? `${getOptionLabel(option)} - ${subLabel}`
+              : getOptionLabel(option);
+          })}
+          isOpen={isOpen}
+        />
       </div>
     </div>
   );

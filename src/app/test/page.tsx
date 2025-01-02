@@ -46,6 +46,7 @@ export default function Test() {
               label="test"
               options={options}
               getOptionLabel={(option) => option.name}
+              getOptionSubLabel={(options) => options.id.toString()}
             />
 
             <Button>Submit</Button>
