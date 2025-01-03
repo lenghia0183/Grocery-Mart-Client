@@ -1,19 +1,28 @@
 import clsx from "clsx";
 import React from "react";
 
-export interface OptionListProps {
-  options: string[];
+export interface OptionListProps<Item> {
+  options: Item[];
   isOpen?: boolean;
+  handleSelectOption: (selectedOption: Item) => void;
+  getOptionLabel: (selectedOption: Item) => string;
+  getOptionSubLabel: (selectedOption: Item) => string;
 }
 
-const OptionList: React.FC<OptionListProps> = ({ options, isOpen = true }) => {
+const OptionList = <Item,>({
+  options,
+  isOpen = true,
+  handleSelectOption,
+  getOptionLabel,
+  getOptionSubLabel,
+}: OptionListProps<Item>) => {
   return (
     <ul
       style={{
         maxHeight: "200px",
       }}
       className={clsx(
-        "bg-blue-300 rounded-md border border-gray-500 absolute w-full top-[107%] overflow-y-scroll transition-all duration-300 scale-y-0 origin-top opacity-0",
+        "bg-white-500 rounded-md border border-gray-500 absolute w-full top-[107%] overflow-y-scroll transition-all duration-300 scale-y-0 origin-top opacity-0",
         {
           "opacity-0": !isOpen,
           "scale-y-100 !opacity-100": isOpen,
@@ -21,8 +30,18 @@ const OptionList: React.FC<OptionListProps> = ({ options, isOpen = true }) => {
       )}
     >
       {options.map((option, index) => (
-        <li key={index} className="p-2 hover:bg-blue-400">
-          {option}
+        <li
+          key={index}
+          className="p-2 hover:bg-gray-400"
+          onClick={() => handleSelectOption(option as Item)}
+        >
+          {getOptionLabel(option as Item)}
+          {getOptionSubLabel(option as Item) && (
+            <span className="text-sm text-gray-500">
+              {" "}
+              - {getOptionSubLabel(option as Item)}
+            </span>
+          )}
         </li>
       ))}
     </ul>

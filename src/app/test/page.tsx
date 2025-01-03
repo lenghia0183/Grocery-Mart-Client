@@ -107,7 +107,7 @@ export default function Test() {
                 ): Category[] => {
                   return response.data.categories;
                 }}
-                autoFetch={false}
+                // autoFetch={false}
               />
 
               <Button>Submit</Button>

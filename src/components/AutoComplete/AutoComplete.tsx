@@ -102,6 +102,12 @@ const Autocomplete = <Item, Response = Item[]>({
     setInputValue(e.target.value);
   };
 
+  const handleSelectOption = (selectedOption: Item) => {
+    console.log("select option", selectedOption);
+    setInputValue(getOptionLabel(selectedOption));
+    setIsOpen(false);
+  };
+
   return (
     <div>
       {label && <label className="text-md mb-2">{label}</label>}
@@ -123,13 +129,11 @@ const Autocomplete = <Item, Response = Item[]>({
           iconClassName="group-hover:text-blue-300 group-hover:border-blue-300"
         />
         <OptionList
-          options={options.map((option) => {
-            const subLabel = getOptionSubLabel(option);
-            return subLabel
-              ? `${getOptionLabel(option)} - ${subLabel}`
-              : getOptionLabel(option);
-          })}
+          options={options}
+          getOptionSubLabel={getOptionSubLabel}
+          getOptionLabel={getOptionLabel}
           isOpen={isOpen}
+          handleSelectOption={handleSelectOption}
         />
       </div>
     </div>

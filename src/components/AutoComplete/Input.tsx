@@ -13,7 +13,7 @@ export interface IInputProps {
   iconClassName?: string;
   inputValue?: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCloseDropdown: () => void;
+  handleToggleDropdown: () => void;
 }
 
 const Input: React.FC<IInputProps> = ({
