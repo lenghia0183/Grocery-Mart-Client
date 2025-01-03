@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import CheckBoxGroup from "@/components/CheckBoxGroup";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import Autocomplete from "@/components/AutoComplete";
 import TextField from "@/components/TextField";
 

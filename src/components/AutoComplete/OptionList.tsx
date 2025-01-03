@@ -9,8 +9,11 @@ export interface OptionListProps {
 const OptionList: React.FC<OptionListProps> = ({ options, isOpen = true }) => {
   return (
     <ul
+      style={{
+        maxHeight: "200px",
+      }}
       className={clsx(
-        "bg-blue-300 rounded-md border border-gray-500 absolute w-full top-[107%] overflow-auto transition-all duration-300 max-h-fit min-h-fit scale-y-0 origin-top opacity-0",
+        "bg-blue-300 rounded-md border border-gray-500 absolute w-full top-[107%] overflow-y-scroll transition-all duration-300 scale-y-0 origin-top opacity-0",
         {
           "opacity-0": !isOpen,
           "scale-y-100 !opacity-100": isOpen,
