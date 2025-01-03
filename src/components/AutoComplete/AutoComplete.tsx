@@ -48,8 +48,6 @@ const Autocomplete = <Item, Response = Item[]>({
   const [field, meta, helpers] = useField(name);
   const error = meta.error && meta.touched ? meta.error : "";
 
-  console.log("isOpen 1", isOpen);
-
   useEffect(() => {
     if (autoFetch) {
       if (asyncRequest) fetchData();
@@ -132,6 +130,7 @@ const Autocomplete = <Item, Response = Item[]>({
           handleToggleDropdown={handleToggleDropdown}
           handleOpenDropDown={handleOpenDropdown}
           inputValue={inputValue}
+          error={error}
           className={clsx("group-hover:border-blue-300", {
             "!border-blue-300": isOpen,
           })}

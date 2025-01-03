@@ -7,6 +7,7 @@ import CheckBoxGroup from "@/components/CheckBoxGroup";
 import Header from "@/components/Header";
 import Autocomplete from "@/components/AutoComplete";
 import TextField from "@/components/TextField";
+import * as Yup from "yup"; // Import Yup
 
 export default function Test() {
   interface Category {
@@ -65,6 +66,16 @@ export default function Test() {
       };
     }
   };
+
+  // Define validation schema
+  const validationSchema = Yup.object({
+    testArr: Yup.array()
+      .min(1, "You must select at least one checkbox.")
+      .required("Required"),
+    test: Yup.string().required("This field is required."),
+    category: Yup.string().required("Please select a category."),
+  });
+
   return (
     <main>
       <Header />
@@ -73,7 +84,9 @@ export default function Test() {
           initialValues={{
             testArr: [{ test1: true }, { test2: true }],
             test: "",
+            category: "",
           }}
+          validationSchema={validationSchema}
           onSubmit={(values) => {
             console.log(values);
           }}
@@ -114,7 +127,7 @@ export default function Test() {
                 autoFetch={false}
               />
 
-              <Button>Submit</Button>
+              <Button className="mt-2">Submit</Button>
             </Form>
           )}
         </Formik>

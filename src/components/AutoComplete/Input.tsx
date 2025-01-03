@@ -11,6 +11,7 @@ export interface IInputProps {
   className?: string;
   iconClassName?: string;
   inputValue?: string;
+  error?: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleOpenDropDown: () => void;
   handleToggleDropdown: () => void;
@@ -27,6 +28,7 @@ const Input: React.FC<IInputProps> = ({
   handleInputChange,
   handleOpenDropDown,
   handleToggleDropdown,
+  error,
 }) => {
   const handleIconClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -47,7 +49,8 @@ const Input: React.FC<IInputProps> = ({
         ref={inputRef}
         type="text"
         className={clsx(
-          "w-full p-2 bg-transparent border rounded-md outline-none placeholder-gray-500 border-gray-500",
+          "w-full p-2 bg-transparent border rounded-md outline-none placeholder-gray-500 ",
+          { "border-red-400": error, "border-gray-500": !error },
           className
         )}
         placeholder={placeholder}
@@ -64,7 +67,11 @@ const Input: React.FC<IInputProps> = ({
           height: height,
         }}
         className={clsx(
-          "flex items-center justify-center ml-1 rounded-md border border-gray-500 text-gray-500",
+          "flex items-center justify-center ml-1 rounded-md border",
+          {
+            "border-red-400 text-red-400": error,
+            "border-gray-500 text-gray-500": !error,
+          },
           iconClassName
         )}
         onClick={handleIconClick}
