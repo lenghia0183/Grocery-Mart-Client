@@ -84,13 +84,6 @@ const Autocomplete = <Item, Response = Item[]>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedInputValue, isOpen]);
 
-  // useEffect(() => {
-  //   if (inputValue && isSelected) {
-  //     setIsOpen(false);
-  //     setIsSelected(false);
-  //   }
-  // }, [inputValue, isSelected]);
-
   const fetchData = async () => {
     if (!asyncRequest) return;
 
@@ -123,18 +116,14 @@ const Autocomplete = <Item, Response = Item[]>({
   const handleSelectOption = (selectedOption: Item) => {
     setInputValue(getOptionLabel(selectedOption));
     setIsOpen(false);
-    // helpers.setValue(getOptionValue(selectedOption));
     setIsSelected(true);
+    helpers.setValue(getOptionValue(selectedOption));
   };
 
   return (
     <div>
       {label && <label className="text-md mb-2">{label}</label>}
-      <div
-        className="relative group"
-        ref={containerRef}
-        // onClick={handleOpenDropdown}
-      >
+      <div className="relative group" ref={containerRef}>
         <Input
           height={height}
           isOpen={isOpen}
@@ -160,6 +149,9 @@ const Autocomplete = <Item, Response = Item[]>({
           getOptionLabel={getOptionLabel}
           isOpen={isOpen}
           handleSelectOption={handleSelectOption}
+          className={clsx("group-hover:border-blue-300", {
+            "!border-blue-300": isOpen,
+          })}
         />
       </div>
       {error && <span className="text-red-400 text-xs">{error}</span>}

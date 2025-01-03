@@ -7,6 +7,7 @@ export interface OptionListProps<Item> {
   handleSelectOption: (selectedOption: Item) => void;
   getOptionLabel: (selectedOption: Item) => string;
   getOptionSubLabel: (selectedOption: Item) => string;
+  className?: string;
 }
 
 const OptionList = <Item,>({
@@ -15,6 +16,7 @@ const OptionList = <Item,>({
   handleSelectOption,
   getOptionLabel,
   getOptionSubLabel,
+  className,
 }: OptionListProps<Item>) => {
   return (
     <ul
@@ -26,7 +28,8 @@ const OptionList = <Item,>({
         {
           "opacity-0": !isOpen,
           "scale-y-100 !opacity-100": isOpen,
-        }
+        },
+        className
       )}
     >
       {options.map((option, index) => (
