@@ -8,6 +8,7 @@ export interface OptionListProps<Item> {
   getOptionLabel: (selectedOption: Item) => string;
   getOptionSubLabel: (selectedOption: Item) => string;
   className?: string;
+  inputValue?: string;
 }
 
 const OptionList = <Item,>({
@@ -17,6 +18,7 @@ const OptionList = <Item,>({
   getOptionLabel,
   getOptionSubLabel,
   className,
+  inputValue,
 }: OptionListProps<Item>) => {
   return (
     <ul
@@ -35,7 +37,10 @@ const OptionList = <Item,>({
       {options.map((option, index) => (
         <li
           key={index}
-          className="p-2 hover:bg-gray-400"
+          className={clsx("p-2 hover:bg-gray-200", {
+            "bg-yellow-300 hover:!bg-yellow-300":
+              inputValue == getOptionLabel(option),
+          })}
           onClick={() => handleSelectOption(option as Item)}
         >
           {getOptionLabel(option as Item)}

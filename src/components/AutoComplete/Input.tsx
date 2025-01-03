@@ -19,6 +19,7 @@ export interface IInputProps {
   handleToggleDropdown: () => void;
   disabled?: boolean;
   handleBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  handleClearInput: () => void;
 }
 
 const Input: React.FC<IInputProps> = ({
@@ -32,6 +33,7 @@ const Input: React.FC<IInputProps> = ({
   handleInputChange,
   handleOpenDropDown,
   handleToggleDropdown,
+  handleClearInput,
   error,
   disabled,
   handleBlur,
@@ -51,28 +53,44 @@ const Input: React.FC<IInputProps> = ({
 
   return (
     <div className={clsx("flex", {})}>
-      <input
-        ref={inputRef}
-        type="text"
-        className={clsx(
-          "w-full p-2 bg-transparent border rounded-md outline-none placeholder-gray-500 ",
-          {
-            "border-red-400": error,
-            "border-gray-500": !error,
-            "!bg-gray-50 border-gray-300 ": disabled,
-          },
+      <div className="flex w-full relative">
+        <input
+          ref={inputRef}
+          type="text"
+          className={clsx(
+            "w-full p-2 bg-transparent border rounded-md outline-none placeholder-gray-500  ",
+            {
+              "border-red-400": error,
+              "border-gray-500": !error,
+              "!bg-gray-50 border-gray-300 ": disabled,
+            },
 
-          className
+            className
+          )}
+          placeholder={placeholder}
+          style={{
+            height: height,
+          }}
+          onChange={handleInputChange}
+          value={inputValue}
+          onFocus={handleOpenDropDown}
+          onBlur={handleBlur}
+        />
+
+        {inputValue && (
+          <span
+            className={"absolute right-2 top-1/2 -translate-y-1/2 flex"}
+            onClick={() => {
+              handleClearInput();
+              if (inputRef.current != null) {
+                inputRef.current.focus();
+              }
+            }}
+          >
+            <Icon name="close" strokeWidth={1} />
+          </span>
         )}
-        placeholder={placeholder}
-        style={{
-          height: height,
-        }}
-        onChange={handleInputChange}
-        value={inputValue}
-        onFocus={handleOpenDropDown}
-        onBlur={handleBlur}
-      />
+      </div>
       <div
         style={{
           width: height,

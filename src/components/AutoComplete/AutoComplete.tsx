@@ -41,6 +41,7 @@ const Autocomplete = <Item, Response = Item[]>({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [isSelected, setIsSelected] = useState<boolean>(false);
+  const [isClearInput, setIsClearInput] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -74,11 +75,13 @@ const Autocomplete = <Item, Response = Item[]>({
   }, []);
 
   useEffect(() => {
-    if (debouncedInputValue && !isSelected && isOpen) {
+    // thay đổi input sẽ call api
+    if (debouncedInputValue && !isSelected && isOpen && !isClearInput) {
       fetchData();
     }
 
-    if (isOpen && !autoFetch && !debouncedInputValue) {
+    // đóng mở sẽ call api
+    if (isOpen && !autoFetch && !debouncedInputValue && !isClearInput) {
       fetchData();
     }
 
@@ -113,6 +116,7 @@ const Autocomplete = <Item, Response = Item[]>({
     setInputValue(e.target.value);
     setValue(e.target.value);
     setIsSelected(false);
+    setIsClearInput(false);
   };
 
   const handleSelectOption = (selectedOption: Item) => {
@@ -120,10 +124,18 @@ const Autocomplete = <Item, Response = Item[]>({
     setIsOpen(false);
     setIsSelected(true);
     setValue(getOptionValue(selectedOption));
+    setIsClearInput(false);
   };
 
   const handleBlur = () => {
     setTouched(true);
+  };
+
+  const handleClearInput = () => {
+    setInputValue("");
+    setValue("");
+    setIsSelected(false);
+    setIsClearInput(true);
   };
 
   return (
@@ -141,21 +153,22 @@ const Autocomplete = <Item, Response = Item[]>({
           handleOpenDropDown={handleOpenDropdown}
           handleBlur={handleBlur}
           inputValue={inputValue}
+          handleClearInput={handleClearInput}
           error={error}
           disabled={disabled}
-          className={clsx("group-hover:border-blue-300", {
+          className={clsx({
             "!border-blue-300": isOpen,
+            "group-hover:border-blue-300": !error,
           })}
-          iconClassName={clsx(
-            "group-hover:text-blue-300 group-hover:border-blue-300",
-            {
-              "!text-blue-300": isOpen,
-              "!border-blue-300": isOpen,
-            }
-          )}
+          iconClassName={clsx({
+            "!text-blue-300": isOpen,
+            "!border-blue-300": isOpen,
+            "group-hover:text-blue-300 group-hover:border-blue-300": !error,
+          })}
         />
         <OptionList
           options={options}
+          inputValue={inputValue}
           getOptionSubLabel={getOptionSubLabel}
           getOptionLabel={getOptionLabel}
           isOpen={isOpen}
