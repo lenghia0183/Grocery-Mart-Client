@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Input from "./Input";
 import OptionList from "./OptionList";
 import useDebounce from "@/hooks/useDebounce";
+import clsx from "clsx";
 
 export interface IAutoCompleteProps<Item, Response = Item[]> {
   width?: string;
@@ -32,6 +33,7 @@ const Autocomplete = <Item, Response = Item[]>({
   const [inputValue, setInputValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
+  const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -56,10 +58,11 @@ const Autocomplete = <Item, Response = Item[]>({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (debouncedInputValue) {
+    if (debouncedInputValue && !isSelected) {
       fetchData();
     }
 
@@ -100,12 +103,14 @@ const Autocomplete = <Item, Response = Item[]>({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    setIsSelected(false);
   };
 
   const handleSelectOption = (selectedOption: Item) => {
     console.log("select option", selectedOption);
     setInputValue(getOptionLabel(selectedOption));
     setIsOpen(false);
+    setIsSelected(true);
   };
 
   return (
@@ -125,8 +130,16 @@ const Autocomplete = <Item, Response = Item[]>({
           handleToggleDropdown={handleToggleDropdown}
           inputValue={inputValue}
           isFocus={isFocus}
-          className="group-hover:border-blue-300"
-          iconClassName="group-hover:text-blue-300 group-hover:border-blue-300"
+          className={clsx("group-hover:border-blue-300", {
+            "!border-blue-300": isOpen,
+          })}
+          iconClassName={clsx(
+            "group-hover:text-blue-300 group-hover:border-blue-300",
+            {
+              "!text-blue-300": isOpen,
+              "!border-blue-300": isOpen,
+            }
+          )}
         />
         <OptionList
           options={options}

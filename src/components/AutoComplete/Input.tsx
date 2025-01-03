@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Icon from "../Icon";
 import Loading from "../Loading";
 import clsx from "clsx";
@@ -32,9 +32,18 @@ const Input: React.FC<IInputProps> = ({
     handleToggleDropdown();
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
   return (
     <div className="flex">
       <input
+        ref={inputRef}
         type="text"
         className={clsx(
           "w-full p-2 bg-transparent border rounded-md outline-none placeholder-gray-500 border-gray-500",
