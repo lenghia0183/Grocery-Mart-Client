@@ -19,6 +19,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   asyncRequest?: (inputValue: string) => Promise<Response>;
   asyncRequestHelper?: (data: Response) => Item[];
   autoFetch?: boolean;
+  disabled?: boolean;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
@@ -32,6 +33,7 @@ const Autocomplete = <Item, Response = Item[]>({
   asyncRequest,
   getOptionValue = (data) => data as Item,
   autoFetch = true,
+  disabled = false,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -119,7 +121,9 @@ const Autocomplete = <Item, Response = Item[]>({
   };
 
   return (
-    <div>
+    <div
+      className={clsx({ "pointer-events-none cursor-not-allowed": disabled })}
+    >
       {label && <label className="text-md mb-2">{label}</label>}
       <div className="relative group" ref={containerRef}>
         <Input
@@ -131,6 +135,7 @@ const Autocomplete = <Item, Response = Item[]>({
           handleOpenDropDown={handleOpenDropdown}
           inputValue={inputValue}
           error={error}
+          disabled={disabled}
           className={clsx("group-hover:border-blue-300", {
             "!border-blue-300": isOpen,
           })}

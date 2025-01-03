@@ -15,6 +15,7 @@ export interface IInputProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleOpenDropDown: () => void;
   handleToggleDropdown: () => void;
+  disabled?: boolean;
 }
 
 const Input: React.FC<IInputProps> = ({
@@ -29,6 +30,7 @@ const Input: React.FC<IInputProps> = ({
   handleOpenDropDown,
   handleToggleDropdown,
   error,
+  disabled,
 }) => {
   const handleIconClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -44,13 +46,17 @@ const Input: React.FC<IInputProps> = ({
   }, [isOpen]);
 
   return (
-    <div className="flex">
+    <div className={clsx("flex", {})}>
       <input
         ref={inputRef}
         type="text"
         className={clsx(
           "w-full p-2 bg-transparent border rounded-md outline-none placeholder-gray-500 ",
-          { "border-red-400": error, "border-gray-500": !error },
+          {
+            "border-red-400": error,
+            "border-gray-500": !error,
+            "!bg-gray-50 border-gray-300 ": disabled,
+          },
           className
         )}
         placeholder={placeholder}
@@ -71,6 +77,7 @@ const Input: React.FC<IInputProps> = ({
           {
             "border-red-400 text-red-400": error,
             "border-gray-500 text-gray-500": !error,
+            "!bg-gray-50 border-gray-300 text-gray-300": disabled,
           },
           iconClassName
         )}
