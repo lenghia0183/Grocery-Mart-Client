@@ -96,6 +96,7 @@ export default function Test() {
               <TextField name="test" label="test" className="mb-4" />
 
               <Autocomplete
+                name="category"
                 label="test"
                 getOptionLabel={(data) => {
                   return data.name;
@@ -107,7 +108,10 @@ export default function Test() {
                 ): Category[] => {
                   return response.data.categories;
                 }}
-                // autoFetch={false}
+                getOptionValue={(data: Category) => {
+                  return data._id;
+                }}
+                autoFetch={false}
               />
 
               <Button>Submit</Button>

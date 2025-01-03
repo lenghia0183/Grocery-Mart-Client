@@ -5,20 +5,24 @@ import Input from "./Input";
 import OptionList from "./OptionList";
 import useDebounce from "@/hooks/useDebounce";
 import clsx from "clsx";
+import { useField } from "formik";
 
 export interface IAutoCompleteProps<Item, Response = Item[]> {
+  name: string;
   width?: string;
   height?: string;
   label?: string;
   options?: Item[];
   getOptionLabel: (option: Item) => string;
   getOptionSubLabel?: (option: Item) => string;
+  getOptionValue?: (option: Item) => Item | string;
   asyncRequest?: (inputValue: string) => Promise<Response>;
   asyncRequestHelper?: (data: Response) => Item[];
   autoFetch?: boolean;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
+  name,
   height = "45px",
   label,
   options: initialOptions = [],
@@ -26,18 +30,25 @@ const Autocomplete = <Item, Response = Item[]>({
   getOptionSubLabel = () => "",
   asyncRequestHelper = (data) => data as Item[],
   asyncRequest,
+  getOptionValue = (data) => data as Item,
   autoFetch = true,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFocus, setIsFocus] = useState<boolean>(false);
+
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   const debouncedInputValue = useDebounce(inputValue, 500);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [field, meta, helpers] = useField(name);
+  const error = meta.error && meta.touched ? meta.error : "";
+
+  console.log("isOpen 1", isOpen);
 
   useEffect(() => {
     if (autoFetch) {
@@ -62,7 +73,7 @@ const Autocomplete = <Item, Response = Item[]>({
   }, []);
 
   useEffect(() => {
-    if (debouncedInputValue && !isSelected) {
+    if (debouncedInputValue && !isSelected && isOpen) {
       fetchData();
     }
 
@@ -72,6 +83,13 @@ const Autocomplete = <Item, Response = Item[]>({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedInputValue, isOpen]);
+
+  // useEffect(() => {
+  //   if (inputValue && isSelected) {
+  //     setIsOpen(false);
+  //     setIsSelected(false);
+  //   }
+  // }, [inputValue, isSelected]);
 
   const fetchData = async () => {
     if (!asyncRequest) return;
@@ -97,19 +115,15 @@ const Autocomplete = <Item, Response = Item[]>({
     setIsOpen((pre) => !pre);
   };
 
-  const handleFocus = () => {
-    setIsFocus(true);
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     setIsSelected(false);
   };
 
   const handleSelectOption = (selectedOption: Item) => {
-    console.log("select option", selectedOption);
     setInputValue(getOptionLabel(selectedOption));
     setIsOpen(false);
+    // helpers.setValue(getOptionValue(selectedOption));
     setIsSelected(true);
   };
 
@@ -119,8 +133,7 @@ const Autocomplete = <Item, Response = Item[]>({
       <div
         className="relative group"
         ref={containerRef}
-        onClick={handleOpenDropdown}
-        onFocus={handleFocus}
+        // onClick={handleOpenDropdown}
       >
         <Input
           height={height}
@@ -128,8 +141,8 @@ const Autocomplete = <Item, Response = Item[]>({
           isLoading={isLoading}
           handleInputChange={handleInputChange}
           handleToggleDropdown={handleToggleDropdown}
+          handleOpenDropDown={handleOpenDropdown}
           inputValue={inputValue}
-          isFocus={isFocus}
           className={clsx("group-hover:border-blue-300", {
             "!border-blue-300": isOpen,
           })}
@@ -149,6 +162,7 @@ const Autocomplete = <Item, Response = Item[]>({
           handleSelectOption={handleSelectOption}
         />
       </div>
+      {error && <span className="text-red-400 text-xs">{error}</span>}
     </div>
   );
 };

@@ -8,11 +8,11 @@ export interface IInputProps {
   placeholder?: string;
   isLoading?: boolean;
   isOpen?: boolean;
-  isFocus?: boolean;
   className?: string;
   iconClassName?: string;
   inputValue?: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleOpenDropDown: () => void;
   handleToggleDropdown: () => void;
 }
 
@@ -25,6 +25,7 @@ const Input: React.FC<IInputProps> = ({
   className,
   inputValue,
   handleInputChange,
+  handleOpenDropDown,
   handleToggleDropdown,
 }) => {
   const handleIconClick = (e: React.MouseEvent) => {
@@ -55,6 +56,7 @@ const Input: React.FC<IInputProps> = ({
         }}
         onChange={handleInputChange}
         value={inputValue}
+        onFocus={handleOpenDropDown}
       />
       <div
         style={{
