@@ -125,6 +125,7 @@ export default function Test() {
                   return data._id;
                 }}
                 autoFetch={false}
+                filterOptionsLocally={false}
               />
 
               <Button className="mt-2">Submit</Button>

@@ -20,6 +20,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   asyncRequestHelper?: (data: Response) => Item[];
   autoFetch?: boolean;
   disabled?: boolean;
+  filterOptionsLocally?: boolean;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
@@ -34,14 +35,18 @@ const Autocomplete = <Item, Response = Item[]>({
   getOptionValue = (data) => data as Item,
   autoFetch = true,
   disabled = false,
+  filterOptionsLocally = true,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
+  const [filteredOptions, setFilteredOptions] =
+    useState<Item[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isClearInput, setIsClearInput] = useState<boolean>(false);
+  const [hasFetchedData, setHasFetchedData] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -75,13 +80,35 @@ const Autocomplete = <Item, Response = Item[]>({
   }, []);
 
   useEffect(() => {
-    // thay đổi input sẽ call api
-    if (debouncedInputValue && !isSelected && isOpen && !isClearInput) {
+    // thay đổi input sẽ call api không tìm kiếm trong options đã có
+    if (
+      debouncedInputValue &&
+      !isSelected &&
+      isOpen &&
+      !isClearInput &&
+      !filterOptionsLocally
+    ) {
       fetchData();
     }
 
-    // đóng mở sẽ call api
-    if (isOpen && !autoFetch && !debouncedInputValue && !isClearInput) {
+    // đóng mở sẽ call api không tìm kiếm trong options đã có
+    if (
+      isOpen &&
+      !autoFetch &&
+      !debouncedInputValue &&
+      !isClearInput &&
+      !filterOptionsLocally
+    ) {
+      fetchData();
+    }
+
+    // call api khi chưa có options và autoFectch là true và filterOptionsLocally là true (call khi lần đầu mount)
+    if (autoFetch && filterOptionsLocally && !hasFetchedData) {
+      fetchData();
+    }
+
+    // sẽ call api khi chưa có options và autoFectch là false vì phải call api thì filterdOptions mới có dữ liệu (call trong lần mở đầu tiên)
+    if (isOpen && !autoFetch && filterOptionsLocally && !hasFetchedData) {
       fetchData();
     }
 
@@ -96,6 +123,10 @@ const Autocomplete = <Item, Response = Item[]>({
       const result = await asyncRequest(debouncedInputValue);
       const transformedData = asyncRequestHelper(result);
       setOptions(transformedData);
+      setHasFetchedData(true);
+      if (filterOptionsLocally) {
+        setFilteredOptions(transformedData);
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setOptions([]);
@@ -117,6 +148,16 @@ const Autocomplete = <Item, Response = Item[]>({
     setValue(e.target.value);
     setIsSelected(false);
     setIsClearInput(false);
+
+    if (filterOptionsLocally && hasFetchedData) {
+      setFilteredOptions(
+        options.filter((option) =>
+          getOptionLabel(option)
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
+        )
+      );
+    }
   };
 
   const handleSelectOption = (selectedOption: Item) => {
@@ -136,6 +177,10 @@ const Autocomplete = <Item, Response = Item[]>({
     setValue("");
     setIsSelected(false);
     setIsClearInput(true);
+
+    if (filterOptionsLocally) {
+      setFilteredOptions(options);
+    }
   };
 
   return (
@@ -167,7 +212,7 @@ const Autocomplete = <Item, Response = Item[]>({
           })}
         />
         <OptionList
-          options={options}
+          options={filterOptionsLocally ? filteredOptions : options}
           inputValue={inputValue}
           getOptionSubLabel={getOptionSubLabel}
           getOptionLabel={getOptionLabel}
