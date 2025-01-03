@@ -48,6 +48,7 @@ const Autocomplete = <Item, Response = Item[]>({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);
+  const { setValue, setTouched } = helpers;
   const error = meta.error && meta.touched ? meta.error : "";
 
   useEffect(() => {
@@ -110,6 +111,7 @@ const Autocomplete = <Item, Response = Item[]>({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    setValue(e.target.value);
     setIsSelected(false);
   };
 
@@ -117,7 +119,11 @@ const Autocomplete = <Item, Response = Item[]>({
     setInputValue(getOptionLabel(selectedOption));
     setIsOpen(false);
     setIsSelected(true);
-    helpers.setValue(getOptionValue(selectedOption));
+    setValue(getOptionValue(selectedOption));
+  };
+
+  const handleBlur = () => {
+    setTouched(true);
   };
 
   return (
@@ -133,6 +139,7 @@ const Autocomplete = <Item, Response = Item[]>({
           handleInputChange={handleInputChange}
           handleToggleDropdown={handleToggleDropdown}
           handleOpenDropDown={handleOpenDropdown}
+          handleBlur={handleBlur}
           inputValue={inputValue}
           error={error}
           disabled={disabled}

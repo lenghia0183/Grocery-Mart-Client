@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import Icon from "../Icon";
 import Loading from "../Loading";
@@ -16,6 +18,7 @@ export interface IInputProps {
   handleOpenDropDown: () => void;
   handleToggleDropdown: () => void;
   disabled?: boolean;
+  handleBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<IInputProps> = ({
@@ -31,6 +34,7 @@ const Input: React.FC<IInputProps> = ({
   handleToggleDropdown,
   error,
   disabled,
+  handleBlur,
 }) => {
   const handleIconClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -57,6 +61,7 @@ const Input: React.FC<IInputProps> = ({
             "border-gray-500": !error,
             "!bg-gray-50 border-gray-300 ": disabled,
           },
+
           className
         )}
         placeholder={placeholder}
@@ -66,6 +71,7 @@ const Input: React.FC<IInputProps> = ({
         onChange={handleInputChange}
         value={inputValue}
         onFocus={handleOpenDropDown}
+        onBlur={handleBlur}
       />
       <div
         style={{
