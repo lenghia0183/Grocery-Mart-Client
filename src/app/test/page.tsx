@@ -9,48 +9,109 @@ import Autocomplete from "@/components/AutoComplete";
 import TextField from "@/components/TextField";
 
 export default function Test() {
-  const options = [
-    { id: 1, name: "Option 1" },
-    { id: 2, name: "Option 2" },
-  ];
+  interface Category {
+    _id: string;
+    name: string;
+    image: string;
+    slug: string;
+    createdAt: string;
+    updatedAt: string;
+  }
 
+  interface Pagination {
+    limit: number;
+    totalResult: number;
+    totalPage: number;
+    currentPage: number;
+    currentResult: number;
+  }
+
+  interface CategoryResponse {
+    code: number;
+    message: string;
+    data: {
+      categories: Category[];
+      limit: Pagination["limit"];
+      totalResult: Pagination["totalResult"];
+      totalPage: Pagination["totalPage"];
+      currentPage: Pagination["currentPage"];
+      currentResult: Pagination["currentResult"];
+    };
+  }
+
+  const fetchCategory = async (): Promise<CategoryResponse> => {
+    try {
+      const response = await fetch("https://api.hauifood.com/v1/categories");
+      console.log("response: ", response);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: CategoryResponse = await response.json();
+      console.log("response", data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      return {
+        code: 0,
+        message: "",
+        data: {
+          categories: [],
+          limit: 0,
+          totalResult: 0,
+          totalPage: 0,
+          currentPage: 0,
+          currentResult: 0,
+        },
+      };
+    }
+  };
   return (
-    <main className="">
+    <main>
       <Header />
-
       <div className="container">
         <Formik
           initialValues={{
             testArr: [{ test1: true }, { test2: true }],
+            test: "",
           }}
           onSubmit={(values) => {
             console.log(values);
           }}
         >
-          <Form>
-            <CheckBoxGroup name="testArr" vertical={true}>
-              <div>
+          {({}) => (
+            <Form>
+              <CheckBoxGroup name="testArr" vertical={true}>
                 <div>
-                  <CheckBox name="test1" label="test1" size={100} />
+                  <div>
+                    <CheckBox name="test1" label="test1" size={100} />
+                  </div>
                 </div>
-              </div>
-              <div>
                 <div>
-                  <CheckBox name="test2" label="test2" />
+                  <div>
+                    <CheckBox name="test2" label="test2" />
+                  </div>
                 </div>
-              </div>
-            </CheckBoxGroup>
+              </CheckBoxGroup>
 
-            <TextField name="test" label="test" className="mb-4" />
-            <Autocomplete
-              label="test"
-              options={options}
-              getOptionLabel={(option) => option.name}
-              getOptionSubLabel={(options) => options.id.toString()}
-            />
+              <TextField name="test" label="test" className="mb-4" />
 
-            <Button>Submit</Button>
-          </Form>
+              <Autocomplete
+                label="test"
+                getOptionLabel={(data) => {
+                  return data.name;
+                }}
+                getOptionSubLabel={(data) => data._id}
+                asyncRequest={fetchCategory}
+                asyncRequestHelper={(
+                  response: CategoryResponse
+                ): Category[] => {
+                  return response.data.categories;
+                }}
+              />
+
+              <Button>Submit</Button>
+            </Form>
+          )}
         </Formik>
       </div>
     </main>

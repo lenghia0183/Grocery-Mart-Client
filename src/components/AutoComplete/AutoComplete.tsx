@@ -4,31 +4,32 @@ import React, { useState, useRef, useEffect } from "react";
 import Input from "./Input";
 import OptionList from "./OptionList";
 
-export interface IAutoCompleteProps<T> {
+export interface IAutoCompleteProps<Item, Response = Item[]> {
   width?: string;
   height?: string;
   label?: string;
-  options: T[];
-  getOptionLabel: (option: T) => string;
-  getOptionSubLabel?: (option: T) => string;
-  asyncRequest?: (inputValue: string) => Promise<T[]>;
-  asyncRequestHelper?: (data: T[]) => T[];
+  options?: Item[];
+  getOptionLabel: (option: Item) => string;
+  getOptionSubLabel?: (option: Item) => string;
+  asyncRequest?: (inputValue: string) => Promise<Response>;
+  asyncRequestHelper?: (data: Response) => Item[];
 }
 
-const Autocomplete = <T,>({
+const Autocomplete = <Item, Response = Item[]>({
   height = "45px",
   label,
-  options: initialOptions,
+  options: initialOptions = [],
   getOptionLabel,
   getOptionSubLabel = () => "",
-  asyncRequestHelper = (data) => data,
+  asyncRequestHelper = (data) => data as Item[],
   asyncRequest,
-}: IAutoCompleteProps<T>): JSX.Element => {
-  const [options, setOptions] = useState<T[]>(initialOptions);
+}: IAutoCompleteProps<Item, Response>): JSX.Element => {
+  const [options, setOptions] = useState<Item[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,21 +50,28 @@ const Autocomplete = <T,>({
   }, []);
 
   useEffect(() => {
-    fetchData();
+    if (asyncRequest) fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [inputValue]);
 
   const fetchData = async () => {
     if (!asyncRequest) return;
 
-    const result = await asyncRequest(inputValue);
-    const transformedData = asyncRequestHelper(result);
-    setOptions(transformedData);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const result = await asyncRequest(inputValue);
+      const transformedData = asyncRequestHelper(result);
+      setOptions(transformedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setOptions([]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleToggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const handleFocus = () => {
@@ -72,11 +80,12 @@ const Autocomplete = <T,>({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    if (asyncRequest) fetchData();
   };
 
   return (
     <div>
-      <label className="text-md mb-2">{label}</label>
+      {label && <label className="text-md mb-2">{label}</label>}
       <div
         className="relative group"
         ref={containerRef}
