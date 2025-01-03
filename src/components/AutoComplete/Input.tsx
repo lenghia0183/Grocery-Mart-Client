@@ -13,6 +13,7 @@ export interface IInputProps {
   iconClassName?: string;
   inputValue?: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCloseDropdown: () => void;
 }
 
 const Input: React.FC<IInputProps> = ({
@@ -24,7 +25,13 @@ const Input: React.FC<IInputProps> = ({
   className,
   inputValue,
   handleInputChange,
+  handleToggleDropdown,
 }) => {
+  const handleIconClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleToggleDropdown();
+  };
+
   return (
     <div className="flex">
       <input
@@ -49,6 +56,7 @@ const Input: React.FC<IInputProps> = ({
           "flex items-center justify-center ml-1 rounded-md border border-gray-500 text-gray-500",
           iconClassName
         )}
+        onClick={handleIconClick}
       >
         {isLoading ? (
           <Loading width="30px" height="30px" />

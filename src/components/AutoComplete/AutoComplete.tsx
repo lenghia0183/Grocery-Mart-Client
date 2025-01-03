@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Input from "./Input";
 import OptionList from "./OptionList";
+import useDebounce from "@/hooks/useDebounce";
 
 export interface IAutoCompleteProps<Item, Response = Item[]> {
   width?: string;
@@ -13,6 +14,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   getOptionSubLabel?: (option: Item) => string;
   asyncRequest?: (inputValue: string) => Promise<Response>;
   asyncRequestHelper?: (data: Response) => Item[];
+  autoFetch?: boolean;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
@@ -23,6 +25,7 @@ const Autocomplete = <Item, Response = Item[]>({
   getOptionSubLabel = () => "",
   asyncRequestHelper = (data) => data as Item[],
   asyncRequest,
+  autoFetch = true,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -32,7 +35,13 @@ const Autocomplete = <Item, Response = Item[]>({
 
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const debouncedInputValue = useDebounce(inputValue, 500);
+
   useEffect(() => {
+    if (autoFetch) {
+      if (asyncRequest) fetchData();
+    }
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         containerRef.current &&
@@ -50,28 +59,39 @@ const Autocomplete = <Item, Response = Item[]>({
   }, []);
 
   useEffect(() => {
-    if (asyncRequest) fetchData();
+    if (debouncedInputValue) {
+      fetchData();
+    }
+
+    if (isOpen && !autoFetch && !debouncedInputValue) {
+      fetchData();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputValue]);
+  }, [debouncedInputValue, isOpen]);
 
   const fetchData = async () => {
     if (!asyncRequest) return;
 
     try {
       setIsLoading(true);
-      const result = await asyncRequest(inputValue);
+      const result = await asyncRequest(debouncedInputValue);
       const transformedData = asyncRequestHelper(result);
       setOptions(transformedData);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error("Error fetching data:", error);
       setOptions([]);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleOpenDropdown = () => {
+    setIsOpen(true);
+  };
+
   const handleToggleDropdown = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen((pre) => !pre);
   };
 
   const handleFocus = () => {
@@ -80,7 +100,6 @@ const Autocomplete = <Item, Response = Item[]>({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    if (asyncRequest) fetchData();
   };
 
   return (
@@ -89,7 +108,7 @@ const Autocomplete = <Item, Response = Item[]>({
       <div
         className="relative group"
         ref={containerRef}
-        onClick={handleToggleDropdown}
+        onClick={handleOpenDropdown}
         onFocus={handleFocus}
       >
         <Input
@@ -97,6 +116,7 @@ const Autocomplete = <Item, Response = Item[]>({
           isOpen={isOpen}
           isLoading={isLoading}
           handleInputChange={handleInputChange}
+          handleToggleDropdown={handleToggleDropdown}
           inputValue={inputValue}
           isFocus={isFocus}
           className="group-hover:border-blue-300"
