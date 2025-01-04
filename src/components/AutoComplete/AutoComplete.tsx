@@ -23,6 +23,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   filterOptionsLocally?: boolean;
   vertical?: boolean;
   labelWidth?: string;
+  className?: string;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
@@ -40,6 +41,7 @@ const Autocomplete = <Item, Response = Item[]>({
   filterOptionsLocally = true,
   vertical = false,
   labelWidth = "110px",
+  className,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
   const [filteredOptions, setFilteredOptions] =
@@ -233,55 +235,57 @@ const Autocomplete = <Item, Response = Item[]>({
     );
   } else {
     return (
-      <div
-        className={clsx("flex items-center gap-2", {
-          "pointer-events-none cursor-not-allowed": disabled,
-        })}
-      >
-        {label && (
-          <label
-            className="text-md mb-2"
-            style={{
-              width: labelWidth,
-            }}
-          >
-            {label}
-          </label>
-        )}
-        <div className="relative group w-full" ref={containerRef}>
-          <Input
-            height={height}
-            isOpen={isOpen}
-            isLoading={isLoading}
-            handleInputChange={handleInputChange}
-            handleToggleDropdown={handleToggleDropdown}
-            handleOpenDropDown={handleOpenDropdown}
-            handleBlur={handleBlur}
-            inputValue={inputValue}
-            handleClearInput={handleClearInput}
-            error={error}
-            disabled={disabled}
-            className={clsx({
-              "!border-blue-300": isOpen,
-              "group-hover:border-blue-300": !error,
-            })}
-            iconClassName={clsx({
-              "!text-blue-300": isOpen,
-              "!border-blue-300": isOpen,
-              "group-hover:text-blue-300 group-hover:border-blue-300": !error,
-            })}
-          />
-          <OptionList
-            options={filterOptionsLocally ? filteredOptions : options}
-            inputValue={inputValue}
-            getOptionSubLabel={getOptionSubLabel}
-            getOptionLabel={getOptionLabel}
-            isOpen={isOpen}
-            handleSelectOption={handleSelectOption}
-            className={clsx("group-hover:border-blue-300", {
-              "!border-blue-300": isOpen,
-            })}
-          />
+      <div className={clsx(className)}>
+        <div
+          className={clsx("flex items-center gap-2", {
+            "pointer-events-none cursor-not-allowed": disabled,
+          })}
+        >
+          {label && (
+            <label
+              className="text-md mb-2"
+              style={{
+                width: labelWidth,
+              }}
+            >
+              {label}
+            </label>
+          )}
+          <div className="relative group w-full" ref={containerRef}>
+            <Input
+              height={height}
+              isOpen={isOpen}
+              isLoading={isLoading}
+              handleInputChange={handleInputChange}
+              handleToggleDropdown={handleToggleDropdown}
+              handleOpenDropDown={handleOpenDropdown}
+              handleBlur={handleBlur}
+              inputValue={inputValue}
+              handleClearInput={handleClearInput}
+              error={error}
+              disabled={disabled}
+              className={clsx({
+                "!border-blue-300": isOpen,
+                "group-hover:border-blue-300": !error,
+              })}
+              iconClassName={clsx({
+                "!text-blue-300": isOpen,
+                "!border-blue-300": isOpen,
+                "group-hover:text-blue-300 group-hover:border-blue-300": !error,
+              })}
+            />
+            <OptionList
+              options={filterOptionsLocally ? filteredOptions : options}
+              inputValue={inputValue}
+              getOptionSubLabel={getOptionSubLabel}
+              getOptionLabel={getOptionLabel}
+              isOpen={isOpen}
+              handleSelectOption={handleSelectOption}
+              className={clsx("group-hover:border-blue-300", {
+                "!border-blue-300": isOpen,
+              })}
+            />
+          </div>
         </div>
         {error && <span className="text-red-400 text-xs">{error}</span>}
       </div>
