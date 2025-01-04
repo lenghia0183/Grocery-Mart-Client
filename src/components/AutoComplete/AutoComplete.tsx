@@ -24,6 +24,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   vertical?: boolean;
   labelWidth?: string;
   className?: string;
+  allow?: RegExp;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
@@ -42,6 +43,7 @@ const Autocomplete = <Item, Response = Item[]>({
   vertical = true,
   labelWidth = "80px",
   className,
+  allow,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
   const [filteredOptions, setFilteredOptions] =
@@ -150,17 +152,21 @@ const Autocomplete = <Item, Response = Item[]>({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    setValue(e.target.value);
+    let newValue = e.target.value;
+
+    if (allow) {
+      newValue = newValue.replace(allow, "");
+    }
+
+    setInputValue(newValue);
+    setValue(newValue);
     setIsSelected(false);
     setIsClearInput(false);
 
     if (filterOptionsLocally && hasFetchedData) {
       setFilteredOptions(
         options.filter((option) =>
-          getOptionLabel(option)
-            .toLowerCase()
-            .includes(e.target.value.toLowerCase())
+          getOptionLabel(option).toLowerCase().includes(newValue.toLowerCase())
         )
       );
     }

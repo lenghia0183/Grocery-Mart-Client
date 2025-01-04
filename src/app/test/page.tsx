@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import Autocomplete from "@/components/AutoComplete";
 import TextField from "@/components/TextField";
 import * as Yup from "yup"; // Import Yup
+import { TEXTFIELD_ALLOW } from "../constants/regexes";
 
 export default function Test() {
   interface Category {
@@ -131,10 +132,11 @@ export default function Test() {
                   return data._id;
                 }}
                 autoFetch={false}
-                filterOptionsLocally={false}
+                filterOptionsLocally={true}
                 // disabled
                 // vertical={false}
                 className="mt-10"
+                allow={TEXTFIELD_ALLOW.NUMERIC}
               />
 
               <Button className="mt-2">Submit</Button>

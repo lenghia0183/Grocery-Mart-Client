@@ -114,7 +114,7 @@ const TextField = ({
               "border-red-400": error && !disabled,
               "hover:border-blue-300 group-focus-within:border-blue-300":
                 !error && !disabled,
-              "!bg-gray-50 border-gray-300 pointer-events-none": disabled,
+              "bg-gray-50 border-gray-300 pointer-events-none": disabled,
             }
           )}
           onClick={handleDivClick}
