@@ -106,11 +106,17 @@ export default function Test() {
                 </div>
               </CheckBoxGroup>
 
-              <TextField name="test" label="test" className="mb-4" />
+              <TextField
+                name="test"
+                label="test"
+                className="mb-4"
+                vertical={false}
+                labelWidth="20px"
+              />
 
               <Autocomplete
                 name="category"
-                label="test"
+                label="test test test"
                 getOptionLabel={(data) => {
                   return data.name;
                 }}

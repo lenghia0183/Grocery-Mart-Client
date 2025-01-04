@@ -144,58 +144,62 @@ const TextField = ({
   } else {
     return (
       <div
-        style={{
-          width: width,
-          height: height,
-        }}
-        className={clsx("group", "flex items-center space-x-2", className)}
+        className={clsx(className, { "pointer-events-none": disabled })}
         onClick={handleDivClick}
       >
-        {label && (
-          <label
-            htmlFor={name}
-            className={clsx("mr-2", labelClassName)}
-            style={{ width: labelWidth }}
-          >
-            {label}
-          </label>
-        )}
         <div
-          className={clsx(
-            "flex-grow flex items-center border p-2 rounded-md bg-transparent",
-            {
-              "border-red-400": error && !disabled,
-              "hover:border-blue-300 group-focus-within:border-blue-300":
-                !error && !disabled,
-              "!bg-gray-50 border-gray-300 pointer-events-none": disabled,
-            }
-          )}
+          style={{
+            width: width,
+            height: height,
+          }}
+          className={clsx("group", "flex items-center space-x-2")}
         >
-          {leftIcon && (
-            <span className="mr-2" onClick={iconOnClick}>
-              {leftIcon}
-            </span>
+          {label && (
+            <label
+              htmlFor={name}
+              className={clsx("mr-2", labelClassName)}
+              style={{ width: labelWidth }}
+            >
+              {label}
+            </label>
           )}
-          <input
+          <div
             className={clsx(
-              "outline-none placeholder-gray-500 w-full bg-transparent",
-              inputClassName
+              "flex-grow flex items-center border p-2 rounded-md bg-transparent",
+              {
+                "border-red-400": error && !disabled,
+                "hover:border-blue-300 group-focus-within:border-blue-300":
+                  !error && !disabled,
+                "!bg-gray-50 border-gray-300 pointer-events-none": disabled,
+              }
             )}
-            value={field.value}
-            id={inputId}
-            name={name}
-            placeholder={placeholder}
-            type={type}
-            onKeyPress={handleKeyPress}
-            onClick={onClick}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {rightIcon && (
-            <span className="ml-2 flex items-center" onClick={iconOnClick}>
-              {rightIcon}
-            </span>
-          )}
+          >
+            {leftIcon && (
+              <span className="mr-2" onClick={iconOnClick}>
+                {leftIcon}
+              </span>
+            )}
+            <input
+              className={clsx(
+                "outline-none placeholder-gray-500 w-full bg-transparent",
+                inputClassName
+              )}
+              value={field.value}
+              id={inputId}
+              name={name}
+              placeholder={placeholder}
+              type={type}
+              onKeyPress={handleKeyPress}
+              onClick={onClick}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {rightIcon && (
+              <span className="ml-2 flex items-center" onClick={iconOnClick}>
+                {rightIcon}
+              </span>
+            )}
+          </div>
         </div>
         {error && <span className="text-red-400 text-xs">{error}</span>}
       </div>
