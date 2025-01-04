@@ -24,6 +24,7 @@ interface TextFieldProps {
   labelWidth?: string;
   allow?: RegExp;
   prevent?: RegExp;
+  disabled?: boolean;
 }
 
 const TextField = ({
@@ -46,6 +47,7 @@ const TextField = ({
   labelWidth = "80px",
   allow,
   prevent,
+  disabled = true,
 }: TextFieldProps) => {
   const inputId = useId();
   const [field, meta, helpers] = useField(name);
@@ -102,9 +104,10 @@ const TextField = ({
           className={clsx(
             "flex items-center border border-gray-500 p-2 rounded-md bg-transparent",
             {
-              "border-red-400": error,
+              "border-red-400": error && !disabled,
               "hover:border-blue-300 group-focus-within:border-blue-300":
-                !error,
+                !error && !disabled,
+              "!bg-gray-50 border-gray-300 pointer-events-none": disabled,
             }
           )}
           onClick={handleDivClick}
@@ -161,9 +164,10 @@ const TextField = ({
           className={clsx(
             "flex-grow flex items-center border p-2 rounded-md bg-transparent",
             {
-              "border-red-400": error,
+              "border-red-400": error && !disabled,
               "hover:border-blue-300 group-focus-within:border-blue-300":
-                !error,
+                !error && !disabled,
+              "!bg-gray-50 border-gray-300 pointer-events-none": disabled,
             }
           )}
         >

@@ -62,7 +62,7 @@ const Input: React.FC<IInputProps> = ({
             {
               "border-red-400": error,
               "border-gray-500": !error,
-              "!bg-gray-50 border-gray-300 ": disabled,
+              "!bg-gray-50 border-gray-300": disabled,
             },
 
             className
