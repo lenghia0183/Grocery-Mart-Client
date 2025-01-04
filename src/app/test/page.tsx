@@ -132,7 +132,8 @@ export default function Test() {
                 }}
                 autoFetch={false}
                 filterOptionsLocally={false}
-                disabled
+                // disabled
+                // vertical={false}
                 className="mt-10"
               />
 

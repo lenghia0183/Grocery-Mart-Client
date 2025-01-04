@@ -39,8 +39,8 @@ const Autocomplete = <Item, Response = Item[]>({
   autoFetch = true,
   disabled = false,
   filterOptionsLocally = true,
-  vertical = false,
-  labelWidth = "110px",
+  vertical = true,
+  labelWidth = "80px",
   className,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
@@ -194,7 +194,13 @@ const Autocomplete = <Item, Response = Item[]>({
       <div
         className={clsx({ "pointer-events-none cursor-not-allowed": disabled })}
       >
-        {label && <label className="text-md mb-2">{label}</label>}
+        {label && (
+          <label
+            className={clsx("text-md mb-2", { "text-gray-500": disabled })}
+          >
+            {label}
+          </label>
+        )}
         <div className="relative group" ref={containerRef}>
           <Input
             height={height}
@@ -238,12 +244,12 @@ const Autocomplete = <Item, Response = Item[]>({
       <div className={clsx(className)}>
         <div
           className={clsx("flex items-center gap-2", {
-            "pointer-events-none cursor-not-allowed": disabled,
+            "pointer-events-none": disabled,
           })}
         >
           {label && (
             <label
-              className="text-md mb-2"
+              className={clsx("text-md mb-2", { "text-gray-500": disabled })}
               style={{
                 width: labelWidth,
               }}

@@ -93,7 +93,14 @@ const TextField = ({
         className={clsx("group", className)}
       >
         {label && (
-          <label htmlFor={name} className={clsx("block mb-1", labelClassName)}>
+          <label
+            htmlFor={name}
+            className={clsx(
+              "block mb-1",
+              { "text-gray-500": disabled },
+              labelClassName
+            )}
+          >
             {label}
           </label>
         )}
@@ -102,7 +109,7 @@ const TextField = ({
             height: height,
           }}
           className={clsx(
-            "flex items-center border border-gray-500 p-2 rounded-md bg-transparent",
+            "flex items-center border p-2 rounded-md bg-transparent",
             {
               "border-red-400": error && !disabled,
               "hover:border-blue-300 group-focus-within:border-blue-300":
@@ -143,21 +150,25 @@ const TextField = ({
     );
   } else {
     return (
-      <div
-        className={clsx(className, { "pointer-events-none": disabled })}
-        onClick={handleDivClick}
-      >
+      <div className={clsx(className)}>
         <div
           style={{
             width: width,
             height: height,
           }}
-          className={clsx("group", "flex items-center space-x-2")}
+          className={clsx("group", "flex items-center space-x-2", {
+            "pointer-events-none": disabled,
+          })}
+          onClick={handleDivClick}
         >
           {label && (
             <label
               htmlFor={name}
-              className={clsx("mr-2", labelClassName)}
+              className={clsx(
+                "mr-2",
+                { "text-gray-500": disabled },
+                labelClassName
+              )}
               style={{ width: labelWidth }}
             >
               {label}
