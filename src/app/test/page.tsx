@@ -146,12 +146,14 @@ export default function Test() {
                 allow={TEXTFIELD_ALLOW.NUMERIC}
               /> */}
 
-              <FileUploadButton
-                name="files"
-                accept="image/*,application/pdf"
-                maxNumberOfFiles={5}
-                multiple={false}
-              />
+              <div className="w-[30%]">
+                <FileUploadButton
+                  name="files"
+                  accept="image/*,application/pdf"
+                  maxNumberOfFiles={5}
+                  // multiple={false}
+                />
+              </div>
 
               <Button className="mt-2">Submit</Button>
             </Form>
