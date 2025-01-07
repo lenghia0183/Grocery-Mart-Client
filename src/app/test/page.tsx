@@ -9,6 +9,7 @@ import Autocomplete from "@/components/AutoComplete";
 import TextField from "@/components/TextField";
 import * as Yup from "yup"; // Import Yup
 import { TEXTFIELD_ALLOW } from "../constants/regexes";
+import FileUploadButton from "@/components/FileUploadButton";
 
 export default function Test() {
   interface Category {
@@ -70,11 +71,11 @@ export default function Test() {
 
   // Define validation schema
   const validationSchema = Yup.object({
-    testArr: Yup.array()
-      .min(1, "You must select at least one checkbox.")
-      .required("Required"),
-    test: Yup.string().required("This field is required."),
-    category: Yup.string().required("Please select a category."),
+    // testArr: Yup.array()
+    //   .min(1, "You must select at least one checkbox.")
+    //   .required("Required"),
+    // test: Yup.string().required("This field is required."),
+    // category: Yup.string().required("Please select a category."),
   });
 
   return (
@@ -94,7 +95,7 @@ export default function Test() {
         >
           {({}) => (
             <Form>
-              <CheckBoxGroup name="testArr" vertical={true}>
+              {/* <CheckBoxGroup name="testArr" vertical={true}>
                 <div>
                   <div>
                     <CheckBox name="test1" label="test1" size={100} />
@@ -137,6 +138,12 @@ export default function Test() {
                 // vertical={false}
                 className="mt-10"
                 allow={TEXTFIELD_ALLOW.NUMERIC}
+              /> */}
+
+              <FileUploadButton
+                name="files"
+                accept="image/*,application/pdf"
+                maxNumberOfFiles={5}
               />
 
               <Button className="mt-2">Submit</Button>
