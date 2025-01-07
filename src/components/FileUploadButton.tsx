@@ -1,6 +1,7 @@
 import React from "react";
 import { useField, useFormikContext } from "formik";
 import IconButton from "./IconButton";
+import Icon from "./Icon";
 
 type FileUploadButtonProps = {
   name: string;
@@ -45,7 +46,9 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({
     <div className="flex flex-col gap-1 justify-center items-center">
       {!readOnly && (
         <label className="inline-block cursor-pointer bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed ">
-          Upload Files
+          <div className="flex items-center justify-center gap-2">
+            Upload Files <Icon name="upload" color="inherit" />
+          </div>
           <input
             type="file"
             className="hidden"
