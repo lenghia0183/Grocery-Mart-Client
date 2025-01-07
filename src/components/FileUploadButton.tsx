@@ -8,39 +8,36 @@ type FileUploadButtonProps = {
   fileSizeLimit?: number;
   disabled?: boolean;
   readOnly?: boolean;
+  multiple?: boolean;
 };
 
 const FileUploadButton: React.FC<FileUploadButtonProps> = ({
   name,
   accept = "application/pdf, image/jpeg, image/png",
   maxNumberOfFiles = 1,
-
   disabled = false,
   readOnly = false,
+  multiple = true,
 }) => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
   const value = field.value;
+  const error = meta.error && meta.touched ? meta.error : "";
 
-  const multiple = maxNumberOfFiles > 1;
+  const filesLimit = multiple ? maxNumberOfFiles : 1;
+
+  const normalizedValue = Array.isArray(value) ? value : value ? [value] : [];
 
   const onFilesPicked = (event: React.ChangeEvent<HTMLInputElement>) => {
     const pickedFiles = Array.from(event.target.files || []);
-
-    const newFiles = (value ? [...value] : [])
-      .concat(pickedFiles)
-      .slice(0, maxNumberOfFiles);
+    const newFiles = [...normalizedValue, ...pickedFiles].slice(0, filesLimit);
     setFieldValue(name, multiple ? newFiles : pickedFiles[0] || null);
   };
 
   const handleDelete = (index: number) => {
-    if (multiple) {
-      const newFiles = Array.isArray(value) ? [...value] : [];
-      newFiles.splice(index, 1);
-      setFieldValue(name, newFiles);
-    } else {
-      setFieldValue(name, null);
-    }
+    const newFiles = [...normalizedValue];
+    newFiles.splice(index, 1);
+    setFieldValue(name, newFiles.length ? newFiles : null);
   };
 
   return (
@@ -55,37 +52,31 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({
             accept={accept}
             onChange={onFilesPicked}
             disabled={
-              disabled ||
-              (multiple &&
-                Array.isArray(value) &&
-                value.length >= maxNumberOfFiles)
+              disabled || (multiple && normalizedValue.length >= filesLimit)
             }
           />
         </label>
       )}
       <div className="flex flex-wrap gap-2">
-        {Array.isArray(value) &&
-          value.map((file, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between bg-blue-100 text-blue-800 rounded px-2 py-1 w-full max-w-xs"
-            >
-              <span>{file.name}</span>
-              {!readOnly && (
-                <button
-                  type="button"
-                  onClick={() => handleDelete(index)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  &times;
-                </button>
-              )}
-            </div>
-          ))}
+        {normalizedValue.map((file: File, index: number) => (
+          <div
+            key={index}
+            className="flex items-center justify-between bg-blue-100 text-blue-800 rounded px-2 py-1 w-full max-w-xs"
+          >
+            <span>{file.name}</span>
+            {!readOnly && (
+              <button
+                type="button"
+                onClick={() => handleDelete(index)}
+                className="text-red-500 hover:text-red-700"
+              >
+                &times;
+              </button>
+            )}
+          </div>
+        ))}
       </div>
-      {meta.touched && meta.error && (
-        <div className="text-red-500 text-sm">{meta.error}</div>
-      )}
+      {error && <span className="text-red-400 text-xs">{error}</span>}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { Form, Formik } from "formik";
@@ -76,6 +77,7 @@ export default function Test() {
     //   .required("Required"),
     // test: Yup.string().required("This field is required."),
     // category: Yup.string().required("Please select a category."),
+    // files: Yup.required("File upload is required."),
   });
 
   return (
@@ -87,6 +89,10 @@ export default function Test() {
             testArr: [{ test1: true }, { test2: true }],
             test: "",
             category: "",
+            // files: [
+            //   { name: "file1.pdf", size: 12345 },
+            //   { name: "file2.jpg", size: 67890 },
+            // ],
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
@@ -144,6 +150,7 @@ export default function Test() {
                 name="files"
                 accept="image/*,application/pdf"
                 maxNumberOfFiles={5}
+                multiple={false}
               />
 
               <Button className="mt-2">Submit</Button>
