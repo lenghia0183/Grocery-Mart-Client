@@ -11,6 +11,7 @@ type FileUploadButtonProps = {
   disabled?: boolean;
   readOnly?: boolean;
   multiple?: boolean;
+  label?: string;
 };
 
 const FileUploadButton: React.FC<FileUploadButtonProps> = ({
@@ -20,6 +21,7 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({
   disabled = false,
   readOnly = false,
   multiple = true,
+  label = "Upload Files",
 }) => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
@@ -47,7 +49,7 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({
       {!readOnly && (
         <label className="inline-block cursor-pointer bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed ">
           <div className="flex items-center justify-center gap-2">
-            Upload Files <Icon name="upload" color="inherit" />
+            {label} <Icon name="upload" color="inherit" />
           </div>
           <input
             type="file"
