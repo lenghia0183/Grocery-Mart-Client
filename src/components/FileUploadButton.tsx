@@ -63,13 +63,13 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({
           const widthPercentage =
             normalizedValue.length > 4
               ? "25%"
-              : `${100 / normalizedValue.length - 2}%`;
+              : `${100 / normalizedValue.length - 2.2}%`;
 
           return (
             <div
               key={index}
               style={{ width: widthPercentage }}
-              className="flex items-center justify-between bg-blue-100 text-blue-800 rounded px-2 py-1"
+              className="flex items-center justify-between bg-blue-200 text-blue-800 rounded px-2 py-1"
             >
               <span className="truncate w-full">{file.name}</span>
               {!readOnly && (

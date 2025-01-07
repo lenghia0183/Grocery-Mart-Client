@@ -89,10 +89,10 @@ export default function Test() {
             testArr: [{ test1: true }, { test2: true }],
             test: "",
             category: "",
-            // files: [
-            //   { name: "file1.pdf", size: 12345 },
-            //   { name: "file2.jpg", size: 67890 },
-            // ],
+            files: [
+              { name: "file1.pdf", size: 12345 },
+              { name: "file2.jpg", size: 67890 },
+            ],
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
@@ -151,7 +151,8 @@ export default function Test() {
                   name="files"
                   accept="image/*,application/pdf"
                   maxNumberOfFiles={5}
-                  // multiple={false}
+                  multiple={true}
+                  // readOnly={true}
                 />
               </div>
 
