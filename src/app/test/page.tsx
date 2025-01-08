@@ -160,7 +160,9 @@ export default function Test() {
 
               <QuantityInput name="quantity" className="mt-10" />
 
-              <Button className="mt-2">Submit</Button>
+              <Button className="mt-2" type="submit">
+                Submit
+              </Button>
             </Form>
           )}
         </Formik>

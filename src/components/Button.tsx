@@ -28,6 +28,7 @@ interface ButtonProps {
   height?: string;
   href?: string;
   to?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -53,6 +54,7 @@ const Button: React.FC<ButtonProps> = ({
   height,
   href,
   to,
+  type = "button",
   ...props
 }) => {
   const isLink = Boolean(to || href);
@@ -154,6 +156,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
       style={{ width, height }}
+      type={type}
       {...props}
     >
       {content()}
