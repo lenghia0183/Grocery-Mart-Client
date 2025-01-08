@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { useField } from "formik";
 import IconButton from "./IconButton";
@@ -24,13 +26,20 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
   className = "",
   inputClassName = "",
   buttonClassName = "",
-  disabled = false,
+  disabled = true,
   height = "40px",
-  width = "100%",
+  width = "120px",
 }) => {
   const [field, meta, helpers] = useField(name);
-  const { value = 1 } = field;
+  const { value } = field;
   const { setValue } = helpers;
+
+  useEffect(() => {
+    if (value == undefined) {
+      setValue(min);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDecrease = () => {
     if (typeof value === "number" && value > min) {
@@ -71,37 +80,44 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
 
   return (
     <div
-      className={clsx("flex items-center", className, "w-full")}
+      className={clsx(
+        "flex items-center justify-center border border-gray-300 rounded-[10px]",
+        { "pointer-events-none border-gray-300": disabled },
+        className
+      )}
       style={{ width }}
     >
       <IconButton
         iconName="minus"
         iconColor="dark"
         className={clsx(
-          //   "border-gray-300 border rounded-sm shrink-0",
-          //   { "hover:border-emerald": !(value <= min) },
+          {
+            "text-gray-300":
+              (typeof value === "number" && value <= min) || disabled,
+          },
+
+          "shadow-none",
           buttonClassName
         )}
-        iconWidth="50%"
-        iconHeight="50%"
         type="button"
-        height={height}
-        width={height}
-        iconStrokeWidth={30}
+        iconHeight={"24px"}
+        iconWidth={"24px"}
+        iconStrokeWidth={1}
         onClick={handleDecrease}
-        disabled={disabled || (typeof value === "number" && value <= min)}
       />
 
       <input
         type="text"
         {...field}
-        value={value}
+        value={value ?? min}
         onBlur={handleBlur}
         onChange={handleInputChange}
         className={clsx(
-          "p-2 text-center border border-gray-300 outline-none focus:border-emerald text-dark font-medium",
-          inputClassName,
-          "flex-grow min-w-0"
+          "max-w-9 text-center outline-none",
+          {
+            "text-gray-300": disabled,
+          },
+          inputClassName
         )}
         style={{ height }}
         disabled={disabled}
@@ -111,16 +127,17 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
         iconName="plus"
         iconColor="dark"
         className={clsx(
-          //   "border-gray-300 border rounded-sm shrink-0",
-          //   { "hover:border-emerald": !(value >= max) },
+          {
+            "text-gray-300":
+              (typeof value === "number" && value >= max) || disabled,
+          },
+          "shadow-none",
           buttonClassName
         )}
         type="button"
-        iconWidth="50%"
-        iconHeight="50%"
-        height={height}
-        width={height}
-        iconStrokeWidth={20}
+        iconHeight={"24px"}
+        iconWidth={"24px"}
+        iconStrokeWidth={1}
         onClick={handleIncrease}
         disabled={disabled || (typeof value === "number" && value >= max)}
       />

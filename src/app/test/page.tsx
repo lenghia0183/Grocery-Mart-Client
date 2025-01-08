@@ -86,18 +86,16 @@ export default function Test() {
       <Header />
       <div className="container">
         <Formik
-          initialValues={
-            {
-              // testArr: [{ test1: true }, { test2: true }],
-              // test: "",
-              // category: "",
-              // files: [
-              //   { name: "file1.pdf", size: 12345 },
-              //   { name: "file2.jpg", size: 67890 },
-              // ],
-              // quantity: 1,
-            }
-          }
+          initialValues={{
+            // testArr: [{ test1: true }, { test2: true }],
+            // test: "",
+            // category: "",
+            // files: [
+            //   { name: "file1.pdf", size: 12345 },
+            //   { name: "file2.jpg", size: 67890 },
+            // ],
+            quantity: 2,
+          }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
             console.log(values);
@@ -160,7 +158,7 @@ export default function Test() {
                 />
               </div> */}
 
-              <QuantityInput name="quantity" />
+              <QuantityInput name="quantity" className="mt-10" />
 
               <Button className="mt-2">Submit</Button>
             </Form>
