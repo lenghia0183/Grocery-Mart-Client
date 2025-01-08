@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 import Link from "next/link";
 import Loading from "./Loading";
+import { createTailwindClass } from "@/utils";
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -55,6 +56,10 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const isLink = Boolean(to || href);
+  const textColorClass = createTailwindClass("text", textColor);
+  const textHoverColorClass = createTailwindClass("hover:text", textHoverColor);
+  const bgColorClass = createTailwindClass("bg", bgColor);
+  const bgHoverColorClass = createTailwindClass("hover:bg", bgHoverColor);
 
   const baseClasses =
     "rounded focus:outline-none transition duration-300 flex w-fit items-center justify-center cursor-pointer font-medium";
@@ -68,34 +73,34 @@ const Button: React.FC<ButtonProps> = ({
 
   const variantClasses = {
     contained: clsx(
-      textColor || "text-dark",
-      bgColor || "bg-yellow",
-      bgHoverColor || "hover:bg-yellow",
-      textHoverColor || "hover:text-blue-500"
+      textColorClass || "text-dark",
+      bgColorClass || "bg-yellow",
+      bgHoverColorClass || "hover:bg-yellow",
+      textHoverColorClass || "hover:text-blue-500"
     ),
     outlined: clsx(
       "border",
-      textColor || "text-blue-500",
+      textColorClass || "text-blue-500",
       borderColor || "border-blue-500",
-      bgHoverColor || "hover:bg-blue-200",
-      textHoverColor || "hover:text-white",
+      bgHoverColorClass || "hover:bg-blue-200",
+      textHoverColorClass || "hover:text-white",
       borderHoverColor || ""
     ),
     text: clsx(
       "hover:underline",
-      textColor || "text-blue-500",
-      bgHoverColor || "hover:bg-blue-200",
-      textHoverColor || ""
+      textColorClass || "text-blue-500",
+      bgHoverColorClass || "hover:bg-blue-200",
+      textHoverColorClass || ""
     ),
   };
 
   const linkClass = clsx(
-    textColor || "text-dark-500",
-    bgHoverColor || "hover:bg-transparent",
+    textColorClass || "text-dark-500",
+    bgHoverColorClass || "hover:bg-transparent",
     borderColor || "",
     borderHoverColor || "",
-    bgColor || "",
-    textHoverColor || "hover:text-blue-400"
+    bgColorClass || "",
+    textHoverColorClass || "hover:text-blue-400"
   );
 
   const classes = clsx(
