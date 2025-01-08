@@ -29,7 +29,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
   width = "100%",
 }) => {
   const [field, meta, helpers] = useField(name);
-  const { value } = field;
+  const { value = 1 } = field;
   const { setValue } = helpers;
 
   const handleDecrease = () => {
@@ -78,8 +78,8 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
         iconName="minus"
         iconColor="dark"
         className={clsx(
-          "border-gray-300 border rounded-sm shrink-0",
-          { "hover:border-emerald": !(value <= min) },
+          //   "border-gray-300 border rounded-sm shrink-0",
+          //   { "hover:border-emerald": !(value <= min) },
           buttonClassName
         )}
         iconWidth="50%"
@@ -111,8 +111,8 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
         iconName="plus"
         iconColor="dark"
         className={clsx(
-          "border-gray-300 border rounded-sm shrink-0",
-          { "hover:border-emerald": !(value >= max) },
+          //   "border-gray-300 border rounded-sm shrink-0",
+          //   { "hover:border-emerald": !(value >= max) },
           buttonClassName
         )}
         type="button"

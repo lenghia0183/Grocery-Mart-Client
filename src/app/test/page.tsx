@@ -11,6 +11,7 @@ import TextField from "@/components/TextField";
 import * as Yup from "yup"; // Import Yup
 import { TEXTFIELD_ALLOW } from "../constants/regexes";
 import FileUploadButton from "@/components/FileUploadButton";
+import QuantityInput from "@/components/QuantityInput";
 
 export default function Test() {
   interface Category {
@@ -85,15 +86,18 @@ export default function Test() {
       <Header />
       <div className="container">
         <Formik
-          initialValues={{
-            testArr: [{ test1: true }, { test2: true }],
-            test: "",
-            category: "",
-            files: [
-              { name: "file1.pdf", size: 12345 },
-              { name: "file2.jpg", size: 67890 },
-            ],
-          }}
+          initialValues={
+            {
+              // testArr: [{ test1: true }, { test2: true }],
+              // test: "",
+              // category: "",
+              // files: [
+              //   { name: "file1.pdf", size: 12345 },
+              //   { name: "file2.jpg", size: 67890 },
+              // ],
+              // quantity: 1,
+            }
+          }
           validationSchema={validationSchema}
           onSubmit={(values) => {
             console.log(values);
@@ -146,7 +150,7 @@ export default function Test() {
                 allow={TEXTFIELD_ALLOW.NUMERIC}
               /> */}
 
-              <div className="w-[30%]">
+              {/* <div className="w-[30%]">
                 <FileUploadButton
                   name="files"
                   accept="image/*,application/pdf"
@@ -154,7 +158,9 @@ export default function Test() {
                   multiple={true}
                   // readOnly={true}
                 />
-              </div>
+              </div> */}
+
+              <QuantityInput name="quantity" />
 
               <Button className="mt-2">Submit</Button>
             </Form>
