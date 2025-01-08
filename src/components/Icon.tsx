@@ -9,6 +9,8 @@ import Email from "../asset/icons/email.svg";
 import ArrowDown from "../asset/icons/arrowDown.svg";
 import Close from "../asset/icons/close.svg";
 import Upload from "../asset/icons/upload.svg";
+import Plus from "../asset/icons/plus.svg";
+import Minus from "../asset/icons/minus.svg";
 
 import { createTailwindClass } from "@/utils";
 
@@ -36,6 +38,8 @@ export const icons: Record<
   arrowDown: ArrowDown,
   close: Close,
   upload: Upload,
+  plus: Plus,
+  minus: Minus,
 };
 
 const Icon: React.FC<IconProps> = ({
