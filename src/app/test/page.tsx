@@ -12,6 +12,7 @@ import * as Yup from "yup"; // Import Yup
 import { TEXTFIELD_ALLOW } from "../constants/regexes";
 import FileUploadButton from "@/components/FileUploadButton";
 import QuantityInput from "@/components/QuantityInput";
+import GoToTop from "@/components/GoToTop";
 
 export default function Test() {
   interface Category {
@@ -84,7 +85,7 @@ export default function Test() {
   return (
     <main>
       <Header />
-      <div className="container">
+      <div className="container h-[2000px]">
         <Formik
           initialValues={{
             // testArr: [{ test1: true }, { test2: true }],
@@ -166,6 +167,7 @@ export default function Test() {
             </Form>
           )}
         </Formik>
+        <GoToTop />
       </div>
     </main>
   );
