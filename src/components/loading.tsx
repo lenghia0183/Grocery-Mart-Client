@@ -14,8 +14,7 @@ interface LoadingProps {
 const Loading: FC<LoadingProps> = ({
   width = "40px",
   height = "40px",
-  size = 1,
-
+  size = 1, 
   thickness = "4px",
   color = "text-blue-500",
   speed = ".75s",
