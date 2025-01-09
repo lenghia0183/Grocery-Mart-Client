@@ -44,14 +44,18 @@ const GoToTop: React.FC = () => {
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: `conic-gradient(#005957 ${scrollPercentage}%, #f7a825 ${scrollPercentage}%)`,
+            background: `conic-gradient(#0a58ca ${scrollPercentage}%, #f7a825 ${scrollPercentage}%)`,
           }}
         />
         <div className="absolute inset-[2px] bg-white rounded-full flex items-center justify-center text-emerald text-lg">
-          <Icon name="arrowDown" className="rotate-180" size={1.5} />
+          <Icon
+            name="arrowDown"
+            className="rotate-180"
+            size={1.5}
+            color="blue-500"
+          />
         </div>
       </div>
-      haha
     </div>
   );
 };
