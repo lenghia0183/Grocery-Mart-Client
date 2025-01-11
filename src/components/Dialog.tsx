@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { Form, Formik, FormikConfig, FormikValues } from "formik";
 import React, { ReactNode } from "react";
-import Button from "./Button";
-import IconButton from "./IconButton";
+import Button, { ButtonProps } from "./Button";
+import IconButton, { IconButtonProps } from "./IconButton";
 
 interface DialogProps<MyFormValues extends FormikValues> {
   title?: string;
@@ -11,10 +11,10 @@ interface DialogProps<MyFormValues extends FormikValues> {
   isOpen: boolean;
   onCancel: () => void;
   cancelLabel?: string;
-  cancelProps?: Record<string, unknown>;
+  cancelProps?: Omit<ButtonProps, "children">;
   onSubmit?: () => void;
   submitLabel?: string;
-  submitProps?: Record<string, unknown>;
+  submitProps?: Omit<ButtonProps, "children">;
   disableBackdropClick?: boolean;
   children?: ReactNode;
   renderFooter?: () => ReactNode;
@@ -27,7 +27,7 @@ interface DialogProps<MyFormValues extends FormikValues> {
   contentClassName?: string;
   footerClassName?: string;
   backdropClassName?: string;
-  iconButtonProps?: Record<string, unknown>;
+  iconButtonProps?: Omit<IconButtonProps, "name">;
 }
 
 const Dialog = <MyFormValues extends FormikValues>({
@@ -38,16 +38,15 @@ const Dialog = <MyFormValues extends FormikValues>({
   onSubmit,
   cancelLabel = "",
   submitLabel = "",
-  cancelProps = { bgColor: "gray-400" },
-  submitProps = { bgColor: "crimson" },
+  cancelProps,
+  submitProps,
   renderFooter,
-  maxWidth = "max-w-md",
-  fullWidth = true,
+  fullWidth = false,
   disableBackdropClick = false,
   noBorderTop = false,
   noBorderBottom = false,
   formikProps,
-  iconButtonProps = {},
+  iconButtonProps,
   titleClassName,
   dialogClassName,
   titleContainerClassName,
@@ -89,7 +88,12 @@ const Dialog = <MyFormValues extends FormikValues>({
           ) : (
             <div className="flex gap-2">
               {cancelLabel && (
-                <Button onClick={onCancel} {...cancelProps}>
+                <Button
+                  onClick={onCancel}
+                  bgColor="gray-300"
+                  bgHoverColor="gray-50"
+                  {...cancelProps}
+                >
                   {cancelLabel}
                 </Button>
               )}
@@ -109,42 +113,59 @@ const Dialog = <MyFormValues extends FormikValues>({
     </>
   );
 
-  if (!isOpen) return null;
-
   return (
     <div
       className={clsx(
-        "fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 text-xl",
+        "fixed inset-0 flex items-center justify-center bg-black text-xl transition-all duration-300 ",
+        {
+          "opacity-0 pointer-events-none": !isOpen,
+          "bg-opacity-50 opacity-100": isOpen,
+        },
         backdropClassName
       )}
       onClick={handleBackdropClick}
     >
-      <div
-        className={clsx(
-          "bg-white rounded-lg shadow-lg w-full",
-          dialogClassName,
-          maxWidth,
-          { "max-w-full": fullWidth },
-          "max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="container flex items-center justify-center">
         <div
-          className={clsx(
-            "p-4 flex items-center justify-between",
-            titleContainerClassName
-          )}
+          className={clsx({
+            "w-full": fullWidth,
+            "w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%]": !fullWidth,
+          })}
         >
-          <div className={clsx("font-semibold", titleClassName)}>{title}</div>
-          <IconButton
-            iconName="close"
-            onClick={onCancel}
-            {...iconButtonProps}
-          />
+          <div
+            className={clsx(
+              "bg-white rounded-lg shadow-lg transition-all duration-300",
+              {
+                "-translate-y-1/2": !isOpen,
+                "translate-y-0": isOpen,
+              },
+              dialogClassName
+            )}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className={clsx(
+                "p-4 flex items-center justify-between",
+                titleContainerClassName
+              )}
+            >
+              <div className={clsx("font-semibold", titleClassName)}>
+                {title}
+              </div>
+              <IconButton
+                iconName="close"
+                iconColor="gray"
+                onClick={onCancel}
+                className="shadow-none"
+                iconHoverColor="blue"
+                {...iconButtonProps}
+              />
+            </div>
+            <DialogWrapper>
+              <DialogInner />
+            </DialogWrapper>
+          </div>
         </div>
-        <DialogWrapper>
-          <DialogInner />
-        </DialogWrapper>
       </div>
     </div>
   );

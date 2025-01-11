@@ -5,7 +5,7 @@ import Link from "next/link";
 import Loading from "./Loading";
 import { createTailwindClass } from "@/utils";
 
-interface ButtonProps {
+export interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;

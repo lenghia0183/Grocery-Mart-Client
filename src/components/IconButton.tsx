@@ -1,11 +1,11 @@
 import React from "react";
 import clsx from "clsx";
 import Link from "next/link";
-import Loading from "@/components/Loading"; // Đảm bảo bạn có component này
-import Icon from "@/components/Icon"; // Đảm bảo bạn có component này
+import Loading from "@/components/Loading";
+import Icon from "@/components/Icon";
 import { createTailwindClass } from "@/utils";
 
-interface IconButtonProps {
+export interface IconButtonProps {
   iconName: string;
   onClick?: () => void;
   disabled?: boolean;

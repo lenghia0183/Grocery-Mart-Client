@@ -112,6 +112,7 @@ export default function Test() {
           formikProps={formikConfig}
           submitLabel="Submit"
           cancelLabel="Cancel"
+          // fullWidth={true}
         >
           <TextField name="name" label="haha" disabled={false} />
         </Dialog>
