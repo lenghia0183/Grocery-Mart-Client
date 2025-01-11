@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import CheckBoxGroup from "@/components/CheckBoxGroup";
@@ -13,6 +13,8 @@ import { TEXTFIELD_ALLOW } from "../constants/regexes";
 import FileUploadButton from "@/components/FileUploadButton";
 import QuantityInput from "@/components/QuantityInput";
 import GoToTop from "@/components/GoToTop";
+import { useState } from "react";
+import Dialog from "@/components/Dialog";
 
 export default function Test() {
   interface Category {
@@ -82,91 +84,38 @@ export default function Test() {
     // files: Yup.required("File upload is required."),
   });
 
+  interface MyFormValues {
+    name: string;
+  }
+  const initialValues: MyFormValues = { name: "" };
+
+  const formikConfig = {
+    initialValues,
+    validationSchema: Yup.object({
+      name: Yup.string().required("Name is required"),
+    }),
+    onSubmit: (values: MyFormValues) => {
+      console.log("values", values);
+    },
+  };
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <main>
       <Header />
       <div className="container h-[2000px]">
-        <Formik
-          initialValues={{
-            // testArr: [{ test1: true }, { test2: true }],
-            // test: "",
-            // category: "",
-            // files: [
-            //   { name: "file1.pdf", size: 12345 },
-            //   { name: "file2.jpg", size: 67890 },
-            // ],
-            quantity: 2,
-          }}
-          validationSchema={validationSchema}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+        <button onClick={() => setIsOpen(true)}>Open Dialog</button>
+        <Dialog
+          isOpen={isOpen}
+          onCancel={() => setIsOpen(false)}
+          title="Example Dialog"
+          formikProps={formikConfig}
+          submitLabel="Submit"
+          cancelLabel="Cancel"
         >
-          {({}) => (
-            <Form>
-              {/* <CheckBoxGroup name="testArr" vertical={true}>
-                <div>
-                  <div>
-                    <CheckBox name="test1" label="test1" size={100} />
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <CheckBox name="test2" label="test2" />
-                  </div>
-                </div>
-              </CheckBoxGroup>
+          <TextField name="name" label="haha" disabled={false} />
+        </Dialog>
 
-              <TextField
-                name="test"
-                label="test"
-                className="mb-4"
-                vertical={false}
-                labelWidth="20px"
-              />
-
-              <Autocomplete
-                name="category"
-                label="test test test"
-                getOptionLabel={(data) => {
-                  return data.name;
-                }}
-                getOptionSubLabel={(data) => data._id}
-                asyncRequest={fetchCategory}
-                asyncRequestHelper={(
-                  response: CategoryResponse
-                ): Category[] => {
-                  return response.data.categories;
-                }}
-                getOptionValue={(data: Category) => {
-                  return data._id;
-                }}
-                autoFetch={false}
-                filterOptionsLocally={true}
-                // disabled
-                // vertical={false}
-                className="mt-10"
-                allow={TEXTFIELD_ALLOW.NUMERIC}
-              /> */}
-
-              {/* <div className="w-[30%]">
-                <FileUploadButton
-                  name="files"
-                  accept="image/*,application/pdf"
-                  maxNumberOfFiles={5}
-                  multiple={true}
-                  // readOnly={true}
-                />
-              </div> */}
-
-              <QuantityInput name="quantity" className="mt-10" />
-
-              <Button className="mt-2" type="submit">
-                Submit
-              </Button>
-            </Form>
-          )}
-        </Formik>
         <GoToTop />
       </div>
     </main>

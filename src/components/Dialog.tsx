@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import { Form, Formik, FormikConfig, FormikValues } from "formik";
-import React, { useCallback, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import Button from "./Button";
 import IconButton from "./IconButton";
 
-interface DialogProps {
+interface DialogProps<MyFormValues extends FormikValues> {
   title?: string;
   maxWidth?: string;
   fullWidth?: boolean;
-  open: boolean;
+  isOpen: boolean;
   onCancel: () => void;
   cancelLabel?: string;
   cancelProps?: Record<string, unknown>;
@@ -20,7 +20,7 @@ interface DialogProps {
   renderFooter?: () => ReactNode;
   noBorderBottom?: boolean;
   noBorderTop?: boolean;
-  formikProps?: FormikConfig<FormikValues>;
+  formikProps?: FormikConfig<MyFormValues>;
   titleClassName?: string;
   dialogClassName?: string;
   titleContainerClassName?: string;
@@ -30,8 +30,8 @@ interface DialogProps {
   iconButtonProps?: Record<string, unknown>;
 }
 
-const Dialog: React.FC<DialogProps> = ({
-  open,
+const Dialog = <MyFormValues extends FormikValues>({
+  isOpen,
   onCancel,
   title = "",
   children,
@@ -54,28 +54,25 @@ const Dialog: React.FC<DialogProps> = ({
   contentClassName,
   footerClassName,
   backdropClassName,
-}) => {
+}: DialogProps<MyFormValues>) => {
   const handleBackdropClick = () => {
     if (!disableBackdropClick) {
       onCancel();
     }
   };
 
-  const DialogWrapper: React.FC<{ children: ReactNode }> = useCallback(
-    ({ children }) =>
-      formikProps ? (
-        <Formik {...formikProps}>
-          {() => (
-            <Form className="flex flex-col overflow-y-auto">{children}</Form>
-          )}
-        </Formik>
-      ) : (
-        <>{children}</>
-      ),
-    [formikProps]
-  );
+  const DialogWrapper = ({ children }: { children: ReactNode }) =>
+    formikProps ? (
+      <Formik {...formikProps}>
+        {() => (
+          <Form className="flex flex-col overflow-y-auto">{children}</Form>
+        )}
+      </Formik>
+    ) : (
+      <>{children}</>
+    );
 
-  const DialogInner: React.FC = () => (
+  const DialogInner = () => (
     <>
       <div
         className={clsx("p-6", contentClassName, {
@@ -112,7 +109,7 @@ const Dialog: React.FC<DialogProps> = ({
     </>
   );
 
-  if (!open) return null;
+  if (!isOpen) return null;
 
   return (
     <div
