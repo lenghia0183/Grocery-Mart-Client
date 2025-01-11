@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, ReactNode } from "react";
 import clsx from "clsx";
-import { useRouter } from "next/router";
+import { createTailwindClass } from "@/utils";
 
 interface DrawerMenuProps {
   isOpen?: boolean;
@@ -37,8 +37,8 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({
   autoCloseTimeout = null,
   handleClose = () => {},
   overlayColor = "rgba(0, 0, 0, 0.5)",
-  bgColor = "bg-white",
-  textColor,
+  bgColor = "white",
+  textColor = "",
   borderColor = "yellow",
   handleOverlayClick,
   className,
@@ -119,13 +119,17 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({
     },
   };
 
+  const bgColorClass = createTailwindClass("bg", bgColor);
+  const textColorClass = createTailwindClass("text", textColor);
+  const borderColorClass = createTailwindClass("border", borderColor);
+
   const drawerClasses = clsx(
     "fixed transition-transform overflow-auto",
     className,
     `duration-${animationDuration}`,
-    bgColor,
-    textColor,
-    borderColor,
+    bgColorClass,
+    textColorClass,
+    borderColorClass,
     {
       "transform-none": isOpen,
     },
