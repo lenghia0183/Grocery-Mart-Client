@@ -15,6 +15,7 @@ import QuantityInput from "@/components/QuantityInput";
 import GoToTop from "@/components/GoToTop";
 import { useState } from "react";
 import Dialog from "@/components/Dialog";
+import DrawerMenu from "@/components/DrawerMenu";
 
 export default function Test() {
   interface Category {
@@ -99,6 +100,7 @@ export default function Test() {
     },
   };
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
 
   return (
     <main>
@@ -116,6 +118,25 @@ export default function Test() {
         >
           <TextField name="name" label="haha" disabled={false} />
         </Dialog>
+
+        <DrawerMenu
+          isOpen={isOpenDrawer}
+          renderContent={() => {
+            return <div>Drawer Menu</div>;
+          }}
+          handleClose={() => setIsOpenDrawer(false)}
+          handleOverlayClick={() => setIsOpenDrawer(false)}
+          position="bottom"
+          // width="100%"
+        >
+          <button
+            onClick={() => {
+              setIsOpenDrawer(true);
+            }}
+          >
+            Open
+          </button>
+        </DrawerMenu>
 
         <GoToTop />
       </div>
