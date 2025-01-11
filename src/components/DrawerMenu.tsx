@@ -11,7 +11,7 @@ interface DrawerMenuProps {
   height?: string;
   renderContent: () => ReactNode;
   renderTitle?: (() => ReactNode) | null;
-  children?: ReactNode;
+
   animationDuration?: number;
   disableScroll?: boolean;
   autoCloseTimeout?: number | null;
@@ -31,7 +31,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({
   height = "100%",
   renderContent,
   renderTitle = null,
-  children,
+
   animationDuration = 1000,
   disableScroll = true,
   autoCloseTimeout = null,
@@ -161,7 +161,6 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({
         {renderTitle && <div className="p-4">{renderTitle()}</div>}
         <div>{renderContent()}</div>
       </div>
-      {children}
     </>
   );
 };

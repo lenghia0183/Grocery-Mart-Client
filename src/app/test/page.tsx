@@ -128,15 +128,14 @@ export default function Test() {
           handleOverlayClick={() => setIsOpenDrawer(false)}
           position="bottom"
           // width="100%"
+        />
+        <button
+          onClick={() => {
+            setIsOpenDrawer(true);
+          }}
         >
-          <button
-            onClick={() => {
-              setIsOpenDrawer(true);
-            }}
-          >
-            Open
-          </button>
-        </DrawerMenu>
+          Open
+        </button>
 
         <GoToTop />
       </div>
