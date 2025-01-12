@@ -1,144 +1,86 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { Form, Formik, FormikHelpers } from "formik";
-import Button from "@/components/Button";
-import CheckBox from "@/components/CheckBox";
-import CheckBoxGroup from "@/components/CheckBoxGroup";
+import React, { useState } from "react";
+import Tabs from "@/components/Tabs";
 import Header from "@/components/Header";
-import Autocomplete from "@/components/AutoComplete";
-import TextField from "@/components/TextField";
-import * as Yup from "yup"; // Import Yup
-import { TEXTFIELD_ALLOW } from "../constants/regexes";
-import FileUploadButton from "@/components/FileUploadButton";
-import QuantityInput from "@/components/QuantityInput";
-import GoToTop from "@/components/GoToTop";
-import { useState } from "react";
 import Dialog from "@/components/Dialog";
 import DrawerMenu from "@/components/DrawerMenu";
 import LabelValue from "@/components/LabelValue";
-
+import GoToTop from "@/components/GoToTop";
 export default function Test() {
-  interface Category {
-    _id: string;
-    name: string;
-    image: string;
-    slug: string;
-    createdAt: string;
-    updatedAt: string;
-  }
-
-  interface Pagination {
-    limit: number;
-    totalResult: number;
-    totalPage: number;
-    currentPage: number;
-    currentResult: number;
-  }
-
-  interface CategoryResponse {
-    code: number;
-    message: string;
-    data: {
-      categories: Category[];
-      limit: Pagination["limit"];
-      totalResult: Pagination["totalResult"];
-      totalPage: Pagination["totalPage"];
-      currentPage: Pagination["currentPage"];
-      currentResult: Pagination["currentResult"];
-    };
-  }
-
-  const fetchCategory = async (): Promise<CategoryResponse> => {
-    try {
-      const response = await fetch("https://api.hauifood.com/v1/categories");
-      console.log("response: ", response);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data: CategoryResponse = await response.json();
-      console.log("response", data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-      return {
-        code: 0,
-        message: "",
-        data: {
-          categories: [],
-          limit: 0,
-          totalResult: 0,
-          totalPage: 0,
-          currentPage: 0,
-          currentResult: 0,
-        },
-      };
-    }
-  };
-
-  // Define validation schema
-  const validationSchema = Yup.object({
-    // testArr: Yup.array()
-    //   .min(1, "You must select at least one checkbox.")
-    //   .required("Required"),
-    // test: Yup.string().required("This field is required."),
-    // category: Yup.string().required("Please select a category."),
-    // files: Yup.required("File upload is required."),
-  });
-
-  interface MyFormValues {
-    name: string;
-  }
-  const initialValues: MyFormValues = { name: "" };
-
-  const formikConfig = {
-    initialValues,
-    validationSchema: Yup.object({
-      name: Yup.string().required("Name is required"),
-    }),
-    onSubmit: (values: MyFormValues) => {
-      console.log("values", values);
-    },
-  };
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
+  const [selectedTab, setSelectedTab] = useState("dialog");
+
+  const tabList = [
+    { label: "Dialog", value: "dialog" },
+    { label: "Drawer", value: "drawer" },
+    { label: "LabelValue", value: "labelValue" },
+  ];
+
+  const handleTabChange = (value?: string) => {
+    setSelectedTab(value || "dialog");
+  };
+
+  const renderTabContent = () => {
+    switch (selectedTab) {
+      case "dialog":
+        return (
+          <>
+            <button onClick={() => setIsOpen(true)}>Open Dialog</button>
+            <Dialog
+              isOpen={isOpen}
+              onCancel={() => setIsOpen(false)}
+              title="Example Dialog"
+              submitLabel="Submit"
+              cancelLabel="Cancel"
+            >
+              <p>This is a dialog content.</p>
+            </Dialog>
+          </>
+        );
+      case "drawer":
+        return (
+          <>
+            <button
+              onClick={() => {
+                setIsOpenDrawer(true);
+              }}
+            >
+              Open Drawer
+            </button>
+            <DrawerMenu
+              isOpen={isOpenDrawer}
+              renderContent={() => <div>Drawer Menu Content</div>}
+              handleClose={() => setIsOpenDrawer(false)}
+              handleOverlayClick={() => setIsOpenDrawer(false)}
+              position="bottom"
+            />
+          </>
+        );
+      case "labelValue":
+        return (
+          <LabelValue label="Le cong nghia" value={<p>Le cong nghia</p>} />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <main>
       <Header />
-      <div className="container h-[2000px]">
-        <button onClick={() => setIsOpen(true)}>Open Dialog</button>
-        <Dialog
-          isOpen={isOpen}
-          onCancel={() => setIsOpen(false)}
-          title="Example Dialog"
-          formikProps={formikConfig}
-          submitLabel="Submit"
-          cancelLabel="Cancel"
-          // fullWidth={true}
+      <div className="container">
+        <Tabs
+          list={tabList}
+          value={selectedTab}
+          onChange={handleTabChange}
+          className="mb-6"
+          tabClassName="text-lg"
+          divider
         >
-          <TextField name="name" label="haha" disabled={false} />
-        </Dialog>
-
-        <DrawerMenu
-          isOpen={isOpenDrawer}
-          renderContent={() => {
-            return <div>Drawer Menu</div>;
-          }}
-          handleClose={() => setIsOpenDrawer(false)}
-          handleOverlayClick={() => setIsOpenDrawer(false)}
-          position="bottom"
-        />
-        <button
-          onClick={() => {
-            setIsOpenDrawer(true);
-          }}
-        >
-          Open
-        </button>
-
-        <LabelValue label="Le cong nghia" value={<p>le cong nghia</p>} />
-
+          {renderTabContent()}
+        </Tabs>
         <GoToTop />
       </div>
     </main>
