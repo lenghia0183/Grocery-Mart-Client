@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 type LabelValueProps = {
   label: React.ReactNode;
-  value: React.ReactNode;
+  value: React.ReactNode | string;
   labelWidth?: string;
   labelClassName?: string;
   valueClassName?: string;

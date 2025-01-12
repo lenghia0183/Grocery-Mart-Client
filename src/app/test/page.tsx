@@ -16,6 +16,7 @@ import GoToTop from "@/components/GoToTop";
 import { useState } from "react";
 import Dialog from "@/components/Dialog";
 import DrawerMenu from "@/components/DrawerMenu";
+import LabelValue from "@/components/LabelValue";
 
 export default function Test() {
   interface Category {
@@ -135,6 +136,8 @@ export default function Test() {
         >
           Open
         </button>
+
+        <LabelValue label="Le cong nghia" value={<p>le cong nghia</p>} />
 
         <GoToTop />
       </div>
