@@ -14,16 +14,15 @@ interface LoadingProps {
 const Loading: FC<LoadingProps> = ({
   width = "40px",
   height = "40px",
-  size = 1, 
+  size,
   thickness = "4px",
   color = "text-blue-500",
   speed = ".75s",
   className = "",
 }) => {
-  const sizeStyle = {
-    width: width || `${size}em`,
-    height: height || `${size}em`,
-  };
+  const sizeStyle = size
+    ? { width: `${size}em`, height: `${size}em` }
+    : { width: width, height: height };
 
   return (
     <div

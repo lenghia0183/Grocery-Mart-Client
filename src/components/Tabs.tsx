@@ -22,7 +22,7 @@ const Tabs: React.FC<TabsProps> = ({
   children,
   onChange = () => {},
   value: externalValue,
-  divider,
+  divider = true,
   className,
   tabClassName,
 }) => {
@@ -40,9 +40,6 @@ const Tabs: React.FC<TabsProps> = ({
     const tab = document.querySelector(`.tab-${value}`) as HTMLElement;
     if (tab) {
       const { offsetLeft, offsetWidth } = tab;
-
-      console.log("offsetLeft=", offsetLeft + " offsetWidth=", offsetWidth);
-
       setUnderlineStyle({
         left: offsetLeft,
         width: offsetWidth,
@@ -62,9 +59,9 @@ const Tabs: React.FC<TabsProps> = ({
   return (
     <div className={clsx("overflow-hidden", className)}>
       <div
-        className={`flex ${
-          divider ? "border-b" : ""
-        } mb-4 relative text-xl overflow-auto`}
+        className={clsx(`flex  mb-4 relative text-xl overflow-auto`, {
+          "border-b": divider,
+        })}
       >
         {list.map((item, index) => (
           <button

@@ -77,7 +77,7 @@ export default function Test() {
           onChange={handleTabChange}
           className="mb-6"
           tabClassName="text-lg"
-          divider
+          divider={false}
         >
           {renderTabContent()}
         </Tabs>
