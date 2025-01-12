@@ -127,7 +127,6 @@ export default function Test() {
           handleClose={() => setIsOpenDrawer(false)}
           handleOverlayClick={() => setIsOpenDrawer(false)}
           position="bottom"
-          // width="100%"
         />
         <button
           onClick={() => {

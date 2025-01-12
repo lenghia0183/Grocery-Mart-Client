@@ -6,7 +6,7 @@ import { useField } from "formik";
 import IconButton from "./IconButton";
 
 type QuantityInputProps = {
-  name: string; // Tên của trường trong Formik
+  name: string;
   min?: number;
   max?: number;
   step?: number;

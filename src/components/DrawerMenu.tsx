@@ -11,7 +11,6 @@ interface DrawerMenuProps {
   height?: string;
   renderContent: () => ReactNode;
   renderTitle?: (() => ReactNode) | null;
-
   animationDuration?: number;
   disableScroll?: boolean;
   autoCloseTimeout?: number | null;
