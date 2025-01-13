@@ -7,11 +7,27 @@ import Dialog from "@/components/Dialog";
 import DrawerMenu from "@/components/DrawerMenu";
 import LabelValue from "@/components/LabelValue";
 import GoToTop from "@/components/GoToTop";
+import { useQueryState } from "@/hooks/useQueryState";
+
 export default function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
-  const [selectedTab, setSelectedTab] = useState("dialog");
 
+  const {
+    page: productPage,
+    tab: productTab,
+    keyword,
+    filters,
+    orderBy,
+    order,
+    setPage,
+    setTab,
+    setKeyword,
+  } = useQueryState({
+    page: 2,
+  });
+
+  // Dữ liệu tab
   const tabList = [
     { label: "Dialog", value: "dialog" },
     { label: "Drawer", value: "drawer" },
@@ -19,11 +35,15 @@ export default function Test() {
   ];
 
   const handleTabChange = (value?: string) => {
-    setSelectedTab(value || "dialog");
+    setTab(value || "dialog");
   };
 
+  console.log("filters", filters);
+  console.log("order", order);
+  console.log("orderBy", orderBy);
+
   const renderTabContent = () => {
-    switch (selectedTab) {
+    switch (productTab) {
       case "dialog":
         return (
           <>
@@ -42,13 +62,7 @@ export default function Test() {
       case "drawer":
         return (
           <>
-            <button
-              onClick={() => {
-                setIsOpenDrawer(true);
-              }}
-            >
-              Open Drawer
-            </button>
+            <button onClick={() => setIsOpenDrawer(true)}>Open Drawer</button>
             <DrawerMenu
               isOpen={isOpenDrawer}
               renderContent={() => <div>Drawer Menu Content</div>}
@@ -71,9 +85,18 @@ export default function Test() {
     <main>
       <Header />
       <div className="container">
+        <div className="filters">
+          <input
+            type="text"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="Search..."
+          />
+        </div>
+
         <Tabs
           list={tabList}
-          value={selectedTab}
+          value={productTab}
           onChange={handleTabChange}
           className="mb-6"
           tabClassName="text-lg"
@@ -81,6 +104,18 @@ export default function Test() {
         >
           {renderTabContent()}
         </Tabs>
+
+        <div className="pagination">
+          <button
+            onClick={() => setPage(productPage - 1)}
+            disabled={productPage <= 1}
+          >
+            Previous
+          </button>
+          <span>{productPage}</span>
+          <button onClick={() => setPage(productPage + 1)}>Next</button>
+        </div>
+
         <GoToTop />
       </div>
     </main>
