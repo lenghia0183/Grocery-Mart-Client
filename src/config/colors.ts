@@ -25,13 +25,13 @@ const colors: Colors = {
   },
 
   dark: {
-    DEFAULT: "#292e39", // Màu tối nhất
-    100: "#171c28", // Màu tối
-    200: "#171c28", // Màu tối
-    300: "#292e39", // Màu tối
-    400: "#171c28", // Màu tối
-    500: "#171c28", // Màu tối nhất
-    hover: "#292e39", // Hover color
+    DEFAULT: "#292e39",
+    100: "#171c28",
+    200: "#171c28",
+    300: "#292e39",
+    400: "#171c28",
+    500: "#171c28",
+    hover: "#292e39",
   },
 
   white: {

@@ -39,18 +39,18 @@ const Pagination: FC<PaginationProps> = ({
   labelClassName,
   width,
   previousComponent: PreviousComponent = () => (
-    <Icon name="previousPage" size={1} strokeWidth={40} />
+    <Icon name="previousPage" color="inherit" size={1} strokeWidth={40} />
   ),
   nextComponent: NextComponent = () => (
-    <Icon name="nextPage" size={1} strokeWidth={40} />
+    <Icon name="nextPage" color="inherit" size={1} strokeWidth={40} />
   ),
   firstLabel = "First",
   lastLabel = "Last",
   firstComponent: FirstComponent = () => (
-    <Icon name="firstPage" size={1} strokeWidth={40} />
+    <Icon name="firstPage" color="inherit" size={1} strokeWidth={40} />
   ),
   lastComponent: LastComponent = () => (
-    <Icon name="lastPage" size={1} strokeWidth={40} />
+    <Icon name="lastPage" color="inherit" size={1} strokeWidth={40} />
   ),
 }) => {
   const [ulWidth, setUlWidth] = useState<string>("auto");
@@ -129,9 +129,9 @@ const Pagination: FC<PaginationProps> = ({
             style={{ width: buttonWidth, height: buttonHeight }}
             ref={i === activePage ? buttonRef : null}
             className={clsx(
-              "flex items-center justify-center flex-shrink-0 text-emerald font-semibold border cursor-pointer rounded-md border-emerald-50 hover:bg-emerald hover:text-white transition duration-300",
+              "flex items-center justify-center flex-shrink-0 rounded-full text-gray-500 font-semibold border cursor-pointer border-gray-500 hover:text-blue hover:border-blue transition duration-300",
               buttonClassName,
-              { "bg-emerald text-white": isActive }
+              { "bg-blue text-white hover:text-white !border-blue": isActive }
             )}
             onClick={() => handlePageClick(i)}
           >
@@ -147,7 +147,7 @@ const Pagination: FC<PaginationProps> = ({
             key={`break-${i}`}
             style={{ width: buttonWidth, height: buttonHeight }}
             className={clsx(
-              "flex items-center justify-center text-emerald font-semibold",
+              "flex items-center justify-center text-gray-500 font-semibold rounded-full ",
               buttonClassName
             )}
           >
@@ -172,10 +172,10 @@ const Pagination: FC<PaginationProps> = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-full border border-gray-500 text-gray-500 transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-default": currentForcePage === 1 },
-          { " hover:bg-emerald hover:text-white": currentForcePage !== 1 }
+          { "opacity-40 pointer-events-none": currentForcePage === 1 },
+          { "hover:border-blue hover:text-blue": currentForcePage !== 1 }
         )}
         onClick={handleFirstClick}
       >
@@ -189,10 +189,12 @@ const Pagination: FC<PaginationProps> = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-full border border-gray-500 text-gray-500 transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-default": currentForcePage === 1 },
-          { " hover:bg-emerald hover:text-white": currentForcePage !== 1 }
+          {
+            "opacity-40 pointer-events-none": currentForcePage === 1,
+          },
+          { " hover:border-blue hover:text-blue": currentForcePage !== 1 }
         )}
         onClick={handlePreviousClick}
       >
@@ -208,11 +210,11 @@ const Pagination: FC<PaginationProps> = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-full border border-gray-500 text-gray-500 transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-default": currentForcePage === pageCount },
+          { "opacity-40 pointer-events-none": currentForcePage === pageCount },
           {
-            " hover:bg-emerald hover:text-white":
+            " hover:border-blue hover:text-blue":
               currentForcePage !== pageCount,
           }
         )}
@@ -228,11 +230,11 @@ const Pagination: FC<PaginationProps> = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-full border border-gray-500 text-gray-500 transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-default": currentForcePage === pageCount },
+          { "opacity-40 pointer-events-none": currentForcePage === pageCount },
           {
-            " hover:bg-emerald hover:text-white":
+            " hover:border-blue hover:text-blue":
               currentForcePage !== pageCount,
           }
         )}
