@@ -1,1 +1,1 @@
-export * from "./createTailwindClass";
+export * from './createTailwindClass';

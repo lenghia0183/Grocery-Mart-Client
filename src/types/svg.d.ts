@@ -1,8 +1,8 @@
-declare module "*.svg" {
-  import React from "react";
+declare module '*.svg' {
+    import React from 'react';
 
-  const src: string;
-  export default src;
+    const src: string;
+    export default src;
 
-  export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
+    export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
 }

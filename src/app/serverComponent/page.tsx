@@ -1,13 +1,13 @@
 const ServerComponent = async ({
-  searchParams,
+    searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<JSX.Element> => {
-  const filters = await searchParams;
-  console.log("filters", filters);
-  console.log("ParseUrl");
+    const filters = await searchParams;
+    console.log('filters', filters);
+    console.log('ParseUrl');
 
-  return <div>haha</div>;
+    return <div>haha</div>;
 };
 
 export default ServerComponent;
