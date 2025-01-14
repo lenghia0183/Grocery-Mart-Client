@@ -5,43 +5,43 @@ import ImageNext, { ImageProps, StaticImageData } from 'next/image';
 import images from '@/asset/images';
 
 interface ImagePropsExtended extends ImageProps {
-    fallback?: StaticImageData;
+  fallback?: StaticImageData;
 }
 
 const Image = ({
-    src,
-    alt = 'Image',
-    className,
-    fallback = images.fallBack,
-    loading = 'lazy',
-    style,
-    onLoad,
-    onError,
-    ...props
+  src,
+  alt = 'Image',
+  className,
+  fallback = images.fallBack,
+  loading = 'lazy',
+  style,
+  onLoad,
+  onError,
+  ...props
 }: ImagePropsExtended) => {
-    const [imgSrc, setImgSrc] = useState(src || fallback);
+  const [imgSrc, setImgSrc] = useState(src || fallback);
 
-    const handleError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-        setImgSrc(fallback);
-        if (onError) {
-            onError(event);
-        }
-    };
+  const handleError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    setImgSrc(fallback);
+    if (onError) {
+      onError(event);
+    }
+  };
 
-    const validSrc = imgSrc || fallback;
+  const validSrc = imgSrc || fallback;
 
-    return (
-        <ImageNext
-            src={validSrc}
-            alt={alt}
-            className={className}
-            loading={loading}
-            style={style}
-            onLoad={onLoad}
-            onError={handleError}
-            {...props}
-        />
-    );
+  return (
+    <ImageNext
+      src={validSrc}
+      alt={alt}
+      className={className}
+      loading={loading}
+      style={style}
+      onLoad={onLoad}
+      onError={handleError}
+      {...props}
+    />
+  );
 };
 
 Image.displayName = 'Image';

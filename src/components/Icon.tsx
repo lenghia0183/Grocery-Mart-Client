@@ -19,67 +19,67 @@ import LastPage from '../asset/icons/lastPage.svg';
 import { createTailwindClass } from '@/utils';
 
 type IconProps = {
-    name: string;
-    size?: number;
-    width?: number | string;
-    height?: number | string;
-    className?: string;
-    color?: string;
-    hoverColor?: string;
-    strokeWidth?: number;
+  name: string;
+  size?: number;
+  width?: number | string;
+  height?: number | string;
+  className?: string;
+  color?: string;
+  hoverColor?: string;
+  strokeWidth?: number;
 };
 
 export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-    gift: Gift,
-    search: Search,
-    heart: Heart,
-    cart: Cart,
-    password: Password,
-    email: Email,
-    arrowDown: ArrowDown,
-    close: Close,
-    upload: Upload,
-    plus: Plus,
-    minus: Minus,
-    previousPage: PreviousPage,
-    nextPage: NextPage,
-    firstPage: FirstPage,
-    lastPage: LastPage,
+  gift: Gift,
+  search: Search,
+  heart: Heart,
+  cart: Cart,
+  password: Password,
+  email: Email,
+  arrowDown: ArrowDown,
+  close: Close,
+  upload: Upload,
+  plus: Plus,
+  minus: Minus,
+  previousPage: PreviousPage,
+  nextPage: NextPage,
+  firstPage: FirstPage,
+  lastPage: LastPage,
 };
 
 const Icon: React.FC<IconProps> = ({
-    name,
-    size = 1.5,
-    width,
-    height,
-    className = '',
-    color = 'gray-500',
-    hoverColor = '',
-    strokeWidth,
-    ...props
+  name,
+  size = 1.5,
+  width,
+  height,
+  className = '',
+  color = 'gray-500',
+  hoverColor = '',
+  strokeWidth,
+  ...props
 }) => {
-    const IconComponent = icons[name];
-    if (!IconComponent) {
-        return null;
-    }
+  const IconComponent = icons[name];
+  if (!IconComponent) {
+    return null;
+  }
 
-    const iconProps = {
-        ...(width && { width }),
-        ...(height && { height }),
-        ...(!width && !height && size && { width: `${size}em`, height: `${size}em` }),
-        strokeWidth,
-    };
+  const iconProps = {
+    ...(width && { width }),
+    ...(height && { height }),
+    ...(!width && !height && size && { width: `${size}em`, height: `${size}em` }),
+    strokeWidth,
+  };
 
-    const colorsClass = createTailwindClass(['text', 'hover:text'], [color, hoverColor]);
+  const colorsClass = createTailwindClass(['text', 'hover:text'], [color, hoverColor]);
 
-    return (
-        <span
-            className={clsx('inline-flex items-center justify-center transition duration-300', colorsClass, className)}
-            {...props}
-        >
-            <IconComponent {...iconProps} />
-        </span>
-    );
+  return (
+    <span
+      className={clsx('inline-flex items-center justify-center transition duration-300', colorsClass, className)}
+      {...props}
+    >
+      <IconComponent {...iconProps} />
+    </span>
+  );
 };
 
 Icon.displayName = 'Icon';
