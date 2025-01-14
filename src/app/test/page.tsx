@@ -8,6 +8,7 @@ import DrawerMenu from "@/components/DrawerMenu";
 import LabelValue from "@/components/LabelValue";
 import GoToTop from "@/components/GoToTop";
 import { useQueryState } from "@/hooks/useQueryState";
+import Pagination from "@/components/Pagination";
 
 export default function Test() {
   const [isOpen, setIsOpen] = useState(false);
@@ -115,6 +116,8 @@ export default function Test() {
           <span>{productPage}</span>
           <button onClick={() => setPage(productPage + 1)}>Next</button>
         </div>
+
+        <Pagination pageCount={10} />
 
         <GoToTop />
       </div>

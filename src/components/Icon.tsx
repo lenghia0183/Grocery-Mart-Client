@@ -11,6 +11,10 @@ import Close from "../asset/icons/close.svg";
 import Upload from "../asset/icons/upload.svg";
 import Plus from "../asset/icons/plus.svg";
 import Minus from "../asset/icons/minus.svg";
+import PreviousPage from "../asset/icons/previousPage.svg";
+import NextPage from "../asset/icons/nextPage.svg";
+import FirstPage from "../asset/icons/firstPage.svg";
+import LastPage from "../asset/icons/lastPage.svg";
 
 import { createTailwindClass } from "@/utils";
 
@@ -40,6 +44,10 @@ export const icons: Record<
   upload: Upload,
   plus: Plus,
   minus: Minus,
+  previousPage: PreviousPage,
+  nextPage: NextPage,
+  firstPage: FirstPage,
+  lastPage: LastPage,
 };
 
 const Icon: React.FC<IconProps> = ({
