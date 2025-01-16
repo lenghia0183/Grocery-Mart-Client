@@ -8,7 +8,7 @@ interface UseQueryStateOptions {
   prefix?: string;
 }
 
-interface QueryState {
+export interface QueryState {
   page: number;
   pageSize?: number;
   orderBy: string;
