@@ -9,6 +9,7 @@ import LabelValue from '@/components/LabelValue';
 import GoToTop from '@/components/GoToTop';
 import { useQueryState } from '@/hooks/useQueryState';
 import Pagination from '@/components/Pagination';
+import Accordion from '@/components/Accordion';
 
 export default function Test() {
   const [isOpen, setIsOpen] = useState(false);
@@ -108,6 +109,33 @@ export default function Test() {
         </div>
 
         <Pagination pageCount={10} />
+
+        <Accordion>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe laboriosam, molestias blanditiis quia id
+          commodi dolor in temporibus laborum veritatis voluptatibus suscipit alias placeat? Ut incidunt illum aliquid
+          perferendis atque! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione fugit sint voluptatem
+          aspernatur exercitationem! Autem sapiente, pariatur totam magnam numquam laboriosam, cumque unde quod earum
+          aut quasi nisi praesentium! Inventore rem veniam modi quos molestiae placeat soluta in incidunt impedit at
+          similique quidem unde reiciendis nulla explicabo, molestias ducimus? Esse harum, aliquam natus asperiores
+          voluptatem dolor laborum quam ipsum, dolore culpa impedit quidem ad iusto, sed cupiditate veritatis
+          exercitationem iste fuga necessitatibus quaerat! Quo porro enim, accusamus iure impedit eum corrupti sit sed
+          repudiandae sequi nulla similique delectus reprehenderit quibusdam ullam natus architecto tempora id cum atque
+          officiis quisquam fugit doloremque. Libero laudantium dolores tempora suscipit, odio itaque quos blanditiis
+          consequatur a soluta adipisci, veniam quaerat voluptates necessitatibus in quasi eligendi vel fuga, velit
+          omnis nostrum sed repellat! Iusto similique ullam labore non ipsam in maxime vitae necessitatibus sit impedit.
+          Amet quia quos quidem aut tempore eveniet animi est blanditiis corporis, illo ut nam velit fugit accusantium
+          expedita cumque assumenda sed. Commodi dolor minima odio libero et tenetur nisi, asperiores numquam
+          repellendus debitis id consequuntur labore corrupti ad soluta maxime necessitatibus velit sequi? Voluptas,
+          voluptatum asperiores! Dolor ab voluptate cupiditate, cum harum autem? Ipsa, aperiam a eveniet totam quibusdam
+          doloribus voluptatum quas inventore nulla fugiat enim exercitationem earum aut odio minus cupiditate in facere
+          dignissimos eos placeat soluta. Illum id atque commodi laboriosam alias vitae, pariatur rem animi praesentium
+          veniam modi explicabo minus tempore blanditiis nihil vero labore excepturi, quibusdam maiores numquam eos.
+          Doloremque velit id voluptas ullam earum molestias atque quia esse aut eligendi quo voluptatem facilis sed
+          sapiente fugiat, inventore magni ex a tempore nisi! Quae accusamus similique saepe hic ipsum tempora
+          accusantium beatae, numquam nemo recusandae temporibus nobis voluptate mollitia laudantium voluptates maxime
+          culpa laboriosam sunt assumenda doloremque tenetur molestias! Quisquam repudiandae dicta exercitationem,
+          tempore animi et.
+        </Accordion>
 
         <GoToTop />
       </div>

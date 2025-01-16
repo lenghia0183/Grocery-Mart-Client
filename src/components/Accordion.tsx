@@ -24,8 +24,6 @@ const Accordion: React.FC<AccordionProps> = ({
   const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
-  const newMaxHeightStyle = maxHeight;
-  const newMinHeightStyle = minHeight;
   const newMinHeightStyleValue = parseFloat(minHeight);
 
   useEffect(() => {
@@ -38,7 +36,6 @@ const Accordion: React.FC<AccordionProps> = ({
     setIsOpen(!isOpen);
   };
 
-  // Điều kiện để hiển thị nút Xem thêm / Thu gọn
   const showToggleButton = contentHeight > newMinHeightStyleValue;
 
   return (
@@ -47,13 +44,12 @@ const Accordion: React.FC<AccordionProps> = ({
         ref={contentRef}
         className="transition-max-height duration-300 ease-in-out overflow-hidden"
         style={{
-          maxHeight: isOpen ? newMaxHeightStyle || `${contentHeight}px` : newMinHeightStyle,
+          maxHeight: isOpen ? maxHeight || `${contentHeight}px` : minHeight,
         }}
       >
         {children}
       </div>
 
-      {/* Hiển thị nút Xem thêm / Thu gọn chỉ khi contentHeight lớn hơn minHeight */}
       {showToggleButton && (
         <Button
           onClick={toggleAccordion}
@@ -63,6 +59,7 @@ const Accordion: React.FC<AccordionProps> = ({
           startIcon={
             <Icon
               name="arrowDown"
+              color="blue-500"
               size={1}
               className={clsx(
                 'transition-transform ease-in-out duration-500',
