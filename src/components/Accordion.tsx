@@ -55,7 +55,8 @@ const Accordion: React.FC<AccordionProps> = ({
           onClick={toggleAccordion}
           variant="text"
           bgHoverColor="transparent"
-          className={clsx('mx-auto', buttonClassName)}
+          borderHoverColor="transparent"
+          className={clsx('mx-auto transition-all', buttonClassName)}
           startIcon={
             <Icon
               name="arrowDown"
