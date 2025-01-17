@@ -20,9 +20,8 @@ interface ThemeProviderProps {
 
 export default function ThemeProvider({ children, initialTheme }: ThemeProviderProps) {
   const savedTheme = getCookie('theme') as string | undefined;
-  console.log('saved theme: ', savedTheme);
   if (savedTheme === undefined) {
-    setCookie('theme', 'system', { path: '/', maxAge: 7 * 24 * 60 * 60 });
+    setCookie('theme', 'dark', { path: '/', maxAge: 7 * 24 * 60 * 60 });
   }
   const [theme, setThemeState] = useState<string>(savedTheme || initialTheme);
 
