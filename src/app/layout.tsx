@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import ThemeProvider from '@/context/ThemeProvider';
+import { cookies } from 'next/headers';
+import clsx from 'clsx';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,14 +31,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+
+  const theme = (await cookieStore).get('theme');
+
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
-      <body className="bg-white dark:bg-slate-950">{children}</body>
+    <html
+      lang="en"
+      className={clsx(inter.className, {
+        dark: theme?.value === 'dark',
+      })}
+      suppressHydrationWarning
+    >
+      <body className="bg-white dark:bg-slate-950">
+        <ThemeProvider initialTheme={theme?.value || 'dark'}>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

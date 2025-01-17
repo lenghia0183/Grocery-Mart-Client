@@ -10,6 +10,7 @@ import GoToTop from '@/components/GoToTop';
 import { useQueryState } from '@/hooks/useQueryState';
 import Pagination from '@/components/Pagination';
 import Accordion from '@/components/Accordion';
+import ToggleTheme from '@/components/ToggleTheme';
 
 export default function Test() {
   const [isOpen, setIsOpen] = useState(false);
@@ -136,6 +137,8 @@ export default function Test() {
           culpa laboriosam sunt assumenda doloremque tenetur molestias! Quisquam repudiandae dicta exercitationem,
           tempore animi et.
         </Accordion>
+
+        <ToggleTheme />
 
         <GoToTop />
       </div>
