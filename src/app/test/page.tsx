@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tabs from '@/components/Tabs';
 import Header from '@/components/Header';
 import Dialog from '@/components/Dialog';
@@ -11,6 +11,7 @@ import { useQueryState } from '@/hooks/useQueryState';
 import Pagination from '@/components/Pagination';
 import Accordion from '@/components/Accordion';
 import ToggleTheme from '@/components/ToggleTheme';
+import { api } from '@/services/api/axios';
 
 export default function Test() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +45,17 @@ export default function Test() {
   console.log('filters', filters);
   console.log('order', order);
   console.log('orderBy', orderBy);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const login = await api.post('auth/login', { email: 'yeusangtao96@gmail.com', password: 'Fengtimo@1219' });
+      const response = await api.get('auth/me');
+      console.log('login', login);
+      console.log('response', response);
+    };
+
+    fetchData();
+  }, [productPage]);
 
   const renderTabContent = () => {
     switch (productTab) {

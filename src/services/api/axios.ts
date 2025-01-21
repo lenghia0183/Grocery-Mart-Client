@@ -3,12 +3,12 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosError, AxiosResp
 import { getCookie, setCookie } from 'cookies-next';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/localStorage';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL + '/api/';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 const BASE_URL_GHN = process.env.NEXT_PUBLIC_BASE_URL_GHN || '';
 const TOKEN_GHN = process.env.NEXT_PUBLIC_GHN_API_KEY || '';
 const SHOP_ID_GHN = process.env.NEXT_PUBLIC_GHN_SHOP_ID || '';
 
-const REFRESH_TOKEN_URL = 'v1/auth/refresh-token';
+const REFRESH_TOKEN_URL = 'auth/refresh-tokens';
 const HEADERS_MULTIPLE_PART = {
   'Content-Type': 'multipart/form-data; boundary=something',
 };
@@ -28,9 +28,9 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
     (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
       let token: string | undefined;
       if (typeof window === 'undefined') {
-        token = getCookie('token') as string | undefined;
+        token = getCookie('accessToken') as string | undefined;
       } else {
-        token = getLocalStorageItem('token') || (getCookie('token') as string | undefined);
+        token = getLocalStorageItem('accessToken') || (getCookie('accessToken') as string | undefined);
       }
 
       if (config.url !== REFRESH_TOKEN_URL && token) {
@@ -53,7 +53,9 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
     },
     async (error: AxiosError) => {
       const { response } = error;
+
       const originalRequest = error.config as InternalAxiosRequestConfig & { _isRefreshBefore?: boolean };
+      console.log(!originalRequest._isRefreshBefore);
       if (
         response?.status === 401 &&
         !originalRequest._isRefreshBefore &&
@@ -66,8 +68,8 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
           const newAccessToken = refresh?.data?.accessToken;
 
           if (newAccessToken) {
-            setLocalStorageItem('token', newAccessToken);
-            setCookie('token', newAccessToken);
+            setLocalStorageItem('accessToken', newAccessToken);
+            setCookie('accessToken', newAccessToken);
             setCookie('refreshToken', newAccessToken);
 
             originalRequest.headers = AxiosHeaders.from(originalRequest.headers || {});
@@ -89,7 +91,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
 export const createApi = (instance: AxiosInstance) => ({
   instance,
 
-  post: async (endpoint: string, params: unknown) => {
+  post: async (endpoint: string, params: Record<string, unknown>) => {
     try {
       return await instance.post(endpoint, params);
     } catch (err: AxiosError | unknown) {
@@ -97,7 +99,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  postMultiplePart: async (endpoint: string, params: unknown) => {
+  postMultiplePart: async (endpoint: string, params: Record<string, unknown>) => {
     try {
       return await instance.post(endpoint, params, {
         headers: HEADERS_MULTIPLE_PART,
@@ -115,7 +117,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  put: async (endpoint: string, params: unknown) => {
+  put: async (endpoint: string, params: Record<string, unknown>) => {
     try {
       return await instance.put(endpoint, params);
     } catch (err: AxiosError | unknown) {
@@ -123,7 +125,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  patch: async (endpoint: string, params: unknown) => {
+  patch: async (endpoint: string, params: Record<string, unknown>) => {
     try {
       return await instance.patch(endpoint, params);
     } catch (err: AxiosError | unknown) {
@@ -131,7 +133,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  delete: async (endpoint: string, params: unknown) => {
+  delete: async (endpoint: string, params: Record<string, unknown>) => {
     try {
       return await instance.delete(endpoint, { data: params });
     } catch (err: AxiosError | unknown) {
@@ -141,7 +143,7 @@ export const createApi = (instance: AxiosInstance) => ({
 });
 
 export const refreshAccessToken = async () => {
-  const refreshToken = getCookie('refreshToken') as string | undefined;
+  const refreshToken = (getCookie('refreshToken') as string | undefined) || getLocalStorageItem('refreshToken');
   return api.instance.post(REFRESH_TOKEN_URL, {
     refreshToken,
   });
