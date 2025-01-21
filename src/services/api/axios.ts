@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosError, AxiosResponse, AxiosHeaders } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/localStorage';
 
@@ -25,7 +25,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
   });
 
   instance.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
+    (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
       let token: string | undefined;
       if (typeof window === 'undefined') {
         token = getCookie('token') as string | undefined;
@@ -52,10 +52,11 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
       return Promise.reject(response);
     },
     async (error: AxiosError) => {
-      const { response, config: originalRequest } = error;
+      const { response } = error;
+      const originalRequest = error.config as InternalAxiosRequestConfig & { _isRefreshBefore?: boolean };
       if (
         response?.status === 401 &&
-        !originalRequest?._isRefreshBefore &&
+        !originalRequest._isRefreshBefore &&
         originalRequest?.url !== REFRESH_TOKEN_URL &&
         getLocalStorageItem('refreshToken')
       ) {
@@ -69,10 +70,8 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
             setCookie('token', newAccessToken);
             setCookie('refreshToken', newAccessToken);
 
-            originalRequest.headers = {
-              ...originalRequest.headers,
-              Authorization: `Bearer ${newAccessToken}`,
-            };
+            originalRequest.headers = AxiosHeaders.from(originalRequest.headers || {});
+            originalRequest.headers.set('Authorization', `Bearer ${newAccessToken}`);
             return instance(originalRequest);
           }
         } catch (refreshError) {
@@ -108,7 +107,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  get: async (endpoint: string, params: Record<string, unknown> = {}, options: InternalAxiosRequestConfig = {}) => {
+  get: async (endpoint: string, params: Record<string, unknown> = {}, options: Record<string, string> = {}) => {
     try {
       return await instance.get(endpoint, { ...options, params });
     } catch (err: AxiosError | unknown) {
