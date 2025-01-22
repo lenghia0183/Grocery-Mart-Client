@@ -7,11 +7,19 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 const BASE_URL_GHN = process.env.NEXT_PUBLIC_BASE_URL_GHN || '';
 const TOKEN_GHN = process.env.NEXT_PUBLIC_GHN_API_KEY || '';
 const SHOP_ID_GHN = process.env.NEXT_PUBLIC_GHN_SHOP_ID || '';
+const isDevelopment = process.env.NEXT_PUBLIC_ENV === 'development';
 
 const REFRESH_TOKEN_URL = 'auth/refresh-tokens';
 const HEADERS_MULTIPLE_PART = {
   'Content-Type': 'multipart/form-data; boundary=something',
 };
+
+interface ApiResponse<T> {
+  code: number;
+  data?: T;
+  errorDetails?: AxiosError;
+  message: string;
+}
 
 export const createInstance = (baseURL: string, customHeaders: Record<string, string> = {}): AxiosInstance => {
   const instance = axios.create({
@@ -55,7 +63,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
       const { response } = error;
 
       const originalRequest = error.config as InternalAxiosRequestConfig & { _isRefreshBefore?: boolean };
-      console.log(!originalRequest._isRefreshBefore);
+
       if (
         response?.status === 401 &&
         !originalRequest._isRefreshBefore &&
@@ -88,56 +96,72 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
   return instance;
 };
 
+const handleAxiosError = <T>(err: unknown): ApiResponse<T> => {
+  if (axios.isAxiosError(err)) {
+    const errorResponse: ApiResponse<T> = {
+      code: err.response?.data?.code || err.response?.status || 500,
+      message: err.response?.data?.message || err.message,
+      ...(isDevelopment ? { errorDetails: err } : {}),
+    };
+    return errorResponse;
+  }
+  throw err;
+};
+
 export const createApi = (instance: AxiosInstance) => ({
   instance,
 
-  post: async (endpoint: string, params: Record<string, unknown>) => {
+  post: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T>> => {
     try {
       return await instance.post(endpoint, params);
-    } catch (err: AxiosError | unknown) {
-      return (err as AxiosError)?.response?.data || err;
+    } catch (err: unknown) {
+      return handleAxiosError(err);
     }
   },
 
-  postMultiplePart: async (endpoint: string, params: Record<string, unknown>) => {
+  postMultiplePart: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T>> => {
     try {
       return await instance.post(endpoint, params, {
         headers: HEADERS_MULTIPLE_PART,
       });
-    } catch (err: AxiosError | unknown) {
-      return (err as AxiosError)?.response?.data || err;
+    } catch (err: unknown) {
+      return handleAxiosError(err);
     }
   },
 
-  get: async (endpoint: string, params: Record<string, unknown> = {}, options: Record<string, string> = {}) => {
+  get: async <T>(
+    endpoint: string,
+    params: Record<string, unknown> = {},
+    options: Record<string, string> = {},
+  ): Promise<ApiResponse<T>> => {
     try {
       return await instance.get(endpoint, { ...options, params });
-    } catch (err: AxiosError | unknown) {
-      return (err as AxiosError)?.response?.data || err;
+    } catch (err: unknown) {
+      return handleAxiosError(err);
     }
   },
 
-  put: async (endpoint: string, params: Record<string, unknown>) => {
+  put: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T> | AxiosError> => {
     try {
       return await instance.put(endpoint, params);
-    } catch (err: AxiosError | unknown) {
-      return (err as AxiosError)?.response?.data || err;
+    } catch (err: unknown) {
+      return handleAxiosError(err);
     }
   },
 
-  patch: async (endpoint: string, params: Record<string, unknown>) => {
+  patch: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T> | AxiosError> => {
     try {
       return await instance.patch(endpoint, params);
-    } catch (err: AxiosError | unknown) {
-      return (err as AxiosError)?.response?.data || err;
+    } catch (err: unknown) {
+      return handleAxiosError(err);
     }
   },
 
-  delete: async (endpoint: string, params: Record<string, unknown>) => {
+  delete: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T> | AxiosError> => {
     try {
       return await instance.delete(endpoint, { data: params });
-    } catch (err: AxiosError | unknown) {
-      return (err as AxiosError)?.response?.data || err;
+    } catch (err: unknown) {
+      return handleAxiosError(err);
     }
   },
 });

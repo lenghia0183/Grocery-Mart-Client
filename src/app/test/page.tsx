@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Tabs from '@/components/Tabs';
 import Header from '@/components/Header';
 import Dialog from '@/components/Dialog';
@@ -12,6 +12,15 @@ import Pagination from '@/components/Pagination';
 import Accordion from '@/components/Accordion';
 import ToggleTheme from '@/components/ToggleTheme';
 import { api } from '@/services/api/axios';
+import Button from '@/components/Button';
+
+interface LoginResponse {
+  token: string;
+  user: {
+    id: number;
+    name: string;
+  };
+}
 
 export default function Test() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,9 +30,7 @@ export default function Test() {
     page: productPage,
     tab: productTab,
     keyword,
-    filters,
-    orderBy,
-    order,
+
     setPage,
     setTab,
     setKeyword,
@@ -42,20 +49,12 @@ export default function Test() {
     setTab(value || 'dialog');
   };
 
-  console.log('filters', filters);
-  console.log('order', order);
-  console.log('orderBy', orderBy);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const login = await api.post('auth/login', { email: 'yeusangtao96@gmail.com', password: 'Fengtimo@1219' });
-      const response = await api.get('auth/me');
-      console.log('login', login);
-      console.log('response', response);
-    };
-
-    fetchData();
-  }, [productPage]);
+  const fetchData = async () => {
+    const login = await api.post('v1/auth/login', { email: 'yeusangtao96@gmail.com', password: 'Fengtimo@1219' });
+    const response = await api.get<LoginResponse>('v1/auth/me');
+    console.log('login', login);
+    console.log('response', response);
+  };
 
   const renderTabContent = () => {
     switch (productTab) {
@@ -112,6 +111,14 @@ export default function Test() {
         >
           {renderTabContent()}
         </Tabs>
+
+        <Button
+          onClick={() => {
+            fetchData();
+          }}
+        >
+          call api
+        </Button>
 
         <div className="pagination">
           <button onClick={() => setPage(productPage - 1)} disabled={productPage <= 1}>
