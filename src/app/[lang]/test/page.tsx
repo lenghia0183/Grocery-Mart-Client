@@ -30,7 +30,6 @@ export default function Test() {
     page: productPage,
     tab: productTab,
     keyword,
-
     setPage,
     setTab,
     setKeyword,
@@ -43,6 +42,7 @@ export default function Test() {
     { label: 'Dialog', value: 'dialog' },
     { label: 'Drawer', value: 'drawer' },
     { label: 'LabelValue', value: 'labelValue' },
+    { label: 'callApi', value: 'callApi' },
   ];
 
   const handleTabChange = (value?: string) => {
@@ -88,6 +88,17 @@ export default function Test() {
         );
       case 'labelValue':
         return <LabelValue label="Le cong nghia" value={<p>Le cong nghia</p>} />;
+      case 'callApi':
+        return (
+          <Button
+            onClick={() => {
+              fetchData();
+            }}
+          >
+            call api
+          </Button>
+        );
+
       default:
         return null;
     }
@@ -111,14 +122,6 @@ export default function Test() {
         >
           {renderTabContent()}
         </Tabs>
-
-        <Button
-          onClick={() => {
-            fetchData();
-          }}
-        >
-          call api
-        </Button>
 
         <div className="pagination">
           <button onClick={() => setPage(productPage - 1)} disabled={productPage <= 1}>
