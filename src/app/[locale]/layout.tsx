@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import '../globals.css';
 import ThemeProvider from '@/context/ThemeProvider';
 import { cookies } from 'next/headers';
 import clsx from 'clsx';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,24 +37,33 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
+  type Locale = 'vi' | 'en';
+  if (!routing.locales.includes(locale as Locale)) {
+    notFound();
+  }
   const cookieStore = cookies();
 
   const theme = (await cookieStore).get('theme');
-
+  const messages = await getMessages();
   return (
     <html
-      lang="en"
+      lang={locale}
       className={clsx(inter.className, {
         dark: theme?.value === 'dark',
       })}
       suppressHydrationWarning
     >
-      <body className="bg-white dark:bg-slate-950">
-        <ThemeProvider initialTheme={theme?.value || 'dark'}>{children}</ThemeProvider>
-      </body>
+      {' '}
+      <NextIntlClientProvider messages={messages}>
+        <body className="bg-white dark:bg-slate-950">
+          <ThemeProvider initialTheme={theme?.value || 'dark'}>{children}</ThemeProvider>
+        </body>
+      </NextIntlClientProvider>
     </html>
   );
 }

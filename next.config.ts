@@ -1,5 +1,7 @@
+import createNextIntlPlugin from 'next-intl/plugin';
 import type { NextConfig } from 'next';
 
+const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   webpack(config) {
     config.module.rules.push({
@@ -11,4 +13,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);
