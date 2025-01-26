@@ -1,6 +1,6 @@
 export const Locales = {
-  EN: 'en',
-  VI: 'vi',
+  EN: 'en-US',
+  VI: 'vi-VN',
 } as const;
 
 export const LocalesArray = Object.values(Locales);

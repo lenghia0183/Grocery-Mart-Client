@@ -5,9 +5,6 @@ import { Locale } from '@/config/locales';
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
 
-  console.log('requestLocale: ', locale);
-  console.log('routing', routing);
-
   if (!locale || !routing.locales.includes(locale as Locale)) {
     locale = routing.defaultLocale;
   }
