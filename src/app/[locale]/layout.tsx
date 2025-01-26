@@ -8,6 +8,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { Locale } from '@/config/locales';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -42,7 +43,6 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-  type Locale = 'vi' | 'en';
   if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
@@ -58,7 +58,6 @@ export default async function RootLayout({
       })}
       suppressHydrationWarning
     >
-      {' '}
       <NextIntlClientProvider messages={messages}>
         <body className="bg-white dark:bg-slate-950">
           <ThemeProvider initialTheme={theme?.value || 'dark'}>{children}</ThemeProvider>

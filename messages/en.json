@@ -1,5 +1,5 @@
 {
-  "TestPage": {
-    "title": "Hello world!"
+  "testPage": {
+    "openDialog": "open dialog"
   }
 }

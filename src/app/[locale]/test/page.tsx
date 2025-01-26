@@ -13,6 +13,7 @@ import Accordion from '@/components/Accordion';
 import ToggleTheme from '@/components/ToggleTheme';
 import { api } from '@/services/api/axios';
 import Button from '@/components/Button';
+import { useTranslations } from 'next-intl';
 
 interface LoginResponse {
   token: string;
@@ -25,6 +26,8 @@ interface LoginResponse {
 export default function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
+
+  const t = useTranslations();
 
   const {
     page: productPage,
@@ -61,7 +64,7 @@ export default function Test() {
       case 'dialog':
         return (
           <>
-            <button onClick={() => setIsOpen(true)}>Open Dialog</button>
+            <button onClick={() => setIsOpen(true)}>{t('testPage.openDialog')}</button>
             <Dialog
               isOpen={isOpen}
               onCancel={() => setIsOpen(false)}
