@@ -60,8 +60,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   const bgColorClass = createTailwindClass('bg', bgColor);
   const bgHoverColorClass = createTailwindClass('hover:bg', bgHoverColor);
 
-  const baseClasses =
-    'shadow-button-light outline-none rounded-md transition duration-200 flex items-center justify-center';
+  const baseClasses = ' outline-none rounded-md transition duration-200 flex items-center justify-center';
 
   const sizeClasses = {
     small: 'px-2 py-2',
@@ -93,7 +92,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     variantClasses[variant],
     {
       'opacity-50 cursor-not-allowed': disabled || loading,
-      'rounded-full': rounded,
+      '!rounded-full': rounded,
     },
     className,
   );

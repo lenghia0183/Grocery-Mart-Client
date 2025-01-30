@@ -29,6 +29,7 @@ const Header: React.FC = () => {
         <div className="flex gap-3">
           <IconButton
             iconName="search"
+            className="shadow-button-light"
             variant="contained"
             width="50px"
             height="50px"

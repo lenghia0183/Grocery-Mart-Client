@@ -20,6 +20,7 @@ const colors: Colors = {
 
   yellow: {
     DEFAULT: '#ffb700',
+    400: '#fcc63d',
     500: '#ffb700',
     hover: '#ffa700',
   },

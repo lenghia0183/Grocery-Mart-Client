@@ -14,6 +14,7 @@ import ToggleTheme from '@/components/ToggleTheme';
 import { api } from '@/services/api/axios';
 import Button from '@/components/Button';
 import { useTranslations } from 'next-intl';
+import Banner from '@/components/Banner';
 
 interface LoginResponse {
   token: string;
@@ -110,6 +111,7 @@ export default function Test() {
   return (
     <main>
       <Header />
+      <Banner />
       <div className="container">
         <div className="filters">
           <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="Search..." />

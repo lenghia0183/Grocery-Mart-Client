@@ -41,3 +41,8 @@ body {
 ::-webkit-scrollbar-vertical {
   width: 8px;
 }
+
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
