@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -15,6 +15,9 @@ interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = ({ className }) => {
+  const [currentSlide, setCurrentSlide] = useState(0); // State lưu vị trí slide hiện tại
+  const slider = useRef<Slider>(null);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -24,9 +27,22 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
     autoplay: true,
     autoplaySpeed: 7000,
     fade: true,
+    dotsClass: 'absolute left-1/2 -translate-x-1/2 bottom-5',
+    appendDots: (dots: React.ReactNode) => (
+      <div>
+        <ul className="flex space-x-5 justify-center"> {dots} </ul>
+      </div>
+    ),
+    customPaging: (i: number) => (
+      <button
+        className={clsx('w-[10px] h-[10px] rounded-full', i === currentSlide ? 'bg-white' : 'bg-gray-400')}
+        style={{
+          color: 'transparent',
+        }}
+      ></button>
+    ),
+    beforeChange: (_: number, next: number) => setCurrentSlide(next),
   };
-
-  const slider = useRef<Slider>(null);
 
   const banners = [
     {
@@ -45,7 +61,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
       <div className="relative">
         <IconButton
           type="button"
-          className="rotate-90 absolute top-1/2 -translate-y-1/2 -left-8 hidden sm:flex"
+          className="rotate-90 absolute top-1/2 -translate-y-1/2 -left-8 hidden sm:flex "
           iconName="arrowDown"
           iconStrokeWidth={500}
           variant="contained"
@@ -86,7 +102,9 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
               key={index}
               src={banner.image}
               alt={`Grocery Mart`}
-              className="w-full h-full aspect-[7/3] rounded-[25px]"
+              priority
+              loading="eager"
+              className="w-full h-full aspect-[6/2] rounded-[25px] object-cover"
             />
           ))}
         </Slider>

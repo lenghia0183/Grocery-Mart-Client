@@ -10,48 +10,67 @@ type Colors = {
 
 const colors: Colors = {
   blue: {
+    // Đã có trước
     DEFAULT: '#77dae6',
-    100: '#f7faff',
-    200: '#efeff7',
-    300: '#77dae6',
-    500: '#0a58ca',
-    hover: '#66b8e1',
+    100: '#f7faff', // Đã có trước
+    200: '#efeff7', // Đã có trước
+    300: '#cce5f0', // Màu mới
+    400: '#66b8e1', // Đã có trước
+    500: '#0a58ca', // Đã có trước
+    hover: '#66b8e1', // Đã có trước
   },
 
   yellow: {
+    // Đã có trước
     DEFAULT: '#ffb700',
-    400: '#fcc63d',
-    500: '#ffb700',
-    hover: '#ffa700',
+    100: '#fff8e1', // Màu mới
+    200: '#ffecb3', // Màu mới
+    300: '#ffe082', // Màu mới
+    400: '#fcc63d', // Đã có trước
+    500: '#ffb700', // Đã có trước
+    hover: '#ffa700', // Đã có trước
   },
 
   dark: {
+    // Đã có trước
     DEFAULT: '#292e39',
-    100: '#171c28',
-    200: '#171c28',
-    300: '#292e39',
-    400: '#171c28',
-    500: '#171c28',
-    hover: '#292e39',
+    100: '#e0e0e0', // Màu mới
+    200: '#bdbdbd', // Màu mới
+    300: '#808080', // Màu mới
+    400: '#4f4f4f', // Màu mới
+    500: '#292e39', // Đã có trước
+    hover: '#171c28', // Đã có trước
   },
 
   white: {
+    // Đã có trước
     DEFAULT: '#FFFFFF',
-    400: '#b9babe',
-    500: '#FFFFFF',
+    100: '#f9f9f9', // Màu mới
+    200: '#f0f0f0', // Màu mới
+    300: '#e0e0e0', // Màu mới
+    400: '#b9babe', // Đã có trước
+    500: '#FFFFFF', // Đã có trước
   },
 
   gray: {
+    // Đã có trước
     DEFAULT: '#d2d1d6',
-    400: '#d2d1d6',
-    500: '#9e9da8',
+    100: '#f9f9f9', // Màu mới
+    200: '#eeeeee', // Màu mới
+    300: '#d2d1d6', // Đã có trước
+    400: '#9e9da8', // Đã có trước
+    500: '#808080', // Màu mới
   },
 
   red: {
+    // Đã có trước
     DEFAULT: '#f44336',
-    500: '#f44336',
-    hover: '#d32f2f',
-    400: '#f44336',
+    100: '#ffebee', // Màu mới
+    200: '#ffcdd2', // Màu mới
+    300: '#ef9a9a', // Màu mới
+    400: '#f44336', // Đã có trước
+    500: '#d32f2f', // Đã có trước
+    hover: '#d32f2f', // Đã có trước
   },
 };
 
