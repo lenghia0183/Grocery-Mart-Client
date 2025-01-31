@@ -3,6 +3,8 @@
 import { api } from '@/services/api/axios';
 import Image from './Image';
 
+import { Pagination as PaginationType } from '@/types/ApiResponse';
+
 interface Category {
   _id: string;
   name: string;
@@ -10,13 +12,8 @@ interface Category {
   slug: string;
 }
 
-interface CategoryResponse {
+interface CategoryResponse extends PaginationType {
   categories: Category[];
-  currentPage: number;
-  currentResult: number;
-  limit: number;
-  totalPage: number;
-  totalResult: number;
 }
 
 const CategoryList = async (): Promise<JSX.Element> => {

@@ -2,6 +2,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosError, AxiosResponse, AxiosHeaders } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/localStorage';
+import { ApiResponse } from '@/types/ApiResponse';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 const BASE_URL_GHN = process.env.NEXT_PUBLIC_BASE_URL_GHN || '';
@@ -13,13 +14,6 @@ const REFRESH_TOKEN_URL = 'auth/refresh-tokens';
 const HEADERS_MULTIPLE_PART = {
   'Content-Type': 'multipart/form-data; boundary=something',
 };
-
-interface ApiResponse<T> {
-  code: number;
-  data?: T;
-  errorDetails?: AxiosError;
-  message: string;
-}
 
 export const createInstance = (baseURL: string, customHeaders: Record<string, string> = {}): AxiosInstance => {
   const instance = axios.create({
