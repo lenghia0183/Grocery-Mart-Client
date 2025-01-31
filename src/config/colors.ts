@@ -58,8 +58,8 @@ const colors: Colors = {
     100: '#f9f9f9', // Màu mới
     200: '#eeeeee', // Màu mới
     300: '#d2d1d6', // Đã có trước
-    400: '#9e9da8', // Đã có trước
-    500: '#808080', // Màu mới
+    400: '#dcd7d7', // Đã có trước
+    500: '#9e9da8', // Đã có trước
   },
 
   red: {

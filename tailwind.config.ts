@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import { breakpoints } from './src/config/breakpoints';
 import { shadows } from './src/config/shadows';
+
 import {
   colors,
   bgColorSafelist,
