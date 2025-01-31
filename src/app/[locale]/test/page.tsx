@@ -111,7 +111,7 @@ export default function Test() {
   return (
     <main>
       <Header />
-      <Banner />
+      <Banner className="mt-10" />
       <div className="container">
         <div className="filters">
           <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="Search..." />

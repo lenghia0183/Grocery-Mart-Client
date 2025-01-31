@@ -57,7 +57,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
   ];
 
   return (
-    <div className={clsx('container', { className })}>
+    <div className={clsx('container', className)}>
       <div className="relative">
         <IconButton
           type="button"
