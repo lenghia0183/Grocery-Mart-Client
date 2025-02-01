@@ -75,7 +75,14 @@ const Header: React.FC = () => {
               </p>
             </div>
           </div>
-          <ToolTip render={() => <AvatarMenu />} openOnClick clickable opacity={1}>
+          <ToolTip
+            render={() => <AvatarMenu />}
+            openOnClick
+            clickable
+            opacity={1}
+            className="!bg-white !p-0 !rounded-2xl shadow-avatar-menu-light"
+            // classNameArrow="shadow-avatar-menu-light"
+          >
             <div className="h-[50px] w-[50px] rounded-md bg-dark-100"></div>
           </ToolTip>
         </div>

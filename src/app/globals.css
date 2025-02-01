@@ -50,3 +50,7 @@ body {
 .react-tooltip {
   z-index: 9999999;
 }
+
+.react-tooltip-arrow {
+  z-index: -10;
+}
