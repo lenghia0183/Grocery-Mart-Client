@@ -43,9 +43,6 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
 
-  // if (!routing.locales.includes(locale as Locale)) {
-  //   notFound();
-  // }
   const cookieStore = cookies();
 
   const theme = (await cookieStore).get('theme');

@@ -1,21 +1,22 @@
-import { ComponentProps, ReactNode, useId } from 'react';
+import { ComponentProps, ReactNode, useId, isValidElement, cloneElement } from 'react';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 interface ToolTipProps extends Omit<ComponentProps<typeof ReactTooltip>, 'id' | 'children'> {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
-const ToolTip = ({ content, children, ...props }: ToolTipProps) => {
+const ToolTip = ({ children, render, ...props }: ToolTipProps) => {
   const tooltipId = useId();
 
-  return (
-    <div className="inline-block">
-      <span data-tooltip-id={tooltipId}>{children}</span>
+  const renderChildren = isValidElement(children)
+    ? cloneElement(children as React.ReactElement, { 'data-tooltip-id': tooltipId })
+    : children;
 
-      <ReactTooltip id={tooltipId} {...props}>
-        {content}
-      </ReactTooltip>
-    </div>
+  return (
+    <>
+      <>{renderChildren}</>
+      <ReactTooltip id={tooltipId} render={render} {...props} />
+    </>
   );
 };
 

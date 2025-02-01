@@ -1,7 +1,11 @@
+'use client';
+
 import React from 'react';
 import Logo from './Logo';
 import Button from './Button';
 import IconButton from './IconButton';
+import ToolTip from './ToolTip';
+import AvatarMenu from './AvatarMenu';
 
 const Header: React.FC = () => {
   return (
@@ -71,7 +75,9 @@ const Header: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className="h-[50px] w-[50px] rounded-md bg-dark-100"></div>
+          <ToolTip render={() => <AvatarMenu />} openOnClick clickable opacity={1}>
+            <div className="h-[50px] w-[50px] rounded-md bg-dark-100"></div>
+          </ToolTip>
         </div>
       </div>
     </header>

@@ -46,3 +46,7 @@ body {
 .slick-next {
   display: none !important;
 }
+
+.react-tooltip {
+  z-index: 9999999;
+}
