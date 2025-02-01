@@ -29,11 +29,15 @@ const menuItems: MenuItem[] = [
     icon: <Icon name="setting" color="inherit" size={1.7} />,
     subMenu: [
       {
-        label: 'Giao diện',
-
+        label: 'Chế độ sáng tối',
+        icon: <Icon name="darkMode" color="inherit" size={1.7} strokeWidth={111} />,
         subMenu: [
-          { label: 'Chế độ sáng', value: 'light' },
-          { label: 'Chế độ tối', value: 'dark' },
+          {
+            label: 'Chế độ sáng',
+            value: 'light',
+            icon: <Icon name="sun" color="inherit" strokeWidth={1.6} size={1.9} />,
+          },
+          { label: 'Chế độ tối', value: 'dark', icon: <Icon name="moon" color="inherit" strokeWidth={0.5} /> },
         ],
       },
       {
@@ -67,7 +71,7 @@ const AvatarMenu = () => {
   return (
     <ul className="max-w-[240px] rounded-2xl overflow-hidden text-dark font-semibold text-base pb-">
       <li className="p-5 flex gap-5 item-center">
-        <div className="h-[50px] w-[50px] rounded-md bg-dark-100"></div>
+        <div className="h-[50px] w-[50px] rounded-md bg-dark"></div>
         <div className="">
           <p>Lenghia0183</p>
           <p className="mt-1 text-sm font-normal text-gray-500 truncate w-[120px]" title="Lenghia0183@gmail.com">
@@ -77,8 +81,12 @@ const AvatarMenu = () => {
       </li>
 
       {menuStack.length > 1 && (
-        <li onClick={goBack} className="py-3 px-5 hover:bg-gray-400 cursor-pointer font-semibold">
-          ← Back
+        <li onClick={goBack} className=" hover:bg-gray-400 hover:text-blue-500 cursor-pointer font-semibold">
+          <div className=" py-2 px-5 flex items-center justify-between">
+            <Icon name="backArrow" color="inherit" size={1.5} />
+            Quay lại
+          </div>
+          <div className="h-[1px] my-1 mx-1 bg-gray-500"></div>
         </li>
       )}
       {currentMenu.subMenu?.map((item, index) => (
@@ -91,7 +99,6 @@ const AvatarMenu = () => {
               <div>{item.label}</div>
               {item.icon && item.icon}
             </div>
-            {/* {item.subMenu && <span className="text-gray-500">▶</span>} */}
           </div>
           {item.divide && <div className="h-[1px] my-1 mx-5 bg-gray-400"></div>}
         </li>

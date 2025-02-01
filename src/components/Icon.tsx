@@ -20,6 +20,9 @@ import DarkMode from '../asset/icons/darkMode.svg';
 import Language from '../asset/icons/language.svg';
 import Logout from '../asset/icons/logout.svg';
 import setting from '../asset/icons/setting.svg';
+import Sun from '../asset/icons/sun.svg';
+import Moon from '../asset/icons/moon.svg';
+import BackArrow from '../asset/icons/backArrow.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -55,6 +58,9 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   language: Language,
   logout: Logout,
   setting: setting,
+  sun: Sun,
+  moon: Moon,
+  backArrow: BackArrow,
 };
 
 const Icon: React.FC<IconProps> = ({

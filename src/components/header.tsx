@@ -83,7 +83,7 @@ const Header: React.FC = () => {
             className="!bg-white !p-0 !rounded-2xl shadow-avatar-menu-light"
             // classNameArrow="shadow-avatar-menu-light"
           >
-            <div className="h-[50px] w-[50px] rounded-md bg-dark-100"></div>
+            <div className="h-[50px] w-[50px] rounded-md bg-dark"></div>
           </ToolTip>
         </div>
       </div>
