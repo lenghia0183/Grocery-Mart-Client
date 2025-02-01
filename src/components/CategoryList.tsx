@@ -2,19 +2,7 @@
 
 import { api } from '@/services/api/axios';
 import Image from './Image';
-
-import { Pagination as PaginationType } from '@/types/ApiResponse';
-
-interface Category {
-  _id: string;
-  name: string;
-  image: string;
-  slug: string;
-}
-
-interface CategoryResponse extends PaginationType {
-  categories: Category[];
-}
+import { CategoryResponse } from '@/types/category';
 
 const CategoryList = async (): Promise<JSX.Element> => {
   const response = await api.get<CategoryResponse>('https://api.hauifood.com/v1/categories?limit=3&page=1');

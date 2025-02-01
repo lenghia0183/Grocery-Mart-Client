@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
 import clsx from 'clsx';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import 'react-tooltip/dist/react-tooltip.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
