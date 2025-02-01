@@ -13,20 +13,24 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   {
     label: 'Tài khoản',
-    icon: <Icon name="account" />,
+    icon: <Icon name="account" color="inherit" strokeWidth={1.75} />,
   },
   {
     label: 'Giỏ hàng',
+    icon: <Icon name="cart" color="inherit" strokeWidth={1.8} />,
   },
   {
     label: 'Yêu thích',
+    icon: <Icon name="heart" color="inherit" strokeWidth={1.8} />,
     divide: true,
   },
   {
     label: 'Cài đặt',
+    icon: <Icon name="setting" color="inherit" size={1.7} />,
     subMenu: [
       {
         label: 'Giao diện',
+
         subMenu: [
           { label: 'Chế độ sáng', value: 'light' },
           { label: 'Chế độ tối', value: 'dark' },
@@ -34,6 +38,7 @@ const menuItems: MenuItem[] = [
       },
       {
         label: 'Ngôn ngữ',
+        icon: <Icon name="language" color="inherit" />,
         subMenu: [
           { label: 'Tiếng Việt', value: 'vi' },
           { label: 'Tiếng Anh', value: 'en' },
@@ -44,6 +49,7 @@ const menuItems: MenuItem[] = [
   },
   {
     label: 'Đăng xuất',
+    icon: <Icon name="logout" color="inherit" size={1.3} strokeWidth={15} />,
   },
 ];
 
@@ -81,8 +87,11 @@ const AvatarMenu = () => {
             onClick={() => item.subMenu && setMenuStack((prev) => [...prev, item])}
             className={clsx('py-3 px-5 hover:bg-gray-400 cursor-pointer flex justify-between items-center')}
           >
-            {item.label}
-            {item.subMenu && <span className="text-gray-500">▶</span>}
+            <div className="flex items-center justify-between text-inherit w-full">
+              <div>{item.label}</div>
+              {item.icon && item.icon}
+            </div>
+            {/* {item.subMenu && <span className="text-gray-500">▶</span>} */}
           </div>
           {item.divide && <div className="h-[1px] my-1 mx-5 bg-gray-400"></div>}
         </li>

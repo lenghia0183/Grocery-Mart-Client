@@ -15,6 +15,11 @@ import PreviousPage from '../asset/icons/previousPage.svg';
 import NextPage from '../asset/icons/nextPage.svg';
 import FirstPage from '../asset/icons/firstPage.svg';
 import LastPage from '../asset/icons/lastPage.svg';
+import Account from '../asset/icons/account.svg';
+import DarkMode from '../asset/icons/darkMode.svg';
+import Language from '../asset/icons/language.svg';
+import Logout from '../asset/icons/logout.svg';
+import setting from '../asset/icons/setting.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -45,6 +50,11 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   nextPage: NextPage,
   firstPage: FirstPage,
   lastPage: LastPage,
+  account: Account,
+  darkMode: DarkMode,
+  language: Language,
+  logout: Logout,
+  setting: setting,
 };
 
 const Icon: React.FC<IconProps> = ({
