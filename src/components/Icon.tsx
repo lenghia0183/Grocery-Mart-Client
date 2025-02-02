@@ -25,8 +25,12 @@ import Moon from '../asset/icons/moon.svg';
 import BackArrow from '../asset/icons/backArrow.svg';
 import Star from '../asset/icons/star.svg';
 import Facebook from '../asset/icons/facebook.svg';
-import Linkedin from '../asset/icons/linkedin.svg';
+import Zalo from '../asset/icons/zalo.svg';
 import Instagram from '../asset/icons/instagram.svg';
+import Phone from '../asset/icons/phone.svg';
+import Address from '../asset/icons/address.svg';
+import Calendar from '../asset/icons/calendar.svg';
+import Clock from '../asset/icons/clock.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -67,8 +71,12 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   backArrow: BackArrow,
   star: Star,
   facebook: Facebook,
-  linkedin: Linkedin,
+  zalo: Zalo,
   instagram: Instagram,
+  phone: Phone,
+  address: Address,
+  calendar: Calendar,
+  clock: Clock,
 };
 
 const Icon: React.FC<IconProps> = ({

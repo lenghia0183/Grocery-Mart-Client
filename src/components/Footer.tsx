@@ -13,6 +13,7 @@ type FooterSection = {
     label: string;
     href: string;
     value?: string;
+    icon?: React.ReactNode;
   }>;
 };
 
@@ -44,10 +45,30 @@ const footerSections: FooterSection[] = [
   {
     title: 'Contact',
     links: [
-      { label: 'Email', value: 'Lenghia0183@gmail.com', href: 'mailto:Lenghia0183@gmail.com' },
-      { label: 'Phone', value: '+84 0369 067 607', href: 'tel:+84369067607' },
-      { label: 'Address', value: 'Liên Phương, Thường Tín, Hà Nội', href: '' },
-      { label: 'Business hours', value: 'Thứ Hai - Thứ Bảy 08:00 sáng - 06:00 chiều', href: '' },
+      {
+        label: 'Email',
+        value: 'Lenghia0183@gmail.com',
+        href: 'mailto:Lenghia0183@gmail.com',
+        icon: <Icon name="email" color="inherit" strokeWidth={1.2} size={1.3} />,
+      },
+      {
+        label: 'Phone',
+        value: '+84 0369 067 607',
+        href: 'tel:+84369067607',
+        icon: <Icon name="phone" color="inherit" strokeWidth={1.2} size={1.3} />,
+      },
+      {
+        label: 'Address',
+        value: 'Liên Phương, Thường Tín, Hà Nội',
+        href: '',
+        icon: <Icon name="address" color="inherit" strokeWidth={1.2} size={1.3} />,
+      },
+      {
+        label: 'Business hours',
+        value: 'Thứ Hai - Thứ Bảy 08:00 sáng - 06:00 chiều',
+        href: '',
+        icon: <Icon name="clock" color="inherit" strokeWidth={1.5} size={1.3} />,
+      },
     ],
   },
 ];
@@ -104,7 +125,10 @@ export default function Footer() {
                   <li key={idx}>
                     {item.value ? (
                       <div className="mt-5">
-                        <p>{item.label}</p>
+                        <div className="flex item-center gap-2">
+                          {item.icon && item.icon}
+                          <p>{item.label}</p>
+                        </div>
                         <Link href={item.href} className="hover:text-blue mt-2">
                           {item.value}
                         </Link>
@@ -140,7 +164,7 @@ export default function Footer() {
               <Icon name="instagram" />
             </Link>
             <Link href="#" className="w-8 h-8 bg-blue-300 flex items-center justify-center rounded-lg">
-              <Icon name="linkedin" />
+              <Icon name="zalo" />
             </Link>
           </div>
         </div>
