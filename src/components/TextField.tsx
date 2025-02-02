@@ -15,6 +15,7 @@ interface TextFieldProps {
   vertical?: boolean;
   placeholder?: string;
   inputClassName?: string;
+  inputContainerClassName?: string;
   labelClassName?: string;
   className?: string;
   width?: string;
@@ -38,6 +39,7 @@ const TextField = ({
   vertical = true,
   placeholder,
   inputClassName,
+  inputContainerClassName,
   labelClassName,
   className,
   width,
@@ -47,7 +49,7 @@ const TextField = ({
   labelWidth = '80px',
   allow,
   prevent,
-  disabled = true,
+  disabled = false,
 }: TextFieldProps) => {
   const inputId = useId();
   const [field, meta, helpers] = useField(name);
@@ -101,7 +103,7 @@ const TextField = ({
           style={{
             height: height,
           }}
-          className={clsx('flex items-center border p-2 rounded-md bg-transparent', {
+          className={clsx('flex items-center border p-2 rounded-md bg-transparent', inputContainerClassName, {
             'border-red-400': error && !disabled,
             'hover:border-blue-300 group-focus-within:border-blue-300': !error && !disabled,
             'bg-gray-50 border-gray-300 pointer-events-none': disabled,
@@ -157,11 +159,15 @@ const TextField = ({
             </label>
           )}
           <div
-            className={clsx('flex-grow flex items-center border p-2 rounded-md bg-transparent', {
-              'border-red-400': error && !disabled,
-              'hover:border-blue-300 group-focus-within:border-blue-300': !error && !disabled,
-              '!bg-gray-50 border-gray-300 pointer-events-none': disabled,
-            })}
+            className={clsx(
+              'flex-grow flex items-center border p-2 rounded-md bg-transparent',
+              inputContainerClassName,
+              {
+                'border-red-400': error && !disabled,
+                'hover:border-blue-300 group-focus-within:border-blue-300': !error && !disabled,
+                '!bg-gray-50 border-gray-300 pointer-events-none': disabled,
+              },
+            )}
           >
             {leftIcon && (
               <span className="mr-2" onClick={iconOnClick}>

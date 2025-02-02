@@ -21,7 +21,7 @@ const ProductList = async (): Promise<JSX.Element> => {
   };
   return (
     <div className="container">
-      <h2 className="text-2xl font-semibold mt-10 mb-5">{t('latest')}</h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-5 text-dark dark:text-white">{t('latest')}</h2>
       <ul className="grid grid-cols-5 gap-x-5 gap-y-7">
         {productList.map((product, index) => (
           <ProductCard key={index} data={fakeProductData} />

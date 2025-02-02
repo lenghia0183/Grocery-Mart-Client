@@ -34,5 +34,36 @@
   "home": {
     "category": "Category",
     "latest": "Newest"
+  },
+  "footer": {
+    "desc01": "Grocery Mart is committed to providing a simple, convenient, and enjoyable online shopping experience. With a wide range of products including coffee, tea, and cocoa, we always prioritize customer satisfaction.",
+    "desc02": "At Grocery Mart, product quality and customer service are our top priorities. We continuously improve to maximize convenience, making your shopping experience easier than ever.",
+    "store": {
+      "title": "Store",
+      "home": "Home",
+      "coffee": "Coffee",
+      "tea": "Tea",
+      "cocoa": "Cocoa"
+    },
+    "help": {
+      "title": "Support",
+      "storeLocation": "Store Location",
+      "orderStatus": "Order Status"
+    },
+    "company": {
+      "title": "About Us",
+      "customerService": "Customer Service",
+      "termsOfUse": "Terms of Use",
+      "aboutUs": "Our Story"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "Email",
+      "phone": "Phone Number",
+      "address": "Address",
+      "businessHours": "Business Hours",
+      "businessHoursValue": "Monday - Saturday, 08:00 AM - 06:00 PM"
+    },
+    "copyright": "© 2021 - 2025 Grocery Mart. All rights reserved."
   }
 }

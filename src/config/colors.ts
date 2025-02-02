@@ -37,8 +37,9 @@ const colors: Colors = {
     100: '#e0e0e0', // Màu mới
     200: '#bdbdbd', // Màu mới
     300: '#808080', // Màu mới
-    400: '#4f4f4f', // Màu mới
+    400: '#171c28', // Màu mới
     500: '#292e39', // Đã có trước
+    600: '#020617',
     hover: '#171c28', // Đã có trước
   },
 
@@ -58,8 +59,9 @@ const colors: Colors = {
     100: '#f9f9f9', // Màu mới
     200: '#eeeeee', // Màu mới
     300: '#d2d1d6', // Đã có trước
-    400: '#dcd7d7', // Đã có trước
+    400: 'rgb(210, 202, 202, 0.7)', // Đã có trước
     500: '#9e9da8', // Đã có trước
+    600: '#dcd7d7',
   },
 
   red: {

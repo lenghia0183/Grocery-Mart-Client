@@ -6,7 +6,7 @@ function Logo(): JSX.Element {
   return (
     <Link
       href="/"
-      className="flex items-center gap-3 text-2xl font-semibold text-dark-500 select-none"
+      className="flex items-center gap-3 text-2xl font-semibold text-dark-500 dark:text-white select-none"
       title="Grocery Mart Logo"
     >
       <Image

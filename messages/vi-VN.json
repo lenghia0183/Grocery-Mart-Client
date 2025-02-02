@@ -36,5 +36,35 @@
     "latest": "Mới nhất"
   },
 
-  "footer": {}
+  "footer": {
+    "desc01": "Grocery Mart cam kết mang đến trải nghiệm mua sắm trực tuyến đơn giản, thuận tiện và thú vị. Với đa dạng sản phẩm từ cà phê, trà đến ca cao, chúng tôi luôn đặt sự hài lòng của khách hàng lên hàng đầu.",
+    "desc02": "Chất lượng sản phẩm và dịch vụ khách hàng tại Grocery Mart là ưu tiên số một. Chúng tôi không ngừng cải tiến để mang đến sự thuận tiện tối đa cho bạn, giúp việc mua sắm trở nên dễ dàng hơn bao giờ hết.",
+    "store": {
+      "title": "Cửa hàng",
+      "home": "Trang chủ",
+      "coffee": "Cà phê",
+      "tea": "Trà",
+      "cocoa": "Ca cao"
+    },
+    "help": {
+      "title": "Hỗ trợ",
+      "storeLocation": "Vị trí cửa hàng",
+      "orderStatus": "Trạng thái đơn hàng"
+    },
+    "company": {
+      "title": "Về chúng tôi",
+      "customerService": "Dịch vụ khách hàng",
+      "termsOfUse": "Điều khoản sử dụng",
+      "aboutUs": "Giới thiệu"
+    },
+    "contact": {
+      "title": "Liên hệ",
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "address": "Địa chỉ",
+      "businessHours": "Giờ làm việc",
+      "businessHoursValue": "Thứ Hai - Thứ Bảy, 08:00 - 18:00"
+    },
+    "copyright": "© 2021 - 2025 Grocery Mart. Bản quyền thuộc về Grocery Mart."
+  }
 }

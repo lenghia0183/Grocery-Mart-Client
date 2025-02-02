@@ -13,22 +13,24 @@ const CategoryList = async (): Promise<JSX.Element> => {
 
   return (
     <div className="container">
-      <h2 className="text-2xl font-semibold mt-10 mb-5">{t('category')}</h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-5 text-dark dark:text-white">{t('category')}</h2>
       <ul className="grid grid-cols-3 gap-4">
         {categoryList.map((category) => (
           <li
             key={category._id}
-            className="group shadow-category-card-light flex gap-3  hover:bg-gray-400 p-[20px] items-center rounded-[16px] transition-all duration-300"
+            className="group dark:shadow-category-card-dark shadow-category-card-light flex gap-3  dark:bg-dark-400  hover:bg-gray-400 p-[20px] items-start rounded-[16px] transition-all duration-300"
           >
-            <Image
-              src={category.image}
-              alt={category.name}
-              width={115}
-              height={115}
-              className="group-hover:scale-110 rounded-[16px] w-[100px] h-[100px] transition-all duration-300"
-            />
-            <div>
-              <div className="font-semibold text-xl">20k - 150k</div>
+            <div className="group-hover:scale-110 rounded-[16px] w-[100px] h-[100px] transition-all duration-300 dark:bg-dark-500">
+              <Image
+                src={category.image}
+                alt={category.name}
+                width={115}
+                height={115}
+                className="rounded-[16px] w-[100px] h-[100px]"
+              />
+            </div>
+            <div className="text-dark dark:text-white">
+              <div className="font-semibold text-xl ">20k - 150k</div>
               <div className="text-lg">{category.name + 'Grocery-mart'}</div>
             </div>
           </li>

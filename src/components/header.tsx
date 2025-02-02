@@ -31,25 +31,31 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className="bg-blue-200 shadow-sm shadow-slate-300">
+    <header className="bg-blue-200 dark:bg-dark-400 shadow-sm shadow-slate-300 dark:shadow-none">
       <div className="container flex justify-between py-6">
         <div className="flex">
           <Logo />
 
-          <div className="ml-[70px] flex">
+          <div className="ml-[70px] flex ">
             {navItems.map((item, index) => (
-              <Button key={index} href={item.href} variant="text" className="px-[15px] text-lg">
+              <Button
+                key={index}
+                href={item.href}
+                variant="text"
+                className="px-[15px] text-lg dark:text-white text-dark"
+              >
                 {item.label}
               </Button>
             ))}
           </div>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 dark:text-white">
           <IconButton
             iconName="search"
-            className="shadow-button-light"
+            className="shadow-button-light dark:bg-dark-500"
             variant="contained"
+            iconColor="inherit"
             width="50px"
             height="50px"
             iconWidth="21px"
@@ -57,8 +63,8 @@ const Header: React.FC = () => {
             iconStrokeWidth={1.8}
           />
 
-          <div className="flex items-center gap-3 rounded-md bg-white shadow-button-light">
-            <div className="flex items-center gap-2 py-3 pl-5 hover:text-blue-300">
+          <div className="flex items-center gap-3 rounded-md bg-white dark:bg-dark-500 shadow-button-light">
+            <div className="flex items-center gap-2 py-3 pl-5 hover:text-blue-300 dark:text-white">
               <IconButton
                 className="shadow-none"
                 iconName="heart"
@@ -74,7 +80,7 @@ const Header: React.FC = () => {
 
             <div className="h-[60%] w-[1px] bg-gray-400"></div>
 
-            <div className="flex items-center gap-2 py-3 pr-5 hover:text-blue-300">
+            <div className="flex items-center gap-2 py-3 pr-5 hover:text-blue-300 dark:text-white">
               <IconButton
                 className="shadow-none"
                 iconName="cart"
