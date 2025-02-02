@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import { setCookie, getCookie } from 'cookies-next';
 
 interface ThemeContextType {
@@ -74,4 +74,8 @@ export default function ThemeProvider({ children, initialTheme }: ThemeProviderP
   }, [theme]);
 
   return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+}
+
+export function useTheme() {
+  return useContext(ThemeContext);
 }
