@@ -14,7 +14,7 @@ const colors: Colors = {
     DEFAULT: '#77dae6',
     100: '#f7faff', // Đã có trước
     200: '#efeff7', // Đã có trước
-    300: '#cce5f0', // Màu mới
+    300: '#4863a9', // Màu mới
     400: '#66b8e1', // Đã có trước
     500: '#0a58ca', // Đã có trước
     hover: '#66b8e1', // Đã có trước

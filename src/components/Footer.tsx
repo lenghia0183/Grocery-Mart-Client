@@ -125,14 +125,22 @@ export default function Footer() {
         <div className="mt-12 flex flex-col md:flex-row justify-between items-center border-t border-gray-300 pt-6 text-sm">
           <p>© 2021 - 2025 Grocery Mart. All rights reserved.</p>
           <div className="flex space-x-4">
-            <Link href="#" className="hover:text-primary">
-              <Icon name="facebook" className="w-6 h-6 text-gray-700 hover:text-blue-600 transition" />
+            <Link href="#" className="w-8 h-8 bg-blue-300 flex items-center justify-center rounded-lg">
+              <Icon name="facebook" />
             </Link>
-            <Link href="#" className="hover:text-primary">
-              <Icon name="instagram" className="w-6 h-6 text-gray-700 hover:text-pink-500 transition" />
+            <Link
+              href="#"
+              className="w-8 h-8 bg-blue-500 flex items-center justify-center rounded-lg"
+              style={{
+                backgroundColor: '#2134af',
+                backgroundImage:
+                  'linear-gradient(214deg, #2134af 0%, #515bd4 11%, #dd2a7b 62%, #feda77 72%, #f58529 91%)',
+              }}
+            >
+              <Icon name="instagram" />
             </Link>
-            <Link href="#" className="hover:text-primary">
-              <Icon name="linkedin" className="w-6 h-6 text-gray-700 hover:text-blue-700 transition" />
+            <Link href="#" className="w-8 h-8 bg-blue-300 flex items-center justify-center rounded-lg">
+              <Icon name="linkedin" />
             </Link>
           </div>
         </div>
