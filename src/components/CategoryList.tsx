@@ -3,15 +3,17 @@
 import { api } from '@/services/api/axios';
 import Image from './Image';
 import { CategoryResponse } from '@/types/category';
+import { getTranslations } from 'next-intl/server';
 
 const CategoryList = async (): Promise<JSX.Element> => {
   const response = await api.get<CategoryResponse>('https://api.hauifood.com/v1/categories?limit=3&page=1');
+  const t = await getTranslations('home');
 
   const categoryList = response.data?.categories || [];
 
   return (
     <div className="container">
-      <h2 className="text-2xl font-semibold mt-10 mb-5">Danh mục</h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-5">{t('category')}</h2>
       <ul className="grid grid-cols-3 gap-4">
         {categoryList.map((category) => (
           <li

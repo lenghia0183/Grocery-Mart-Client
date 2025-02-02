@@ -15,5 +15,24 @@
     "english": "English",
     "vietnamese": "Vietnamese",
     "back": "Back"
+  },
+
+  "pageTitle": {
+    "home": "Home",
+    "coffee": "Coffee",
+    "tea": "Tea",
+    "cacao": "Cacao",
+    "products": "Products",
+    "contact": "Contact",
+    "about": "About",
+    "login": "Login",
+    "register": "Register",
+    "profile": "Profile",
+    "orders": "My Orders",
+    "favorites": "My Favorite Products"
+  },
+  "home": {
+    "category": "Category",
+    "latest": "Latest"
   }
 }

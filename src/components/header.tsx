@@ -6,8 +6,30 @@ import Button from './Button';
 import IconButton from './IconButton';
 import ToolTip from './ToolTip';
 import AvatarMenu from './AvatarMenu';
+import { useTranslations } from 'next-intl';
 
 const Header: React.FC = () => {
+  const t = useTranslations();
+
+  const navItems = [
+    {
+      label: t('pageTitle.home'),
+      href: '/',
+    },
+    {
+      label: t('pageTitle.coffee'),
+      href: '/',
+    },
+    {
+      label: t('pageTitle.tea'),
+      href: '/',
+    },
+    {
+      label: t('pageTitle.cacao'),
+      href: '/',
+    },
+  ];
+
   return (
     <header className="bg-blue-200 shadow-sm shadow-slate-300">
       <div className="container flex justify-between py-6">
@@ -15,18 +37,11 @@ const Header: React.FC = () => {
           <Logo />
 
           <div className="ml-[70px] flex">
-            <Button href="/" variant="text" className="px-[15px] text-lg">
-              Trang chủ
-            </Button>
-            <Button href="/" variant="text" className="px-[15px] text-lg">
-              Coffee
-            </Button>
-            <Button href="/" variant="text" className="px-[15px] text-lg">
-              Trà đào
-            </Button>
-            <Button href="/" variant="text" className="px-[15px] text-lg">
-              Cacao
-            </Button>
+            {navItems.map((item, index) => (
+              <Button key={index} href={item.href} variant="text" className="px-[15px] text-lg">
+                {item.label}
+              </Button>
+            ))}
           </div>
         </div>
 
@@ -81,7 +96,6 @@ const Header: React.FC = () => {
             clickable
             opacity={1}
             className="!bg-white !p-0 !rounded-2xl shadow-avatar-menu-light"
-            // classNameArrow="shadow-avatar-menu-light"
           >
             <div className="h-[50px] w-[50px] rounded-md bg-dark"></div>
           </ToolTip>

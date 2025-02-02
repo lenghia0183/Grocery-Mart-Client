@@ -15,5 +15,24 @@
     "english": "Tiếng Anh",
     "vietnamese": "Tiếng Việt",
     "back": "Quay lại"
+  },
+
+  "pageTitle": {
+    "home": "Trang chủ",
+    "coffee": "Cà phê",
+    "tea": "Trà",
+    "cacao": "Cacao",
+    "products": "Sản phẩm",
+    "contact": "Liên hệ",
+    "about": "Giới thiệu",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "profile": "Thông tin cá nhân",
+    "orders": "Đơn hàng của tôi",
+    "favorites": "Sản phẩm yêu thích của tôi"
+  },
+  "home": {
+    "category": "Danh mục",
+    "latest": "Mới nhất"
   }
 }

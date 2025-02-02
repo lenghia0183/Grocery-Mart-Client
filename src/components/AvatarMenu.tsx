@@ -15,53 +15,6 @@ interface MenuItem {
   action?: () => void;
 }
 
-// const menuItems: MenuItem[] = [
-//   {
-//     label: 'Tài khoản',
-//     icon: <Icon name="account" color="inherit" strokeWidth={1.75} />,
-//   },
-//   {
-//     label: 'Giỏ hàng',
-//     icon: <Icon name="cart" color="inherit" strokeWidth={1.8} />,
-//   },
-//   {
-//     label: 'Yêu thích',
-//     icon: <Icon name="heart" color="inherit" strokeWidth={1.8} />,
-//     divide: true,
-//   },
-//   {
-//     label: 'Cài đặt',
-//     icon: <Icon name="setting" color="inherit" size={1.7} />,
-//     subMenu: [
-//       {
-//         label: 'Chế độ sáng tối',
-//         icon: <Icon name="darkMode" color="inherit" size={1.7} strokeWidth={111} />,
-//         subMenu: [
-//           {
-//             label: 'Chế độ sáng',
-//             value: 'light',
-//             icon: <Icon name="sun" color="inherit" strokeWidth={1.6} size={1.9} />,
-//           },
-//           { label: 'Chế độ tối', value: 'dark', icon: <Icon name="moon" color="inherit" strokeWidth={0.5} /> },
-//         ],
-//       },
-//       {
-//         label: 'Ngôn ngữ',
-//         icon: <Icon name="language" color="inherit" />,
-//         subMenu: [
-//           { label: 'Tiếng Việt', value: 'vi' },
-//           { label: 'Tiếng Anh', value: 'en' },
-//         ],
-//       },
-//     ],
-//     divide: true,
-//   },
-//   {
-//     label: 'Đăng xuất',
-//     icon: <Icon name="logout" color="inherit" size={1.3} strokeWidth={15} />,
-//   },
-// ];
-
 const AvatarMenu = () => {
   const { setTheme } = useTheme();
   const { changeLanguage } = useLanguage();
