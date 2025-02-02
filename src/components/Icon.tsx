@@ -23,6 +23,7 @@ import setting from '../asset/icons/setting.svg';
 import Sun from '../asset/icons/sun.svg';
 import Moon from '../asset/icons/moon.svg';
 import BackArrow from '../asset/icons/backArrow.svg';
+import Star from '../asset/icons/star.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -61,6 +62,7 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   sun: Sun,
   moon: Moon,
   backArrow: BackArrow,
+  star: Star,
 };
 
 const Icon: React.FC<IconProps> = ({

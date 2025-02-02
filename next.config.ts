@@ -4,7 +4,7 @@ import type { NextConfig } from 'next';
 const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   images: {
-    domains: ['res.cloudinary.com', 'food-cms.grab.com', 'd1sag4ddilekf6.cloudfront.net'],
+    domains: ['res.cloudinary.com', 'food-cms.grab.com', 'd1sag4ddilekf6.cloudfront.net', 'www.crispoconfetti.com'],
   },
   webpack(config) {
     config.module.rules.push({

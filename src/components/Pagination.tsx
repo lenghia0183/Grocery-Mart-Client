@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect, FC } from 'react';
 import clsx from 'clsx';
 
@@ -151,7 +153,7 @@ const Pagination: FC<PaginationProps> = ({
     <ul
       ref={ulRef}
       style={{ width: width || ulWidth }}
-      className={clsx('flex flex-wrap gap-2 items-center transition-all duration-300', className)}
+      className={clsx('flex flex-wrap gap-2 items-center transition-all duration-300 w-full m-auto', className)}
     >
       <li
         style={{ width: buttonWidth, height: buttonHeight }}

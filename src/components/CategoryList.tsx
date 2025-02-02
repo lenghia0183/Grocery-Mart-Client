@@ -18,7 +18,7 @@ const CategoryList = async (): Promise<JSX.Element> => {
         {categoryList.map((category) => (
           <li
             key={category._id}
-            className="group shadow-category-cart-light flex gap-3 bg-gray-200 hover:bg-gray-400 p-[20px] items-center rounded-[16px] transition-all duration-300"
+            className="group shadow-category-card-light flex gap-3  hover:bg-gray-400 p-[20px] items-center rounded-[16px] transition-all duration-300"
           >
             <Image
               src={category.image}
