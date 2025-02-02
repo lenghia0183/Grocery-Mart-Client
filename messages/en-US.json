@@ -1,5 +1,19 @@
 {
   "testPage": {
-    "openDialog": "open dialog"
+    "openDialog": "Open dialog"
+  },
+  "common": {
+    "account": "Account",
+    "logout": "Log out",
+    "cart": "Cart",
+    "favorites": "Favorites",
+    "settings": "Settings",
+    "themeMode": "Theme mode",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "language": "Language",
+    "english": "English",
+    "vietnamese": "Vietnamese",
+    "back": "Back"
   }
 }

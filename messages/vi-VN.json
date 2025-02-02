@@ -1,5 +1,19 @@
 {
   "testPage": {
     "openDialog": "Mở hộp thoại"
+  },
+  "common": {
+    "account": "Tài khoản",
+    "logout": "Đăng xuất",
+    "cart": "Giỏ hàng",
+    "favorites": "Mục yêu thích",
+    "settings": "Cài đặt",
+    "themeMode": "Chế độ giao diện",
+    "darkMode": "Chế độ tối",
+    "lightMode": "Chế độ sáng",
+    "language": "Ngôn ngữ",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt",
+    "back": "Quay lại"
   }
 }

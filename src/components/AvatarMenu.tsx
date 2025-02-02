@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import Icon from './Icon';
 import { useTheme } from '@/context/ThemeProvider';
+import { useLanguage } from '@/context/LanguageProvider';
+import { Locale, Locales } from '@/config/locales';
+import { useTranslations } from 'next-intl';
 
 interface MenuItem {
   label: string;
@@ -61,39 +64,46 @@ interface MenuItem {
 
 const AvatarMenu = () => {
   const { setTheme } = useTheme();
+  const { changeLanguage } = useLanguage();
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
   };
+
+  const t = useTranslations('common');
+
+  const handleLanguageChange = (newLanguage: Locale) => {
+    changeLanguage(newLanguage);
+  };
   const menuItems: MenuItem[] = [
     {
-      label: 'Tài khoản',
+      label: t('account'),
       icon: <Icon name="account" color="inherit" strokeWidth={1.75} />,
     },
     {
-      label: 'Giỏ hàng',
+      label: t('cart'),
       icon: <Icon name="cart" color="inherit" strokeWidth={1.8} />,
     },
     {
-      label: 'Yêu thích',
+      label: t('favorites'),
       icon: <Icon name="heart" color="inherit" strokeWidth={1.8} />,
       divide: true,
     },
     {
-      label: 'Cài đặt',
+      label: t('settings'),
       icon: <Icon name="setting" color="inherit" size={1.7} />,
       subMenu: [
         {
-          label: 'Chế độ sáng tối',
+          label: t('themeMode'),
           icon: <Icon name="darkMode" color="inherit" size={1.7} strokeWidth={111} />,
           subMenu: [
             {
-              label: 'Chế độ sáng',
+              label: t('lightMode'),
               value: 'light',
               icon: <Icon name="sun" color="inherit" strokeWidth={1.6} size={1.9} />,
               action: () => handleThemeChange('light'),
             },
             {
-              label: 'Chế độ tối',
+              label: t('darkMode'),
               value: 'dark',
               icon: <Icon name="moon" color="inherit" strokeWidth={0.5} />,
               action: () => handleThemeChange('dark'),
@@ -101,21 +111,22 @@ const AvatarMenu = () => {
           ],
         },
         {
-          label: 'Ngôn ngữ',
+          label: t('language'),
           icon: <Icon name="language" color="inherit" />,
           subMenu: [
-            { label: 'Tiếng Việt', value: 'vi' },
-            { label: 'Tiếng Anh', value: 'en' },
+            { label: t('vietnamese'), value: 'vi', action: () => handleLanguageChange(Locales.VI) },
+            { label: t('english'), value: 'en', action: () => handleLanguageChange(Locales.EN) },
           ],
         },
       ],
       divide: true,
     },
     {
-      label: 'Đăng xuất',
+      label: t('logout'),
       icon: <Icon name="logout" color="inherit" size={1.3} strokeWidth={15} />,
     },
   ];
+
   const [menuStack, setMenuStack] = useState<MenuItem[]>([{ label: 'main', subMenu: menuItems }]);
 
   const currentMenu = menuStack[menuStack.length - 1];
@@ -142,7 +153,7 @@ const AvatarMenu = () => {
         <li onClick={goBack} className=" hover:bg-gray-400 hover:text-blue-500 cursor-pointer font-semibold">
           <div className=" py-2 px-5 flex items-center justify-between">
             <Icon name="backArrow" color="inherit" size={1.5} />
-            Quay lại
+            {t('back')}
           </div>
           <div className="h-[1px] my-1 mx-1 bg-gray-500"></div>
         </li>
