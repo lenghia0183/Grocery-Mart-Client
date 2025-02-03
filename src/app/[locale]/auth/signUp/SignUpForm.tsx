@@ -7,10 +7,10 @@ import Icon from '@/components/Icon';
 import TextField from '@/components/TextField';
 import React from 'react';
 
-const LoginForm: React.FC = () => {
+const SignUpForm: React.FC = () => {
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: '', password: '', confirmPassword: '' }}
       onSubmit={(values) => {
         console.log(values);
         // Xử lý đăng nhập ở đây
@@ -29,6 +29,15 @@ const LoginForm: React.FC = () => {
             className="mt-6"
           />
 
+          <TextField
+            name="confirmPassword"
+            label=""
+            type="password"
+            placeholder="Confirm password"
+            rightIcon={<Icon name="password" />}
+            className="mt-6"
+          />
+
           <div className="flex justify-between mt-6">
             <CheckBox name="showPassword" label="Hiển thị mật khẩu" />
 
@@ -38,7 +47,7 @@ const LoginForm: React.FC = () => {
           </div>
           <div className="mt-6 flex flex-col gap-5">
             <Button type="submit" full>
-              Sign In
+              Sign Up
             </Button>
 
             <Button
@@ -55,9 +64,9 @@ const LoginForm: React.FC = () => {
             </Button>
 
             <div className="flex gap-2 m-auto">
-              <span className="text-gray-500 "> Don&apos;t have an account?</span>
+              <span className="text-gray-500 "> You have an account yet?</span>
               <Button variant="text" size="zeroPadding" bgHoverColor="none">
-                Đăng ký ngay
+                Đăng nhập ngay
               </Button>
             </div>
           </div>
@@ -67,4 +76,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
