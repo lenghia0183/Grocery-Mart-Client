@@ -57,9 +57,9 @@ const colors: Colors = {
     // Đã có trước
     DEFAULT: '#d2d1d6',
     100: '#f9f9f9', // Màu mới
-    200: '#eeeeee', // Màu mới
+    200: '#c9cbcd', // Màu mới
     300: '#d2d1d6', // Đã có trước
-    400: 'rgb(210, 202, 202, 0.7)', // Đã có trước
+    400: 'rgb(210, 202, 202, 0.65)', // Đã có trước
     500: '#9e9da8', // Đã có trước
     600: '#dcd7d7',
   },
@@ -87,12 +87,35 @@ const colorMap: ColorClass[] = Object.keys(colors).reduce((map: ColorClass[], co
   return map;
 }, []);
 
-const bgColorSafelist: string[] = colorMap.map((colorClass: ColorClass) => `bg-${colorClass}`);
-const textColorSafelist: string[] = colorMap.map((colorClass: ColorClass) => `text-${colorClass}`);
-const borderColorSafelist: string[] = colorMap.map((colorClass: ColorClass) => `border-${colorClass}`);
-const hoverBgColorSafelist: string[] = colorMap.map((colorClass: ColorClass) => `hover:bg-${colorClass}`);
-const hoverTextColorSafelist: string[] = colorMap.map((colorClass: ColorClass) => `hover:text-${colorClass}`);
-const hoverBorderColorSafelist: string[] = colorMap.map((colorClass: ColorClass) => `hover:border-${colorClass}`);
+const bgColorSafelist: string[] = colorMap.flatMap((colorClass: ColorClass) => [
+  `bg-${colorClass}`,
+  `dark:bg-${colorClass}`,
+]);
+
+const textColorSafelist: string[] = colorMap.flatMap((colorClass: ColorClass) => [
+  `text-${colorClass}`,
+  `dark:text-${colorClass}`,
+]);
+
+const borderColorSafelist: string[] = colorMap.flatMap((colorClass: ColorClass) => [
+  `border-${colorClass}`,
+  `dark:border-${colorClass}`,
+]);
+
+const hoverBgColorSafelist: string[] = colorMap.flatMap((colorClass: ColorClass) => [
+  `hover:bg-${colorClass}`,
+  `dark:hover:bg-${colorClass}`,
+]);
+
+const hoverTextColorSafelist: string[] = colorMap.flatMap((colorClass: ColorClass) => [
+  `hover:text-${colorClass}`,
+  `dark:hover:text-${colorClass}`,
+]);
+
+const hoverBorderColorSafelist: string[] = colorMap.flatMap((colorClass: ColorClass) => [
+  `hover:border-${colorClass}`,
+  `dark:hover:border-${colorClass}`,
+]);
 
 export {
   colors,

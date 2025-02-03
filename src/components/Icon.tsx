@@ -32,6 +32,7 @@ import Address from '../asset/icons/address.svg';
 import Calendar from '../asset/icons/calendar.svg';
 import Clock from '../asset/icons/clock.svg';
 import Send from '../asset/icons/send.svg';
+import ArrowSlide from '../asset/icons/arrowSlide.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -79,6 +80,7 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   calendar: Calendar,
   clock: Clock,
   send: Send,
+  arrowSlide: ArrowSlide,
 };
 
 const Icon: React.FC<IconProps> = ({
@@ -104,11 +106,18 @@ const Icon: React.FC<IconProps> = ({
     strokeWidth,
   };
 
-  const colorsClass = createTailwindClass(['text', 'hover:text'], [color, hoverColor]);
+  // const colorsClass = createTailwindClass(['text', 'hover:text'], [color, hoverColor]);
+  const textClass = createTailwindClass('text', color);
+  const hoverTextClass = createTailwindClass('hover:text', hoverColor);
 
   return (
     <span
-      className={clsx('inline-flex items-center justify-center transition duration-300', colorsClass, className)}
+      className={clsx(
+        'inline-flex items-center justify-center transition duration-300',
+        textClass,
+        hoverTextClass,
+        className,
+      )}
       {...props}
     >
       <IconComponent {...iconProps} />

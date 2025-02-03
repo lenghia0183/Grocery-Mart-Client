@@ -1,10 +1,16 @@
-export const createTailwindClass = (prefixes: string | string[] = 'text', colors: string | string[]): string => {
-  const colorArray = Array.isArray(colors) ? colors : [colors];
-  const prefixArray = Array.isArray(prefixes) ? prefixes : [prefixes];
+export const createTailwindClass = (prefix: string, colors: string): string => {
+  if (!colors.trim()) return '';
 
-  const classNames = colorArray.map((color, index) => {
-    if (color && prefixArray[index]) return `${prefixArray[index]}-${color}`;
+  const colorArray = colors.split(' ');
+
+  const classNames = colorArray.map((color) => {
+    const [modifier, baseColor] = color.includes(':') ? color.split(':') : [null, color];
+    if (baseColor === '') {
+      return '';
+    }
+    return modifier ? `${modifier}:${prefix}-${baseColor}` : `${prefix}-${color}`;
   });
+
   return classNames.join(' ');
 };
 

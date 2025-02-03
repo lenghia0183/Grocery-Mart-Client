@@ -61,14 +61,13 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
       <div className="relative">
         <IconButton
           type="button"
-          className="rotate-90 absolute top-1/2 -translate-y-1/2 -left-8 hidden sm:flex "
-          iconName="arrowDown"
-          iconStrokeWidth={500}
+          className="rotate-180 absolute top-1/2 -translate-y-1/2 -left-8 hidden sm:flex"
+          iconName="arrowSlide"
           variant="contained"
-          bgColor="yellow-400"
-          iconColor="white"
+          bgColor="yellow-300 dark:gray-500"
+          iconColor="white dark:dark"
           iconHoverColor="none"
-          bgHoverColor="yellow"
+          bgHoverColor="yellow dark:gray-200"
           rounded
           iconSize={1}
           width="25px"
@@ -80,13 +79,13 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
 
         <IconButton
           type="button"
-          className="-rotate-90 absolute top-1/2 -translate-y-1/2 -right-8 hidden sm:flex "
-          iconName="arrowDown"
+          className=" absolute top-1/2 -translate-y-1/2 -right-8 hidden sm:flex"
+          iconName="arrowSlide"
           variant="contained"
-          bgColor="yellow-400"
-          iconColor="white"
-          bgHoverColor="yellow"
+          bgColor="yellow-300 dark:gray-500"
+          iconColor="white dark:dark"
           iconHoverColor="none"
+          bgHoverColor="yellow dark:gray-200"
           iconSize={1}
           width="25px"
           height="25px"

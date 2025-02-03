@@ -33,16 +33,16 @@ const Header: React.FC = () => {
   return (
     <header className="bg-blue-200 dark:bg-dark-400 shadow-sm shadow-slate-300 dark:shadow-none">
       <div className="container flex justify-between py-6">
+        {/* Logo & Navigation */}
         <div className="flex">
           <Logo />
-
-          <div className="ml-[70px] flex ">
+          <div className="ml-[70px] flex">
             {navItems.map((item, index) => (
               <Button
                 key={index}
                 href={item.href}
                 variant="text"
-                className="px-[15px] text-lg dark:text-white text-dark"
+                className="px-[15px] text-lg text-dark dark:text-white"
               >
                 {item.label}
               </Button>
@@ -50,11 +50,12 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex gap-3 dark:text-white">
+        {/* Action Buttons */}
+        <div className="flex gap-3 text-dark dark:text-white">
           <IconButton
             iconName="search"
-            className="shadow-button-light dark:bg-dark-500"
             variant="contained"
+            className="shadow-button-light dark:shadow-button-dark dark:bg-dark-500"
             iconColor="inherit"
             width="50px"
             height="50px"
@@ -63,12 +64,14 @@ const Header: React.FC = () => {
             iconStrokeWidth={1.8}
           />
 
-          <div className="flex items-center gap-3 rounded-md bg-white dark:bg-dark-500 shadow-button-light">
+          {/* Wishlist & Cart */}
+          <div className="flex items-center gap-3 bg-white dark:bg-dark-500 rounded-md shadow-button-light dark:shadow-button-dark">
+            {/* Wishlist */}
             <div className="flex items-center gap-2 py-3 pl-5 hover:text-blue-300 dark:text-white">
               <IconButton
-                className="shadow-none"
                 iconName="heart"
                 variant="text"
+                className="shadow-none"
                 iconColor="inherit"
                 iconHoverColor="inherit"
                 iconWidth="21px"
@@ -78,13 +81,14 @@ const Header: React.FC = () => {
               <p className="min-w-[20px] max-w-[30px] truncate overflow-ellipsis transition-colors duration-300">333</p>
             </div>
 
-            <div className="h-[60%] w-[1px] bg-gray-400"></div>
+            <div className="w-[1px] h-[60%] bg-gray-400"></div>
 
+            {/* Cart */}
             <div className="flex items-center gap-2 py-3 pr-5 hover:text-blue-300 dark:text-white">
               <IconButton
-                className="shadow-none"
                 iconName="cart"
                 variant="text"
+                className="shadow-none"
                 iconColor="inherit"
                 iconHoverColor="inherit"
                 iconWidth="21px"
@@ -96,14 +100,16 @@ const Header: React.FC = () => {
               </p>
             </div>
           </div>
+
+          {/* User Avatar */}
           <ToolTip
             render={() => <AvatarMenu />}
             openOnClick
             clickable
             opacity={1}
-            className="!bg-white !p-0 !rounded-2xl shadow-avatar-menu-light"
+            className="!p-0 !bg-white !rounded-2xl shadow-avatar-menu-light"
           >
-            <div className="h-[50px] w-[50px] rounded-md bg-dark"></div>
+            <div className="w-[50px] h-[50px] rounded-md bg-dark"></div>
           </ToolTip>
         </div>
       </div>
