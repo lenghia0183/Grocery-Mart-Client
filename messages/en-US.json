@@ -65,5 +65,40 @@
       "businessHoursValue": "Monday - Saturday, 08:00 AM - 06:00 PM"
     },
     "copyright": "© 2021 - 2025 Grocery Mart. All rights reserved."
+  },
+
+  "login": {
+    "helloAgain": "Welcome back!",
+    "desc01": "Enjoy a great shopping experience at Grocery Mart with high-quality products and advanced services tailored just for you.",
+    "desc02": "Sign in to your Grocery Mart account to save your information, access exclusive deals, and enjoy a seamless shopping experience.",
+
+    "form": {
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "showPassword": "Show password",
+      "login": "Log in",
+      "loginWithGoogle": "Log in with Google",
+      "noAccount": "Don't have an account?",
+      "registerNow": "Sign up now"
+    }
+  },
+
+  "signUp": {
+    "greeting": "Welcome to Grocery Mart",
+    "desc01": "Enjoy a great shopping experience at Grocery Mart with high-quality products and advanced services tailored just for you.",
+    "desc02": "Sign up for a Grocery Mart account today to unlock exclusive deals, save your favorite items, and enjoy seamless shopping. Join now for personalized recommendations and exciting offers!",
+
+    "form": {
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "forgotPassword": "Forgot password?",
+      "showPassword": "Show password",
+      "signUp": "Sign up",
+      "loginWithGoogle": "Sign up with Google",
+      "haveAccount": "Already have an account?",
+      "loginNow": "Log in now"
+    }
   }
 }

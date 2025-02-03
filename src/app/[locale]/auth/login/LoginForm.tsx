@@ -6,8 +6,11 @@ import CheckBox from '@/components/CheckBox';
 import Icon from '@/components/Icon';
 import TextField from '@/components/TextField';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 const LoginForm: React.FC = () => {
+  const t = useTranslations('login.form');
+
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -18,27 +21,27 @@ const LoginForm: React.FC = () => {
     >
       {() => (
         <Form className="mt-12">
-          <TextField name="email" label="" type="email" placeholder="Email" rightIcon={<Icon name="email" />} />
+          <TextField name="email" label="" type="email" placeholder={t('email')} rightIcon={<Icon name="email" />} />
 
           <TextField
             name="password"
             label=""
             type="password"
-            placeholder="Password"
+            placeholder={t('password')}
             rightIcon={<Icon name="password" />}
             className="mt-6"
           />
 
           <div className="flex justify-between mt-6">
-            <CheckBox name="showPassword" label="Hiển thị mật khẩu" />
+            <CheckBox name="showPassword" label={t('showPassword')} />
 
             <Button variant="text" size="zeroPadding" textColor="blue-500 dark:white" bgHoverColor="none">
-              Quên mật khẩu
+              {t('forgotPassword')}
             </Button>
           </div>
           <div className="mt-6 flex flex-col gap-5">
             <Button type="submit" full>
-              Sign In
+              {t('login')}
             </Button>
 
             <Button
@@ -51,13 +54,13 @@ const LoginForm: React.FC = () => {
               bgHoverColor="none"
               startIcon={<Icon name="gmail" color="inherit" />}
             >
-              Login with Gmail
+              {t('loginWithGoogle')}
             </Button>
 
             <div className="flex gap-2 m-auto">
-              <span className="text-gray-500 "> Don&apos;t have an account?</span>
+              <span className="text-gray-500 "> {t('noAccount')}</span>
               <Button variant="text" size="zeroPadding" bgHoverColor="none">
-                Đăng ký ngay
+                {t('registerNow')}
               </Button>
             </div>
           </div>

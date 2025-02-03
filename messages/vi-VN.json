@@ -66,5 +66,39 @@
       "businessHoursValue": "Thứ Hai - Thứ Bảy, 08:00 - 18:00"
     },
     "copyright": "© 2021 - 2025 Grocery Mart. Bản quyền thuộc về Grocery Mart."
+  },
+  "login": {
+    "helloAgain": "Chào mừng trở lại!",
+    "desc01": "Trải nghiệm mua sắm tuyệt vời tại Grocery Mart với sản phẩm chất lượng cao và dịch vụ tiên tiến dành riêng cho bạn.",
+    "desc02": "Đăng nhập tài khoản Grocery Mart để lưu thông tin, nhận ưu đãi độc quyền và tận hưởng mua sắm tiện lợi.",
+
+    "form": {
+      "email": "Email",
+      "password": "Mật khẩu",
+      "forgotPassword": "Quên mật khẩu?",
+      "showPassword": "Hiện mật khẩu",
+      "login": "Đăng nhập",
+      "loginWithGoogle": "Đăng nhập bằng Google",
+      "noAccount": "Chưa có tài khoản?",
+      "registerNow": "Đăng ký ngay"
+    }
+  },
+
+  "signUp": {
+    "greeting": "Chào mừng bạn đến với Grocery Mart",
+    "desc01": "Trải nghiệm mua sắm tuyệt vời tại Grocery Mart với sản phẩm chất lượng cao và dịch vụ tiên tiến dành riêng cho bạn.",
+    "desc02": "Đăng ký tài khoản Grocery Mart ngay hôm nay để nhận ưu đãi độc quyền, lưu sản phẩm yêu thích và tận hưởng mua sắm tiện lợi. Tham gia ngay để nhận gợi ý cá nhân hóa và nhiều khuyến mãi hấp dẫn!",
+
+    "form": {
+      "email": "Email",
+      "password": "Mật khẩu",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "forgotPassword": "Quên mật khẩu?",
+      "showPassword": "Hiện mật khẩu",
+      "signUp": "Đăng ký",
+      "loginWithGoogle": "Đăng ký bằng Google",
+      "haveAccount": "Bạn đã có tài khoản?",
+      "loginNow": "Đăng nhập ngay"
+    }
   }
 }
