@@ -44,8 +44,8 @@ const Button: React.FC<ButtonProps> = ({
   bgHoverColor = '',
   startIcon,
   endIcon,
-  borderColor,
-  borderHoverColor,
+  borderColor = '',
+  borderHoverColor = '',
   className,
   iconClassName = '',
   width,
@@ -62,7 +62,8 @@ const Button: React.FC<ButtonProps> = ({
   const textHoverColorClass = createTailwindClass('hover:text', textHoverColor);
   const bgColorClass = createTailwindClass('bg', bgColor);
   const bgHoverColorClass = createTailwindClass('hover:bg', bgHoverColor);
-
+  const borderColorClass = createTailwindClass('border', borderColor);
+  const borderHoverColorClass = createTailwindClass('hover:border', borderHoverColor);
   const baseClasses =
     'rounded focus:outline-none transition duration-300 flex w-fit items-center justify-center cursor-pointer font-medium';
 
@@ -83,10 +84,10 @@ const Button: React.FC<ButtonProps> = ({
     outlined: clsx(
       'border',
       textColorClass || 'text-blue-500',
-      borderColor || 'border-blue-500',
+      borderColorClass || 'border-blue-500',
       bgHoverColorClass || 'hover:bg-blue-200',
       textHoverColorClass || 'hover:text-white',
-      borderHoverColor || '',
+      borderHoverColorClass || '',
     ),
     text: clsx(
       'hover:underline',

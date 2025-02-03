@@ -95,7 +95,7 @@ const TextField = ({
         className={clsx('group', className)}
       >
         {label && (
-          <label htmlFor={name} className={clsx('block mb-1', { 'text-gray-500': disabled }, labelClassName)}>
+          <label htmlFor={name} className={clsx('block mb-1 text-left', { 'text-gray-500': disabled }, labelClassName)}>
             {label}
           </label>
         )}
@@ -105,7 +105,7 @@ const TextField = ({
           }}
           className={clsx('flex items-center border p-2 rounded-md bg-transparent', inputContainerClassName, {
             'border-red-400': error && !disabled,
-            'hover:border-blue-300 group-focus-within:border-blue-300': !error && !disabled,
+            'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
             'bg-gray-50 border-gray-300 pointer-events-none': disabled,
           })}
           onClick={handleDivClick}
@@ -164,7 +164,7 @@ const TextField = ({
               inputContainerClassName,
               {
                 'border-red-400': error && !disabled,
-                'hover:border-blue-300 group-focus-within:border-blue-300': !error && !disabled,
+                'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
                 '!bg-gray-50 border-gray-300 pointer-events-none': disabled,
               },
             )}

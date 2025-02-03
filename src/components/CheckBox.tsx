@@ -9,9 +9,18 @@ export interface CheckBoxProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked?: boolean;
   disabled?: boolean;
+  labelClassName?: string;
 }
 
-const CheckBox: React.FC<CheckBoxProps> = ({ name, label, onChange, checked, size = 20, disabled = false }) => {
+const CheckBox: React.FC<CheckBoxProps> = ({
+  name,
+  label,
+  onChange,
+  checked,
+  size = 20,
+  disabled = false,
+  labelClassName,
+}) => {
   const [field, meta, helpers] = useField({ name, type: 'checkbox' });
   const id = useId();
   const error = meta.error && meta.touched ? meta.error : '';
@@ -30,7 +39,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label, onChange, checked, siz
     <>
       <label
         htmlFor={id}
-        className={clsx('ml-2 flex items-center gap-2', {
+        className={clsx('ml-2 flex items-center gap-2 text-gray-500', labelClassName, {
           'cursor-not-allowed opacity-30': disabled,
         })}
       >
@@ -45,14 +54,14 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label, onChange, checked, siz
           className="hidden"
         />
         <div
-          className={clsx('border-2 flex items-center justify-center relative rounded-md', {
+          className={clsx('border flex items-center justify-center relative rounded-md', {
             'border-gray-500 bg-gray-300': disabled,
-            'border-dark': !disabled,
+            'border-gray-500': !disabled,
           })}
           style={{ width: `${size}px`, height: `${size}px` }}
         >
           <div
-            className={clsx('absolute bg-dark transition-all', {
+            className={clsx('absolute bg-blue-500 transition-all', {
               'scale-0 left-0 bottom-0': !(checked ?? field.checked),
               'scale-100': checked ?? field.checked,
             })}

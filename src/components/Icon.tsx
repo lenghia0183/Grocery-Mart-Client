@@ -33,6 +33,7 @@ import Calendar from '../asset/icons/calendar.svg';
 import Clock from '../asset/icons/clock.svg';
 import Send from '../asset/icons/send.svg';
 import ArrowSlide from '../asset/icons/arrowSlide.svg';
+import Gmail from '../asset/icons/gmail.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -81,6 +82,7 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   clock: Clock,
   send: Send,
   arrowSlide: ArrowSlide,
+  gmail: Gmail,
 };
 
 const Icon: React.FC<IconProps> = ({

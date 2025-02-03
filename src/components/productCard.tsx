@@ -36,7 +36,7 @@ const ProductCard: FC<ProductCardProps> = ({ data }) => {
         <div className="flex justify-between my-3">
           <span className="text-base font-semibold">{data.price}</span>
           <div className="flex items-center gap-1">
-            <Icon name="star" color="yellow" />
+            <Icon name="star" color="yellow-500" width="18px" height="18px" />
             <span className="text-base font-medium">{data.startRate}</span>
           </div>
         </div>

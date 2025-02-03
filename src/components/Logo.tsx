@@ -1,12 +1,20 @@
 import images from '@/asset/images';
 import Image from './Image';
 import Link from 'next/link';
+import clsx from 'clsx';
 
-function Logo(): JSX.Element {
+interface LogoProps {
+  className?: string;
+}
+
+function Logo({ className }: LogoProps): JSX.Element {
   return (
     <Link
       href="/"
-      className="flex items-center gap-3 text-2xl font-semibold text-dark-500 dark:text-white select-none"
+      className={clsx(
+        'flex items-center gap-3 text-2xl font-semibold text-dark-500 dark:text-white select-none',
+        className,
+      )}
       title="Grocery Mart Logo"
     >
       <Image
