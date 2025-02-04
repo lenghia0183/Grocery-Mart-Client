@@ -83,7 +83,6 @@ const ProductFilterSideBar: React.FC = () => {
             maxPrice: values.maxPrice,
             manufacturers: values.manufacturers,
           },
-          page: 10,
         });
       }}
     >
@@ -100,7 +99,7 @@ const ProductFilterSideBar: React.FC = () => {
             />
 
             {/* Danh mục sản phẩm */}
-            <div className="rounded-md  bg-white mt-5">
+            <div className="rounded-md   mt-5">
               <h3 className="text-xl font-medium text-dark flex items-center gap-2">
                 <Icon name="category" size={0.8} color="dark" strokeWidth={2} /> Danh mục sản phẩm
               </h3>
@@ -124,14 +123,14 @@ const ProductFilterSideBar: React.FC = () => {
             </div>
 
             {/* Bộ lọc */}
-            <div className=" bg-white mt-5">
+            <div className="  mt-5">
               <h3 className="text-2xl font-medium text-dark flex items-center gap-2">
                 <Icon name="filter" size={0.8} color="dark" strokeWidth={2} /> Bộ lọc
               </h3>
 
               <div className="h-[1px] bg-dark mt-3 mb-4"></div>
 
-              <div className=" bg-white">
+              <div className=" ">
                 <h3 className="text-lg font-medium text-dark flex items-center gap-2">
                   <Icon name="vendor" size={1.5} /> Theo thương hiệu
                 </h3>
@@ -172,7 +171,7 @@ const ProductFilterSideBar: React.FC = () => {
             <div className="h-[1px] bg-dark mt-5 mb-3"></div>
 
             {/* Đánh giá */}
-            <div className="bg-white">
+            <div className="">
               <h3 className="text-lg font-medium text-dark flex items-center gap-2">
                 <Icon name="rating" size={1.5} /> Đánh giá
               </h3>
