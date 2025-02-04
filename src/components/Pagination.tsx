@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { useSearchParams } from 'next/navigation';
 import Icon from './Icon';
+import { useQueryState } from '@/hooks/useQueryState';
 
 type PaginationProps = {
   pageCount: number;
@@ -52,7 +53,8 @@ const Pagination: FC<PaginationProps> = ({
   const buttonRef = useRef<HTMLLIElement>(null);
   const searchParams = useSearchParams();
 
-  const currentForcePage = Number(searchParams.get('page')) || 1;
+  const { page, setPage } = useQueryState({ page: 1 });
+  const currentForcePage = page;
 
   useEffect(() => {
     if (ulRef.current && buttonRef.current) {
@@ -71,9 +73,10 @@ const Pagination: FC<PaginationProps> = ({
 
   const handlePageClick = (selectedPage: number) => {
     if (selectedPage !== currentForcePage) {
-      const params = new URLSearchParams(window.location.search);
-      params.set('page', selectedPage.toString());
-      window.history.pushState({}, '', `${window.location.pathname}?${params}`);
+      // const params = new URLSearchParams(window.location.search);
+      // params.set('page', selectedPage.toString());
+      // window.history.pushState({}, '', `${window.location.pathname}?${params}`);
+      setPage(selectedPage);
     }
   };
 
