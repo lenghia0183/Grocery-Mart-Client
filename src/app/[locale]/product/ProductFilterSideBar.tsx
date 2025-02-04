@@ -110,12 +110,14 @@ const ProductFilterSideBar: React.FC = () => {
                   <div
                     key={_id}
                     onClick={() => setFieldValue('category', _id)}
-                    className="cursor-pointer flex items-center gap-3 p-1"
+                    className={clsx('cursor-pointer flex items-center gap-3 py-2 transition-all', {
+                      'px-2 text-blue-500': values.category === _id,
+                    })}
                   >
                     <div className="w-[30px] h-[30px]">
                       <Image src={image} alt={name} />
                     </div>
-                    <p className={clsx('text-base font-normal', { 'text-blue': values.category === _id })}>{name}</p>
+                    <p className={clsx('text-base font-normal')}>{name}</p>
                   </div>
                 ))}
               </Accordion>
@@ -134,7 +136,7 @@ const ProductFilterSideBar: React.FC = () => {
                   <Icon name="vendor" size={1.5} /> Theo thương hiệu
                 </h3>
 
-                <Accordion minHeight="180px">
+                <Accordion minHeight="165px">
                   <div className="mt-3">
                     <CheckBoxGroup name="manufacturers">
                       {manufacturerList.map(({ name, _id }) => (
