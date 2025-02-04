@@ -2,7 +2,7 @@
 'use client';
 
 import { useCallback, useMemo, useRef } from 'react';
-import { useSearchParams, usePathname } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 interface UseQueryStateOptions {
   prefix?: string;
@@ -27,11 +27,21 @@ export const useQueryState = (
 ) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const router = useRouter();
 
   const queryObjRef = useRef<Record<string, string | number | null | Record<string, unknown>>>({});
 
+  // console.log('queryObjRef', queryObjRef);
+
   const initialQueryPrefix = useMemo(() => {
-    return Object.fromEntries(Object.entries(initialQuery).map(([key, value]) => [`${prefix}${key}`, value]));
+    return Object.fromEntries(
+      Object.entries(initialQuery).map(([key, value]) => {
+        if (typeof value === 'object') {
+          value = JSON.stringify(value);
+        }
+        return [`${prefix}${key}`, value];
+      }),
+    );
   }, [initialQuery, prefix]);
 
   const pf = useMemo(() => prefix.trim(), [prefix]);
@@ -51,6 +61,7 @@ export const useQueryState = (
   );
 
   const jsonParse = <T>(str: string | null, fallback: T): T => {
+    // console.log('srt', str);
     try {
       return str ? JSON.parse(str) : fallback;
     } catch {
@@ -60,14 +71,16 @@ export const useQueryState = (
 
   const queryObj = useMemo(() => {
     const params = Object.fromEntries(searchParams.entries());
+    // console.log('params', params);
     const result = { ...initialQueryPrefix, ...params };
+    // console.log('result', result);
 
     if (!queryObjRef.current || JSON.stringify(result) !== JSON.stringify(queryObjRef.current)) {
       queryObjRef.current = result;
     }
 
     return queryObjRef.current || {};
-  }, [searchParams, initialQueryPrefix]);
+  }, [searchParams, initialQueryPrefix, pathname]);
 
   const page = useMemo(() => {
     const pageNumber = Number(queryObj[$page]);
@@ -79,10 +92,9 @@ export const useQueryState = (
     return isNaN(pageSizeNumber) ? 8 : pageSizeNumber;
   }, [queryObj, $pageSize]);
 
-  const filters = useMemo(
-    () => jsonParse<Record<string, unknown>>(queryObj[$filters] as string | null, {}),
-    [queryObj, $filters],
-  );
+  const filters = useMemo(() => {
+    return jsonParse<Record<string, unknown>>(queryObj[$filters] as string | null, {});
+  }, [queryObj, $filters]);
 
   const quickFilters = useMemo(
     () => jsonParse<Record<string, unknown>>(queryObj[$quickFilters] as string | null, {}),
@@ -104,6 +116,34 @@ export const useQueryState = (
         ...queryObj,
         ...obj,
       };
+      console.log('queryObj', queryObj);
+      console.log('obj', obj);
+      console.log('updateUrl', updatedQuery);
+      const searchParams = new URLSearchParams();
+
+      Object.entries(updatedQuery).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          if (typeof value === 'object') {
+            searchParams.set(key, JSON.stringify(value));
+          } else {
+            searchParams.set(key, String(value));
+          }
+        } else {
+          searchParams.delete(key);
+        }
+      });
+
+      router.replace(`${pathname}?${searchParams.toString()}`);
+    },
+    [pathname, queryObj, initialQueryPrefix],
+  );
+
+  const setMultiple = useCallback(
+    (payload: Record<string, unknown>) => {
+      const updatedQuery = {
+        ...queryObj,
+        ...payload,
+      };
 
       const searchParams = new URLSearchParams();
 
@@ -114,12 +154,14 @@ export const useQueryState = (
           } else {
             searchParams.set(key, String(value));
           }
+        } else {
+          searchParams.delete(key);
         }
       });
 
-      window.history.replaceState(null, '', `${pathname}?${searchParams.toString()}`);
+      router.replace(`${pathname}?${searchParams.toString()}`);
     },
-    [pathname, queryObj, initialQueryPrefix],
+    [queryObj, pathname, router],
   );
 
   const setPage = useCallback((payload: number) => updateUrl({ [$page]: payload }), [updateUrl, $page]);
@@ -147,7 +189,10 @@ export const useQueryState = (
   );
 
   const setKeyword = useCallback(
-    (payload: string) => updateUrl({ [$keyword]: payload, [$page]: 1 }),
+    (payload: string) => {
+      console.log('payload', payload);
+      updateUrl({ [$keyword]: payload, [$page]: 1 });
+    },
     [updateUrl, $keyword],
   );
 
@@ -170,5 +215,6 @@ export const useQueryState = (
     setTab,
     setOrder,
     setOrderBy,
+    setMultiple,
   };
 };

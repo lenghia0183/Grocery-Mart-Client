@@ -34,6 +34,9 @@ import Clock from '../asset/icons/clock.svg';
 import Send from '../asset/icons/send.svg';
 import ArrowSlide from '../asset/icons/arrowSlide.svg';
 import Gmail from '../asset/icons/gmail.svg';
+import EmptyStar from '../asset/icons/emptyStar.svg';
+import Category from '../asset/icons/category.svg';
+import Filter from '../asset/icons/filter.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -83,6 +86,9 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   send: Send,
   arrowSlide: ArrowSlide,
   gmail: Gmail,
+  emptyStar: EmptyStar,
+  category: Category,
+  filter: Filter,
 };
 
 const Icon: React.FC<IconProps> = ({
