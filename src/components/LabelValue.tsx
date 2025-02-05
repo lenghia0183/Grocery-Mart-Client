@@ -19,7 +19,7 @@ const LabelValue: React.FC<LabelValueProps> = ({
   className = '',
 }) => {
   return (
-    <div className={clsx('flex items-start text-lg text-dark', className)}>
+    <div className={clsx('flex items-start text-lg text-dark dark:text-white', className)}>
       <div className={clsx('font-semibold flex-shrink-0', labelClassName)} style={{ width: labelWidth }}>
         {label}
       </div>
