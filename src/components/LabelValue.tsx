@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 interface LabelValueProps {
   label: React.ReactNode;
-  value: React.ReactNode | string;
+  value?: React.ReactNode | string;
   labelWidth?: string;
   labelClassName?: string;
   valueClassName?: string;
@@ -19,8 +19,8 @@ const LabelValue: React.FC<LabelValueProps> = ({
   className = '',
 }) => {
   return (
-    <div className={clsx('flex items-center text-lg text-dark', className)}>
-      <div className={clsx('font-semibold', labelClassName)} style={{ width: labelWidth }}>
+    <div className={clsx('flex items-start text-lg text-dark', className)}>
+      <div className={clsx('font-semibold flex-shrink-0', labelClassName)} style={{ width: labelWidth }}>
         {label}
       </div>
       <div className={clsx('ml-2', valueClassName)}>{value}</div>

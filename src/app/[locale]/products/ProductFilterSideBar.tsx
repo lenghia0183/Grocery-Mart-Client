@@ -110,14 +110,14 @@ const ProductFilterSideBar: React.FC = () => {
                   <div
                     key={_id}
                     onClick={() => setFieldValue('category', _id)}
-                    className={clsx('cursor-pointer flex items-center gap-3 py-2 transition-all', {
-                      'px-2 text-blue-500': values.category === _id,
+                    className={clsx('cursor-pointer flex items-center gap-3 py-2 transition-all dark:text-white', {
+                      'px-2 text-blue-500 dark:!text-blue-500': values.category === _id,
                     })}
                   >
                     <div className="w-[30px] h-[30px]">
                       <Image src={image} alt={name} />
                     </div>
-                    <p className={clsx('text-base font-normal dark:text-white')}>{name}</p>
+                    <p className={clsx('text-base font-normal ')}>{name}</p>
                   </div>
                 ))}
               </Accordion>

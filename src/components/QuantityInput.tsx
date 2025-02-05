@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { useField } from 'formik';
 import IconButton from './IconButton';
+import { createTailwindClass } from '@/utils';
 
 type QuantityInputProps = {
   name: string;
@@ -16,6 +17,7 @@ type QuantityInputProps = {
   disabled?: boolean;
   height?: string;
   width?: string;
+  borderColor?: string;
 };
 
 const QuantityInput: React.FC<QuantityInputProps> = ({
@@ -26,13 +28,16 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
   className = '',
   inputClassName = '',
   buttonClassName = '',
-  disabled = true,
+  disabled = false,
   height = '40px',
   width = '120px',
+  borderColor = 'gray-500',
 }) => {
   const [field, meta, helpers] = useField(name);
   const { value } = field;
   const { setValue } = helpers;
+
+  const borderColorClass = createTailwindClass('border', borderColor);
 
   useEffect(() => {
     if (value == undefined) {
@@ -81,7 +86,8 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
   return (
     <div
       className={clsx(
-        'flex items-center justify-center border border-gray-300 rounded-[10px]',
+        'flex items-center justify-center border rounded-[10px]',
+        borderColorClass,
         { 'pointer-events-none border-gray-300': disabled },
         className,
       )}

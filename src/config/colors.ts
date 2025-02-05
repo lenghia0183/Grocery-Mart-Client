@@ -64,6 +64,12 @@ const colors: Colors = {
     600: '#f5f5f5',
   },
 
+  green: {
+    // Đã có trước
+    DEFAULT: '#67b044',
+    100: 'rgba(103, 176, 68, 0.4)', // Màu mới
+  },
+
   red: {
     // Đã có trước
     DEFAULT: '#f44336',

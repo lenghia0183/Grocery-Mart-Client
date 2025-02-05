@@ -22,6 +22,7 @@ export interface IconButtonProps {
   bgColor?: string;
   bgHoverColor?: string;
   borderColor?: string;
+  borderHoverColor?: string;
   className?: string;
   rounded?: boolean;
   width?: string;
@@ -44,6 +45,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   iconStrokeWidth,
   iconColor = '',
   iconHoverColor = '',
+  borderHoverColor = '',
   bgColor = '',
   bgHoverColor = '',
   borderColor = '',
@@ -59,6 +61,8 @@ const IconButton: React.FC<IconButtonProps> = ({
   const iconColorClass = createTailwindClass('text', iconColor);
   const bgColorClass = createTailwindClass('bg', bgColor);
   const bgHoverColorClass = createTailwindClass('hover:bg', bgHoverColor);
+  const borderColorClass = createTailwindClass('border', borderColor);
+  const borderHoverColorClass = createTailwindClass('hover:border', borderHoverColor);
 
   const baseClasses = ' outline-none rounded-md transition duration-200 flex items-center justify-center';
 
@@ -80,8 +84,9 @@ const IconButton: React.FC<IconButtonProps> = ({
       'border',
       iconColorClass || 'text-dark-400',
       textHoverColorClass,
-      borderColor || 'border-gray-400',
+      borderColorClass || 'border-gray-400',
       bgHoverColorClass || 'hover:bg-blue-100',
+      borderHoverColorClass || '',
     ),
     text: clsx(iconColorClass || 'text-blue-400', textHoverColorClass, bgHoverColorClass || '', bgColorClass || ''),
   };
