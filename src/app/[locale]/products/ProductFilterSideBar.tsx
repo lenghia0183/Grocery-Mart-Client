@@ -92,18 +92,19 @@ const ProductFilterSideBar: React.FC = () => {
             {/* Tìm kiếm */}
             <TextField
               name="keyword"
-              rightIcon={<Icon name="search" color="dark" />}
-              inputContainerClassName="border-dark"
+              rightIcon={<Icon name="search" color="dark dark:white" />}
+              inputContainerClassName="border-dark dark:border-white"
+              inputClassName="rounded dark:text-white"
+              labelClassName="dark:text-white"
               label="Tìm kiếm"
-              inputClassName="rounded"
             />
 
             {/* Danh mục sản phẩm */}
             <div className="rounded-md   mt-5">
-              <h3 className="text-xl font-medium text-dark flex items-center gap-2">
-                <Icon name="category" size={0.8} color="dark" strokeWidth={2} /> Danh mục sản phẩm
+              <h3 className="text-xl font-medium text-dark dark:text-white flex items-center gap-2">
+                <Icon name="category" size={0.8} color="dark dark:white" strokeWidth={2} /> Danh mục sản phẩm
               </h3>
-              <div className="h-[1px] bg-dark mt-4 mb-3"></div>
+              <div className="h-[1px] bg-dark dark:bg-white mt-4 mb-3"></div>
               <Accordion minHeight="240px">
                 {categoryList.map(({ name, image, _id }) => (
                   <div
@@ -116,7 +117,7 @@ const ProductFilterSideBar: React.FC = () => {
                     <div className="w-[30px] h-[30px]">
                       <Image src={image} alt={name} />
                     </div>
-                    <p className={clsx('text-base font-normal')}>{name}</p>
+                    <p className={clsx('text-base font-normal dark:text-white')}>{name}</p>
                   </div>
                 ))}
               </Accordion>
@@ -124,14 +125,14 @@ const ProductFilterSideBar: React.FC = () => {
 
             {/* Bộ lọc */}
             <div className="  mt-5">
-              <h3 className="text-2xl font-medium text-dark flex items-center gap-2">
-                <Icon name="filter" size={0.8} color="dark" strokeWidth={2} /> Bộ lọc
+              <h3 className="text-2xl font-medium text-dark dark:text-white flex items-center gap-2">
+                <Icon name="filter" size={0.8} color="dark dark:white" strokeWidth={2} /> Bộ lọc
               </h3>
 
-              <div className="h-[1px] bg-dark mt-3 mb-4"></div>
+              <div className="h-[1px] bg-dark dark:bg-white mt-3 mb-4"></div>
 
               <div className=" ">
-                <h3 className="text-lg font-medium text-dark flex items-center gap-2">
+                <h3 className="text-lg font-medium text-dark dark:text-white flex items-center gap-2">
                   <Icon name="vendor" size={1.5} /> Theo thương hiệu
                 </h3>
 
@@ -139,42 +140,53 @@ const ProductFilterSideBar: React.FC = () => {
                   <div className="mt-3">
                     <CheckBoxGroup name="manufacturers">
                       {manufacturerList.map(({ name, _id }) => (
-                        <CheckBox key={_id} label={name} name={_id} labelClassName="!text-dark" borderColor="dark" />
+                        <CheckBox
+                          key={_id}
+                          label={name}
+                          name={_id}
+                          labelClassName="text-dark dark:text-white"
+                          borderColor="dark dark:white"
+                        />
                       ))}
                     </CheckBoxGroup>
                   </div>
                 </Accordion>
               </div>
 
-              <div className="h-[1px] bg-dark mt-3 mb-4"></div>
+              <div className="h-[1px] bg-dark dark:bg-white mt-3 mb-4"></div>
 
-              <h3 className="text-lg font-medium text-dark flex items-center gap-2 ">
+              <h3 className="text-lg font-medium text-dark dark:text-white flex items-center gap-2 ">
                 <Icon name="coin" size={1.5} /> Theo giá sản phẩm
               </h3>
 
               <div className="flex items-center mt-6">
-                <TextField name="minPrice" label="" placeholder="Giá tối thiểu" inputContainerClassName="border-dark" />
+                <TextField
+                  name="minPrice"
+                  label=""
+                  placeholder="Giá tối thiểu"
+                  inputContainerClassName="border-dark dark:border-white"
+                  inputClassName="dark:text-white"
+                />
                 <div className="mx-4 text-xl font-semibold text-dark-300 p-[1px] rounded-full">-</div>
-                <TextField name="maxPrice" label="" placeholder="Giá tối đa" inputContainerClassName="border-dark" />
+                <TextField
+                  name="maxPrice"
+                  label=""
+                  placeholder="Giá tối đa"
+                  inputContainerClassName="border-dark dark:border-white"
+                  inputClassName="dark:text-white"
+                />
               </div>
 
-              <Button
-                onClick={() => {}}
-                // bgColor="emerald"
-                full
-                className="mt-5 hover:text-dark"
-              >
+              <Button onClick={() => {}} full className="mt-5 hover:text-dark">
                 Áp dụng
               </Button>
             </div>
 
-            <div className="h-[1px] bg-dark mt-5 mb-3"></div>
+            <div className="h-[1px] bg-dark dark:bg-white mt-5 mb-3"></div>
 
             {/* Đánh giá */}
             <div className="">
-              <h3 className="text-lg font-medium text-dark flex items-center gap-2">
-                <Icon name="rating" size={1.5} /> Đánh giá
-              </h3>
+              <h3 className="text-lg font-medium text-dark dark:text-white flex items-center gap-2">Theo dánh giá</h3>
 
               <div className="flex flex-col gap-2 mt-2 px-2">
                 {ratings.map((rating) => (
@@ -204,7 +216,7 @@ const ProductFilterSideBar: React.FC = () => {
                 ))}
               </div>
 
-              <div className="h-[1px] bg-dark mt-5 mb-3"></div>
+              <div className="h-[1px] bg-dark mt-5 mb-3 dark:bg-white"></div>
 
               <Button type="submit" full className="mt-5 hover:text-dark">
                 Tìm kiếm

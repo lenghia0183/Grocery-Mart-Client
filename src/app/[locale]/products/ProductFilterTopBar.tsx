@@ -28,9 +28,9 @@ const ProductFilterTopBar = ({}) => {
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <div className="flex gap-x-4 bg-white shadow-md rounded-md h-[80px] px-3 xl:py-0 py-2">
+          <div className="flex gap-x-4 bg-white dark:bg-dark-400 shadow-md rounded-md h-[80px] px-3 xl:py-0 py-2">
             <div className="flex items-center gap-4 flex-wrap">
-              <div className="text-lg font-medium hidden sm:block">Hiển thị theo</div>
+              <div className="text-lg font-medium hidden sm:block dark:text-gray-500">Hiển thị theo</div>
 
               {displayOptions.concat(priceOptions).map((option) => (
                 <Button

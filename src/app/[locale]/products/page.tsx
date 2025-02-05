@@ -14,7 +14,7 @@ const ProductPage = async ({ searchParams }: { searchParams: { [key: string]: st
   console.log('keyword', keyword);
 
   return (
-    <div className="bg-gray-600">
+    <div className="bg-gray-600 dark:bg-dark-500">
       <Header />
       <div className="container mx-auto grid grid-cols-12 mt-10">
         {/* Sidebar */}

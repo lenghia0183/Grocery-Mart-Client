@@ -7,6 +7,7 @@ import IconButton from './IconButton';
 import ToolTip from './ToolTip';
 import AvatarMenu from './AvatarMenu';
 import { useTranslations } from 'next-intl';
+import { PATH } from '@/constants/path';
 
 const Header: React.FC = () => {
   const t = useTranslations();
@@ -14,19 +15,19 @@ const Header: React.FC = () => {
   const navItems = [
     {
       label: t('pageTitle.home'),
-      href: '/',
+      href: PATH.HOME,
     },
     {
       label: t('pageTitle.coffee'),
-      href: '/',
+      href: PATH.PRODUCTS,
     },
     {
       label: t('pageTitle.tea'),
-      href: '/',
+      href: PATH.PRODUCTS,
     },
     {
       label: t('pageTitle.cacao'),
-      href: '/',
+      href: PATH.PRODUCTS,
     },
   ];
 
