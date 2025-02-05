@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, FC } from 'react';
 import clsx from 'clsx';
 
-import { useSearchParams } from 'next/navigation';
 import Icon from './Icon';
 import { useQueryState } from '@/hooks/useQueryState';
 
@@ -51,7 +50,6 @@ const Pagination: FC<PaginationProps> = ({
   const [ulWidth, setUlWidth] = useState<string>('auto');
   const ulRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLLIElement>(null);
-  const searchParams = useSearchParams();
 
   const { page, setPage } = useQueryState({ page: 1 });
   const currentForcePage = page;

@@ -1,9 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import Link from 'next/link';
 import Loading from './Loading';
 import { createTailwindClass } from '@/utils';
+import { Link } from '@/i18n/routing';
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -98,12 +98,12 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   const linkClass = clsx(
-    textColorClass || 'text-dark-500',
+    textColorClass || 'text-blue-500',
     bgHoverColorClass || 'hover:bg-transparent',
-    borderColor || '',
-    borderHoverColor || '',
+    borderColorClass || '',
+    borderHoverColorClass || '',
     bgColorClass || '',
-    textHoverColorClass || 'hover:text-blue-400',
+    textHoverColorClass || 'hover:text-blue-500',
   );
 
   const classes = clsx(

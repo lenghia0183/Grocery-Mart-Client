@@ -1,7 +1,8 @@
 import images from '@/asset/images';
 import Image from './Image';
-import Link from 'next/link';
 import clsx from 'clsx';
+import { PATH } from '@/constants/path';
+import { Link } from '@/i18n/routing';
 
 interface LogoProps {
   className?: string;
@@ -10,7 +11,7 @@ interface LogoProps {
 function Logo({ className }: LogoProps): JSX.Element {
   return (
     <Link
-      href="/"
+      href={PATH.HOME}
       className={clsx(
         'flex items-center gap-3 text-2xl font-semibold text-dark-500 dark:text-white select-none',
         className,

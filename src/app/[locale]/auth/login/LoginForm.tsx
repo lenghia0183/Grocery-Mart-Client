@@ -7,6 +7,7 @@ import Icon from '@/components/Icon';
 import TextField from '@/components/TextField';
 import React from 'react';
 import { useTranslations } from 'next-intl';
+import { PATH } from '@/constants/path';
 
 const LoginForm: React.FC = () => {
   const t = useTranslations('login.form');
@@ -59,7 +60,7 @@ const LoginForm: React.FC = () => {
 
             <div className="flex gap-2 m-auto">
               <span className="text-gray-500 "> {t('noAccount')}</span>
-              <Button variant="text" size="zeroPadding" bgHoverColor="none">
+              <Button variant="text" size="zeroPadding" bgHoverColor="none" href={PATH.SIGN_UP}>
                 {t('registerNow')}
               </Button>
             </div>
