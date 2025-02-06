@@ -7,6 +7,7 @@ import ProductForm from './productForm';
 import LabelValue from '@/components/LabelValue';
 import Tabs from '@/components/Tabs';
 import formatCurrency from '@/utils/formatCurrency';
+import RelatedProducts from '@/components/RelatedProductList';
 
 const tabList = [
   { label: 'Thông tin sản phẩm', value: 'product-info' },
@@ -94,7 +95,9 @@ const ProductDetail: React.FC = () => {
             <LabelValue label="Thông báo" value="Chức năng này sẽ sớm được ra mắt" labelWidth="200px" />
           </Tabs>
         </div>
+        <RelatedProducts />
       </div>
+
       <Footer />
     </>
   );

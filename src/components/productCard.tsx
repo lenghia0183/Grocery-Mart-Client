@@ -1,21 +1,32 @@
+'use client';
+
 import { FC } from 'react';
 import Icon from './Icon';
 import Image from './Image';
+import clsx from 'clsx';
+import formatCurrency from '@/utils/formatCurrency';
 
 interface ProductCardProps {
+  className?: string;
   data: {
     thumbnail: string;
     alt: string;
     nameProduct: string;
     maker: string;
-    price: string;
+    price: number;
     startRate: number;
   };
 }
 
-const ProductCard: FC<ProductCardProps> = ({ data }) => {
+const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
+  console.log('className', className);
   return (
-    <div className="h-full p-4 rounded-2xl bg-white dark:bg-dark-400 shadow-product-card-light dark:shadow-product-card-dark text-dark dark:text-white hover:bg-gray-400 transition-all">
+    <div
+      className={clsx(
+        'h-full p-4 rounded-2xl bg-white dark:bg-dark-400 shadow-product-card-light dark:shadow-product-card-dark text-dark dark:text-white hover:bg-gray-400 transition-all',
+        className,
+      )}
+    >
       <div className="mx-auto w-[220px] h-[220px] bg-white dark:bg-dark-500 rounded-lg">
         <Image
           width={220}
@@ -27,14 +38,14 @@ const ProductCard: FC<ProductCardProps> = ({ data }) => {
       </div>
 
       <div className="mt-4">
-        <h2 className="mb-4 text-lg font-semibold min-h-15 max-h-15 transition-transform duration-300">
+        <h2 className="text-lg font-semibold h-[60px] transition-transform duration-300 overflow-hidden line-clamp-2">
           {data.nameProduct}
         </h2>
 
-        <h3 className="text-sm text-gray-500">{data.maker}</h3>
+        <h3 className="text-sm text-gray-500 mt-4">{data.maker}</h3>
 
         <div className="flex justify-between my-3">
-          <span className="text-base font-semibold">{data.price}</span>
+          <span className="text-base font-semibold">{formatCurrency(data.price)}</span>
           <div className="flex items-center gap-1">
             <Icon name="star" color="yellow-500" width="18px" height="18px" />
             <span className="text-base font-medium">{data.startRate}</span>

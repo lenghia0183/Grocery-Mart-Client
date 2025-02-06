@@ -61,7 +61,7 @@ const Tabs: React.FC<TabsProps> = ({
   return (
     <div className={clsx('overflow-hidden', className)}>
       <div
-        className={clsx(`flex  mb-4 relative text-xl overflow-auto`, {
+        className={clsx(`flex mb-4 relative text-xl overflow-auto`, {
           'border-b': divider,
         })}
       >
