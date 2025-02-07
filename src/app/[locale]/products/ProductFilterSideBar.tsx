@@ -12,6 +12,7 @@ import TextField from '@/components/TextField';
 import CheckBox from '@/components/CheckBox';
 import { useQueryState } from '@/hooks/useQueryState';
 import CheckBoxGroup from '@/components/CheckBoxGroup';
+import Divider from '@/components/Divider';
 
 type Category = {
   name: string;
@@ -104,7 +105,10 @@ const ProductFilterSideBar: React.FC = () => {
               <h3 className="text-xl font-medium text-dark dark:text-white flex items-center gap-2">
                 <Icon name="category" size={0.8} color="dark dark:white" strokeWidth={2} /> Danh mục sản phẩm
               </h3>
-              <div className="h-[1px] bg-dark dark:bg-white mt-4 mb-3"></div>
+              {/* <div className="h-[1px] bg-dark dark:bg-white mt-4 mb-3"></div> */}
+
+              <Divider marginBottom="15px" marginTop="12px" />
+
               <Accordion minHeight="240px">
                 {categoryList.map(({ name, image, _id }) => (
                   <div
@@ -129,7 +133,7 @@ const ProductFilterSideBar: React.FC = () => {
                 <Icon name="filter" size={0.8} color="dark dark:white" strokeWidth={2} /> Bộ lọc
               </h3>
 
-              <div className="h-[1px] bg-dark dark:bg-white mt-3 mb-4"></div>
+              <Divider marginBottom="15px" marginTop="12px" />
 
               <div className=" ">
                 <h3 className="text-lg font-medium text-dark dark:text-white flex items-center gap-2">
@@ -153,7 +157,7 @@ const ProductFilterSideBar: React.FC = () => {
                 </Accordion>
               </div>
 
-              <div className="h-[1px] bg-dark dark:bg-white mt-3 mb-4"></div>
+              <Divider marginBottom="15px" marginTop="12px" />
 
               <h3 className="text-lg font-medium text-dark dark:text-white flex items-center gap-2 ">
                 <Icon name="coin" size={1.5} /> Theo giá sản phẩm
@@ -182,7 +186,7 @@ const ProductFilterSideBar: React.FC = () => {
               </Button>
             </div>
 
-            <div className="h-[1px] bg-dark dark:bg-white mt-5 mb-3"></div>
+            <Divider marginBottom="15px" marginTop="12px" />
 
             {/* Đánh giá */}
             <div className="">
@@ -216,7 +220,7 @@ const ProductFilterSideBar: React.FC = () => {
                 ))}
               </div>
 
-              <div className="h-[1px] bg-dark mt-5 mb-3 dark:bg-white"></div>
+              <Divider marginBottom="15px" marginTop="12px" />
 
               <Button type="submit" full className="mt-5 hover:text-dark">
                 Tìm kiếm
