@@ -14,7 +14,11 @@
     "language": "Ngôn ngữ",
     "english": "Tiếng Anh",
     "vietnamese": "Tiếng Việt",
-    "back": "Quay lại"
+    "back": "Quay lại",
+    "inStock": "Còn hàng",
+    "outOfStock": "Hết hàng",
+    "like": "Thích",
+    "remove": "Xóa"
   },
 
   "pageTitle": {
@@ -100,5 +104,21 @@
       "haveAccount": "Bạn đã có tài khoản?",
       "loginNow": "Đăng nhập ngay"
     }
+  },
+
+  "cart": {
+    "continueShopping": "Tiếp tục mua hàng",
+    "totalPrice": "Tổng giá trị đơn hàng:",
+    "subtotal": "Tổng phụ:",
+    "extraFee": "Phụ phí:",
+    "totalPayment": "Tổng tiền thanh toán:",
+    "totalItems": "Tổng số lượng sản phẩm",
+    "checkout": "Tiến hành thanh toán",
+    "giftTitle": "Gửi đơn hàng này như một món quà.",
+    "giftDescription": "Các mặt hàng có sẵn sẽ được gửi đến người nhận quà của bạn.",
+    "inStock": "Còn hàng",
+    "outOfStock": "Hết hàng",
+    "like": "Thích",
+    "remove": "Xóa"
   }
 }

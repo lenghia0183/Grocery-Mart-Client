@@ -6,6 +6,7 @@ import Icon from '@/components/Icon';
 import QuantityInput from '@/components/QuantityInput';
 import Image from '@/components/Image';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 interface CartItemProps {
   product: {
@@ -19,6 +20,8 @@ interface CartItemProps {
 }
 
 const CartItem = ({ product }: CartItemProps): JSX.Element => {
+  const t = useTranslations('common');
+
   return (
     <Formik
       initialValues={{ quantity: 1 }}
@@ -49,7 +52,7 @@ const CartItem = ({ product }: CartItemProps): JSX.Element => {
                       'text-red-400 dark:text-red-300': !product.inStock,
                     })}
                   >
-                    {product.inStock ? 'Còn hàng' : 'Hết hàng'}
+                    {product.inStock ? t('inStock') : t('outOfStock')}
                   </p>
                 </div>
 
@@ -69,7 +72,7 @@ const CartItem = ({ product }: CartItemProps): JSX.Element => {
                     textColor="gray"
                     startIcon={<Icon name="heart" color="inherit" />}
                   >
-                    Thích
+                    {t('like')}
                   </Button>
 
                   <Button
@@ -79,7 +82,7 @@ const CartItem = ({ product }: CartItemProps): JSX.Element => {
                     textColor="gray"
                     startIcon={<Icon name="delete" color="inherit" />}
                   >
-                    Xóa
+                    {t('remove')}
                   </Button>
                 </div>
               </div>

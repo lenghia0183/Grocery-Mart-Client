@@ -1,20 +1,24 @@
 {
   "testPage": {
-    "openDialog": "Open dialog"
+    "openDialog": "Open Dialog"
   },
   "common": {
     "account": "Account",
-    "logout": "Log out",
+    "logout": "Logout",
     "cart": "Cart",
     "favorites": "Favorites",
     "settings": "Settings",
-    "themeMode": "Theme mode",
-    "darkMode": "Dark mode",
-    "lightMode": "Light mode",
+    "themeMode": "Theme Mode",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
     "language": "Language",
     "english": "English",
     "vietnamese": "Vietnamese",
-    "back": "Back"
+    "back": "Back",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "like": "Like",
+    "remove": "Remove"
   },
 
   "pageTitle": {
@@ -33,11 +37,12 @@
   },
   "home": {
     "category": "Category",
-    "latest": "Newest"
+    "latest": "Latest"
   },
+
   "footer": {
-    "desc01": "Grocery Mart is committed to providing a simple, convenient, and enjoyable online shopping experience. With a wide range of products including coffee, tea, and cocoa, we always prioritize customer satisfaction.",
-    "desc02": "At Grocery Mart, product quality and customer service are our top priorities. We continuously improve to maximize convenience, making your shopping experience easier than ever.",
+    "desc01": "Grocery Mart is committed to providing a simple, convenient, and enjoyable online shopping experience. With a variety of products from coffee and tea to cocoa, we always prioritize customer satisfaction.",
+    "desc02": "Product quality and customer service at Grocery Mart are our top priorities. We continuously improve to bring you maximum convenience, making shopping easier than ever.",
     "store": {
       "title": "Store",
       "home": "Home",
@@ -46,7 +51,7 @@
       "cocoa": "Cocoa"
     },
     "help": {
-      "title": "Support",
+      "title": "Help",
       "storeLocation": "Store Location",
       "orderStatus": "Order Status"
     },
@@ -54,40 +59,39 @@
       "title": "About Us",
       "customerService": "Customer Service",
       "termsOfUse": "Terms of Use",
-      "aboutUs": "Our Story"
+      "aboutUs": "About Us"
     },
     "contact": {
       "title": "Contact",
       "email": "Email",
-      "phone": "Phone Number",
+      "phone": "Phone",
       "address": "Address",
       "businessHours": "Business Hours",
       "businessHoursValue": "Monday - Saturday, 08:00 AM - 06:00 PM"
     },
     "copyright": "© 2021 - 2025 Grocery Mart. All rights reserved."
   },
-
   "login": {
     "helloAgain": "Welcome back!",
-    "desc01": "Enjoy a great shopping experience at Grocery Mart with high-quality products and advanced services tailored just for you.",
-    "desc02": "Sign in to your Grocery Mart account to save your information, access exclusive deals, and enjoy a seamless shopping experience.",
+    "desc01": "Enjoy an amazing shopping experience at Grocery Mart with high-quality products and advanced services tailored just for you.",
+    "desc02": "Log in to your Grocery Mart account to save your information, receive exclusive offers, and enjoy a seamless shopping experience.",
 
     "form": {
       "email": "Email",
       "password": "Password",
       "forgotPassword": "Forgot password?",
       "showPassword": "Show password",
-      "login": "Log in",
-      "loginWithGoogle": "Log in with Google",
+      "login": "Login",
+      "loginWithGoogle": "Login with Google",
       "noAccount": "Don't have an account?",
-      "registerNow": "Sign up now"
+      "registerNow": "Register now"
     }
   },
 
   "signUp": {
     "greeting": "Welcome to Grocery Mart",
-    "desc01": "Enjoy a great shopping experience at Grocery Mart with high-quality products and advanced services tailored just for you.",
-    "desc02": "Sign up for a Grocery Mart account today to unlock exclusive deals, save your favorite items, and enjoy seamless shopping. Join now for personalized recommendations and exciting offers!",
+    "desc01": "Enjoy an amazing shopping experience at Grocery Mart with high-quality products and advanced services tailored just for you.",
+    "desc02": "Sign up for a Grocery Mart account today to receive exclusive offers, save your favorite products, and enjoy a seamless shopping experience. Join now for personalized recommendations and exciting promotions!",
 
     "form": {
       "email": "Email",
@@ -95,10 +99,26 @@
       "confirmPassword": "Confirm password",
       "forgotPassword": "Forgot password?",
       "showPassword": "Show password",
-      "signUp": "Sign up",
+      "signUp": "Sign Up",
       "loginWithGoogle": "Sign up with Google",
       "haveAccount": "Already have an account?",
-      "loginNow": "Log in now"
+      "loginNow": "Login now"
     }
+  },
+
+  "cart": {
+    "continueShopping": "Continue Shopping",
+    "totalPrice": "Total Order Value:",
+    "subtotal": "Subtotal:",
+    "extraFee": "Extra Fee:",
+    "totalPayment": "Total Payment:",
+    "totalItems": "Total Items",
+    "checkout": "Proceed to Checkout",
+    "giftTitle": "Send this order as a gift.",
+    "giftDescription": "Available items will be shipped to your gift recipient.",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "like": "Like",
+    "remove": "Remove"
   }
 }

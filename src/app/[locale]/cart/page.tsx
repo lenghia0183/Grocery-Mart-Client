@@ -11,8 +11,11 @@ import images from '@/asset/images';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { PATH } from '@/constants/path';
+import { useTranslations } from 'next-intl';
 
 const Cart = (): JSX.Element => {
+  const t = useTranslations('cart');
+
   const fakeCartItems = [
     {
       id: 'PROD123456',
@@ -71,19 +74,15 @@ const Cart = (): JSX.Element => {
                   className="mt-auto"
                   href={PATH.PRODUCTS}
                 >
-                  Tiếp tục mua hàng
+                  {t('continueShopping')}
                 </Button>
                 <div className="flex flex-col w-1/2 gap-3">
-                  <LabelValue
-                    label="Tổng giá trị đơn hàng:"
-                    value={formatCurrency(totalPrice)}
-                    className="justify-between"
-                  />
-                  <LabelValue label="Phụ phí:" value={formatCurrency(0)} className="justify-between" />
+                  <LabelValue label={t('totalPrice')} value={formatCurrency(totalPrice)} className="justify-between" />
+                  <LabelValue label={t('extraFee')} value={formatCurrency(0)} className="justify-between" />
                   <Divider />
 
                   <LabelValue
-                    label="Tổng tiền thanh toán:"
+                    label={t('totalPayment')}
                     value={formatCurrency(totalPrice)}
                     labelClassName="text-[25px]"
                     className="justify-between"
@@ -95,23 +94,15 @@ const Cart = (): JSX.Element => {
             {/* Phần thanh toán */}
             <div className="col-span-4 ">
               <div className="flex flex-col gap-3 bg-white dark:bg-dark-400 p-10 shadow-md rounded-md">
-                <LabelValue label="Tổng số lượng sản phẩm" value={totalItems} className="justify-between" />
-                <LabelValue
-                  label="Tổng giá trị đơn hàng:"
-                  value={formatCurrency(totalPrice)}
-                  className="justify-between"
-                />
-                <LabelValue label="Phụ phí:" value={formatCurrency(0)} className="justify-between" />
+                <LabelValue label={t('totalItems')} value={totalItems} className="justify-between" />
+                <LabelValue label={t('totalPrice')} value={formatCurrency(totalPrice)} className="justify-between" />
+                <LabelValue label={t('extraFee')} value={formatCurrency(0)} className="justify-between" />
                 <Divider />
 
-                <LabelValue
-                  label="Tổng tiền thanh toán:"
-                  value={formatCurrency(totalPrice)}
-                  className="justify-between"
-                />
+                <LabelValue label={t('totalPayment')} value={formatCurrency(totalPrice)} className="justify-between" />
 
                 <Button full rounded className="mt-5 py-3">
-                  Tiến hành thanh toán
+                  {t('checkout')}
                 </Button>
               </div>
 
@@ -120,8 +111,8 @@ const Cart = (): JSX.Element => {
                   <Image src={images.gift} alt="grocery-mart" />
                 </div>
                 <div className="flex flex-col justify-between">
-                  <p className="text-xl font-semibold">Send this order as a gift.</p>
-                  <p className="">Available items will be shipped to your gift recipient.</p>
+                  <p className="text-xl font-semibold"> {t('giftTitle')}</p>
+                  <p className="">{t('giftDescription')}</p>
                 </div>
               </div>
             </div>
