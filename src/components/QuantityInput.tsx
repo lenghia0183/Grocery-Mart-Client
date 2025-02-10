@@ -95,10 +95,10 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
     >
       <IconButton
         iconName="minus"
-        iconColor="dark"
+        iconColor="dark dark:white"
         className={clsx(
           {
-            'text-gray-300': (typeof value === 'number' && value <= min) || disabled,
+            'text-gray-300 dark:!text-gray-500': (typeof value === 'number' && value <= min) || disabled,
           },
 
           'shadow-none',
@@ -120,7 +120,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
         className={clsx(
           'max-w-9 text-center outline-none bg-transparent text-dark dark:text-white',
           {
-            'text-gray-300': disabled,
+            'text-gray-300 ': disabled,
           },
           inputClassName,
         )}
@@ -130,10 +130,10 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
 
       <IconButton
         iconName="plus"
-        iconColor="dark"
+        iconColor="dark dark:white"
         className={clsx(
           {
-            'text-gray-300': (typeof value === 'number' && value >= max) || disabled,
+            '!text-gray-300 dark:!text-gray-500': (typeof value === 'number' && value >= max) || disabled,
           },
           'shadow-none',
           buttonClassName,

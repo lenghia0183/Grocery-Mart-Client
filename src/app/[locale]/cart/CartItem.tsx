@@ -45,7 +45,8 @@ const CartItem = ({ product }: CartItemProps): JSX.Element => {
                   <Divider vertical={true} length="20px" thickness="2px" color="gray-500" />
                   <p
                     className={clsx('text-lg', {
-                      'text-green-400': product.inStock,
+                      'text-green-400 dark:text-green-300': product.inStock,
+                      'text-red-400 dark:text-red-300': !product.inStock,
                     })}
                   >
                     {product.inStock ? 'Còn hàng' : 'Hết hàng'}
@@ -58,7 +59,7 @@ const CartItem = ({ product }: CartItemProps): JSX.Element => {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col justify-between ">
                 <p className="text-right text-xl font-semibold">{formatCurrency(product.price * values.quantity)}</p>
                 <div className="flex gap-5">
                   <Button

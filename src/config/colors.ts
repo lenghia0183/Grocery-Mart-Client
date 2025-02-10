@@ -68,6 +68,7 @@ const colors: Colors = {
     // Đã có trước
     DEFAULT: '#67b044',
     100: 'rgba(103, 176, 68, 0.4)',
+    300: '#23b123',
     400: 'rgb(35, 177, 35)',
   },
 
@@ -76,7 +77,7 @@ const colors: Colors = {
     DEFAULT: '#f44336',
     100: '#ffebee', // Màu mới
     200: '#ffcdd2', // Màu mới
-    300: '#ef9a9a', // Màu mới
+    300: '#FF6868', // Đã có trước
     400: '#f44336', // Đã có trước
     500: '#d32f2f', // Đã có trước
     hover: '#d32f2f', // Đã có trước

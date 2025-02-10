@@ -54,11 +54,11 @@ const Cart = (): JSX.Element => {
   return (
     <>
       <Header />
-      <div className="bg-gray-100 py-10">
+      <div className="bg-gray-100 dark:bg-dark-500 py-10 dark:text-white">
         <main className="container">
           <div className="grid grid-cols-12 gap-x-10">
             {/* Danh sách sản phẩm trong giỏ hàng */}
-            <div className="col-span-8 p-10 flex flex-col gap-5 bg-white shadow-md rounded-md">
+            <div className="col-span-8 p-10 flex flex-col gap-5 bg-white dark:bg-dark-400 shadow-md rounded-md">
               {fakeCartItems.map((product) => (
                 <CartItem key={product.id} product={product} />
               ))}
@@ -94,7 +94,7 @@ const Cart = (): JSX.Element => {
 
             {/* Phần thanh toán */}
             <div className="col-span-4 ">
-              <div className="flex flex-col gap-3 bg-white p-10 shadow-md rounded-md">
+              <div className="flex flex-col gap-3 bg-white dark:bg-dark-400 p-10 shadow-md rounded-md">
                 <LabelValue label="Tổng số lượng sản phẩm" value={totalItems} className="justify-between" />
                 <LabelValue
                   label="Tổng giá trị đơn hàng:"
@@ -115,8 +115,8 @@ const Cart = (): JSX.Element => {
                 </Button>
               </div>
 
-              <div className="flex bg-white px-10 py-7 shadow-md rounded-md mt-7 gap-4">
-                <div className="flex items-center justify-center w-[80px] h-[80px] bg-purple-100 rounded-md flex-shrink-0">
+              <div className="flex bg-white dark:bg-dark-400 px-10 py-7 shadow-md rounded-md mt-7 gap-4">
+                <div className="flex items-center justify-center w-[80px] h-[80px] bg-purple-100 dark:bg-dark-500 rounded-md flex-shrink-0">
                   <Image src={images.gift} alt="grocery-mart" />
                 </div>
                 <div className="flex flex-col justify-between">
