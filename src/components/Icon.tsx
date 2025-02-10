@@ -37,6 +37,7 @@ import Gmail from '../asset/icons/gmail.svg';
 import EmptyStar from '../asset/icons/emptyStar.svg';
 import Category from '../asset/icons/category.svg';
 import Filter from '../asset/icons/filter.svg';
+import Delete from '../asset/icons/delete.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -89,6 +90,7 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   emptyStar: EmptyStar,
   category: Category,
   filter: Filter,
+  delete: Delete,
 };
 
 const Icon: React.FC<IconProps> = ({

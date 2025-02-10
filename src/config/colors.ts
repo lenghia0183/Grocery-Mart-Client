@@ -67,7 +67,8 @@ const colors: Colors = {
   green: {
     // Đã có trước
     DEFAULT: '#67b044',
-    100: 'rgba(103, 176, 68, 0.4)', // Màu mới
+    100: 'rgba(103, 176, 68, 0.4)',
+    400: 'rgb(35, 177, 35)',
   },
 
   red: {

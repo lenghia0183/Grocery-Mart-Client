@@ -5,10 +5,12 @@ import { createTailwindClass } from '@/utils';
 type DividerProps = {
   vertical?: boolean;
   color?: string;
-  width?: string;
-  height?: string;
+  thickness?: string;
+  length?: string;
   marginTop?: string;
   marginBottom?: string;
+  marginLeft?: string;
+  marginRight?: string;
   borderStyle?: 'solid' | 'dashed' | 'dotted';
   className?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
@@ -16,24 +18,37 @@ type DividerProps = {
 const Divider: React.FC<DividerProps> = ({
   vertical = false,
   color = 'gray-400',
-  width = '100%',
-  height = '1px',
+  thickness = '1px',
+  length = '100%',
   marginTop = '10px',
   marginBottom = '10px',
+  marginLeft = '',
+  marginRight = '',
   borderStyle = 'solid',
   className,
   ...props
 }) => {
-  const borderThickness = vertical ? width : height;
-
   const borderColorClass = createTailwindClass('border', color);
 
-  const style: CSSProperties = {
-    borderWidth: borderThickness,
-    borderStyle: borderStyle,
-    marginTop,
-    marginBottom,
-  };
+  const style: CSSProperties = vertical
+    ? {
+        width: thickness,
+        height: length,
+        borderLeftWidth: thickness,
+        borderStyle,
+        marginTop,
+        marginBottom,
+        marginLeft,
+        marginRight,
+      }
+    : {
+        width: length,
+        height: thickness,
+        borderTopWidth: thickness,
+        borderStyle,
+        marginTop,
+        marginBottom,
+      };
 
   return <div className={clsx(className, borderColorClass)} style={style} {...props} />;
 };

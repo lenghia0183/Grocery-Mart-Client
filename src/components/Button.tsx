@@ -128,7 +128,9 @@ const Button: React.FC<ButtonProps> = ({
         </>
       ) : (
         <>
-          {startIcon && <span className={clsx('mr-2 flex items-center text-inherit', iconClassName)}>{startIcon}</span>}
+          {startIcon && (
+            <span className={clsx('mr-2 flex items-center text-inherit ', iconClassName)}>{startIcon}</span>
+          )}
           <span className={clsx('text-inherit', iconClassName)}>{children}</span>
           {endIcon && <span className="ml-2 flex items-center">{endIcon}</span>}
         </>
