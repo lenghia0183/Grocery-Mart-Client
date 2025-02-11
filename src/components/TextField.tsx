@@ -26,6 +26,7 @@ interface TextFieldProps {
   allow?: RegExp;
   prevent?: RegExp;
   disabled?: boolean;
+  required?: boolean;
 }
 
 const TextField = ({
@@ -50,6 +51,7 @@ const TextField = ({
   allow,
   prevent,
   disabled = false,
+  required = false,
 }: TextFieldProps) => {
   const inputId = useId();
   const [field, meta, helpers] = useField(name);
@@ -95,7 +97,11 @@ const TextField = ({
         className={clsx('group', className)}
       >
         {label && (
-          <label htmlFor={name} className={clsx('block mb-1 text-left', { 'text-gray-500': disabled }, labelClassName)}>
+          <label
+            htmlFor={name}
+            className={clsx('mb-1 text-left flex items-center', { 'text-gray-500': disabled }, labelClassName)}
+          >
+            {required && <span className="text-red-400 mr-1">*</span>}
             {label}
           </label>
         )}
@@ -155,6 +161,7 @@ const TextField = ({
               className={clsx('mr-2', { 'text-gray-500': disabled }, labelClassName)}
               style={{ width: labelWidth }}
             >
+              {required && <span className="text-red-400 mr-1">*</span>}
               {label}
             </label>
           )}

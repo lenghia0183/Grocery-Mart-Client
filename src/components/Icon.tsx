@@ -38,6 +38,7 @@ import EmptyStar from '../asset/icons/emptyStar.svg';
 import Category from '../asset/icons/category.svg';
 import Filter from '../asset/icons/filter.svg';
 import Delete from '../asset/icons/delete.svg';
+import Copy from '../asset/icons/copy.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -91,6 +92,7 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   category: Category,
   filter: Filter,
   delete: Delete,
+  copy: Copy,
 };
 
 const Icon: React.FC<IconProps> = ({

@@ -13,7 +13,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   height?: string;
   label?: string;
   options?: Item[];
-  getOptionLabel: (option: Item) => string;
+  getOptionLabel?: (option: Item) => string;
   getOptionSubLabel?: (option: Item) => string;
   getOptionValue?: (option: Item) => Item | string;
   asyncRequest?: (inputValue: string) => Promise<Response>;
@@ -25,6 +25,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   labelWidth?: string;
   className?: string;
   allow?: RegExp;
+  required?: boolean;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
@@ -44,6 +45,7 @@ const Autocomplete = <Item, Response = Item[]>({
   labelWidth = '80px',
   className,
   allow,
+  required,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
   const [filteredOptions, setFilteredOptions] = useState<Item[]>(initialOptions);
@@ -180,7 +182,13 @@ const Autocomplete = <Item, Response = Item[]>({
   if (vertical) {
     return (
       <div className={clsx({ 'pointer-events-none cursor-not-allowed': disabled })}>
-        {label && <label className={clsx('text-md mb-2', { 'text-gray-500': disabled })}>{label}</label>}
+        {label && (
+          <label className={clsx('text-md mb-2', { 'text-gray-500': disabled })}>
+            {' '}
+            {required && <span className="text-red-400 mr-1">*</span>}
+            {label}
+          </label>
+        )}
         <div className="relative group" ref={containerRef}>
           <Input
             height={height}
@@ -234,6 +242,8 @@ const Autocomplete = <Item, Response = Item[]>({
                 width: labelWidth,
               }}
             >
+              {' '}
+              {required && <span className="text-red-400 mr-1">*</span>}
               {label}
             </label>
           )}

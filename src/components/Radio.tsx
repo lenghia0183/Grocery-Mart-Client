@@ -1,13 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useField, useFormikContext } from 'formik';
 import clsx from 'clsx';
 
 export interface RadioProps {
   name?: string;
   value: string;
-  label?: string;
+  label?: ReactNode;
   vertical?: boolean;
   onChange?: (value: string) => void;
   className?: string;
