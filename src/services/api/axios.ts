@@ -129,7 +129,7 @@ export const createApi = (instance: AxiosInstance) => ({
     options: Record<string, string> = {},
   ): Promise<ApiResponse<T>> => {
     try {
-      return await instance.get(endpoint, { ...options, params });
+      return await instance.get(endpoint, { ...options, ...params });
     } catch (err: unknown) {
       return handleAxiosError(err);
     }

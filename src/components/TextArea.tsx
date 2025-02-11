@@ -25,6 +25,7 @@ interface TextAreaProps {
   prevent?: RegExp;
   rows?: number;
   cols?: number;
+  required?: boolean;
 }
 
 const TextArea = ({
@@ -48,6 +49,7 @@ const TextArea = ({
   prevent,
   rows = 15,
   cols,
+  required,
 }: TextAreaProps) => {
   const inputId = useId();
   const [field, meta, helpers] = useField(name);
@@ -95,7 +97,7 @@ const TextArea = ({
       >
         {label && (
           <label htmlFor={name} className={clsx('block mb-1', labelClassName)}>
-            {label}
+            {required && <span className="text-red-400 mr-1">*</span>} {label}
           </label>
         )}
         <div
@@ -144,7 +146,7 @@ const TextArea = ({
       >
         {label && (
           <label htmlFor={name} className={clsx('mr-2', labelClassName)} style={{ width: labelWidth }}>
-            {label}
+            {required && <span className="text-red-400 mr-1">*</span>} {label}
           </label>
         )}
         <div

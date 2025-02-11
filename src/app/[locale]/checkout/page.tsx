@@ -10,27 +10,45 @@ import Icon from '@/components/Icon';
 import Image from '@/components/Image';
 import Radio from '@/components/Radio';
 import RadioGroup from '@/components/RadioGroup';
+import TextArea from '@/components/TextArea';
 import TextField from '@/components/TextField';
+import { DistrictData, getDistrictData, getProvinceData, getWardData, ProvinceData } from '@/services/api/GHN';
+import { ApiResponse } from '@/types/ApiResponse';
 import formatCurrency from '@/utils/formatCurrency';
 import { Form, Formik } from 'formik';
-const initialValues = {
+const initialValues: CheckoutFormValues = {
   buyerName: '',
   buyerEmail: '',
   buyerPhone: '',
   receiverName: '',
   receiverPhone: '',
-  province: '',
-  district: '',
+  province: null,
+  district: null,
   ward: '',
   method: 'ghn',
   paymentMethod: '',
 };
+
+interface CheckoutFormValues {
+  buyerName: string;
+  buyerEmail: string;
+  buyerPhone: string;
+  receiverName: string;
+  receiverPhone: string;
+  province: ProvinceData | null;
+  district: DistrictData | null;
+  ward: string;
+  method: string;
+  paymentMethod: string;
+}
+
 const Checkout = (): JSX.Element => {
   return (
     <>
       <Header />
-      <Formik initialValues={initialValues} onSubmit={(values) => console.log(values)}>
-        {() => {
+      <Formik<CheckoutFormValues> initialValues={initialValues} onSubmit={(values) => console.log(values)}>
+        {({ values }) => {
+          console.log('values', values);
           return (
             <Form>
               <main className="p-10 bg-gray-100">
@@ -92,14 +110,65 @@ const Checkout = (): JSX.Element => {
                     {/* Thông tin giao hàng */}
                     <h2 className="mt-10 text-2xl font-medium">Thông tin giao hàng</h2>
                     <Divider />
-                    <div className="grid grid-cols-12 gap-7">
+                    <div className="grid grid-cols-12 gap-7 mt-7">
                       {/* Địa chỉ giao hàng */}
                       <div className="col-span-6">
                         <h3 className="text-xl font-medium">Địa chỉ giao hàng</h3>
                         <div className="flex flex-col gap-7 mt-7">
-                          <Autocomplete name="province" label="Tỉnh/Thành phố" required />
-                          <Autocomplete name="district" label="Quận/Huyện" required />
-                          <Autocomplete name="ward" label="Phường/Xã" required />
+                          <Autocomplete<ProvinceData, ApiResponse<ProvinceData[]>>
+                            name="province"
+                            label="Tỉnh/Thành phố"
+                            asyncRequest={async () => {
+                              const response = await getProvinceData();
+                              return response;
+                            }}
+                            asyncRequestHelper={(response) => {
+                              return response.data || [];
+                            }}
+                            getOptionLabel={(option) => {
+                              return option.ProvinceName;
+                            }}
+                            required
+                          />
+
+                          <Autocomplete<DistrictData, ApiResponse<DistrictData[]>>
+                            name="district"
+                            label="Quận/Huyện"
+                            asyncRequest={async () => {
+                              const response = await getDistrictData(values?.province?.ProvinceID || '');
+                              return response;
+                            }}
+                            asyncRequestHelper={(response) => {
+                              return response.data || [];
+                            }}
+                            getOptionLabel={(option) => {
+                              return option.DistrictName;
+                            }}
+                            disabled={values?.province ? false : true}
+                            asyncRequestDeps="province"
+                            filterOptionsLocally={true}
+                            autoFetch={true}
+                            required
+                          />
+                          <Autocomplete
+                            name="ward"
+                            label="Phường/Xã"
+                            asyncRequest={async () => {
+                              const response = await getWardData(values?.district?.DistrictID || '');
+                              return response;
+                            }}
+                            asyncRequestHelper={(response) => {
+                              return response.data || [];
+                            }}
+                            getOptionLabel={(option) => {
+                              return option.WardName;
+                            }}
+                            disabled={values?.district ? false : true}
+                            filterOptionsLocally={true}
+                            autoFetch={true}
+                            asyncRequestDeps="district"
+                            required
+                          />
                         </div>
                       </div>
 
@@ -117,6 +186,8 @@ const Checkout = (): JSX.Element => {
                           <Radio name="method" value="ghn" />
                         </div>
                       </div>
+
+                      <TextArea name="street" label="Địa chỉ" className="col-span-full" rows={5} required />
                     </div>
 
                     {/* Hình thức thanh toán */}

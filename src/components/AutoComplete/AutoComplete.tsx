@@ -5,7 +5,7 @@ import Input from './Input';
 import OptionList from './OptionList';
 import useDebounce from '@/hooks/useDebounce';
 import clsx from 'clsx';
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 
 export interface IAutoCompleteProps<Item, Response = Item[]> {
   name: string;
@@ -26,6 +26,7 @@ export interface IAutoCompleteProps<Item, Response = Item[]> {
   className?: string;
   allow?: RegExp;
   required?: boolean;
+  asyncRequestDeps?: string;
 }
 
 const Autocomplete = <Item, Response = Item[]>({
@@ -33,7 +34,8 @@ const Autocomplete = <Item, Response = Item[]>({
   height = '45px',
   label,
   options: initialOptions = [],
-  getOptionLabel,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getOptionLabel = (option: Item) => '',
   getOptionSubLabel = () => '',
   asyncRequestHelper = (data) => data as Item[],
   asyncRequest,
@@ -45,6 +47,7 @@ const Autocomplete = <Item, Response = Item[]>({
   labelWidth = '80px',
   className,
   allow,
+  asyncRequestDeps = '',
   required,
 }: IAutoCompleteProps<Item, Response>): JSX.Element => {
   const [options, setOptions] = useState<Item[]>(initialOptions);
@@ -61,15 +64,17 @@ const Autocomplete = <Item, Response = Item[]>({
 
   const debouncedInputValue = useDebounce(inputValue, 500);
 
+  const { values } = useFormikContext<Record<string, string | number | boolean>>();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);
   const { setValue, setTouched } = helpers;
   const error = meta.error && meta.touched ? meta.error : '';
 
   useEffect(() => {
-    if (autoFetch) {
-      if (asyncRequest) fetchData();
-    }
+    // if (autoFetch) {
+    //   if (asyncRequest) fetchData();
+    // }
 
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -86,28 +91,115 @@ const Autocomplete = <Item, Response = Item[]>({
   }, []);
 
   useEffect(() => {
+    // mỗi lần nhập từ mới sẽ call api để tìm kiếm vì khi filterOptionsLocally là false sẽ call api để tìm kiếm
+    if (
+      asyncRequestDeps &&
+      values[asyncRequestDeps] &&
+      !autoFetch &&
+      isOpen &&
+      !filterOptionsLocally &&
+      !isClearInput &&
+      !isSelected
+    ) {
+      fetchData();
+    }
+
+    if (
+      asyncRequestDeps &&
+      values[asyncRequestDeps] &&
+      autoFetch &&
+      !hasFetchedData &&
+      !filterOptionsLocally &&
+      !isClearInput &&
+      !isSelected
+    ) {
+      fetchData();
+    }
+
+    if (
+      asyncRequestDeps &&
+      values[asyncRequestDeps] &&
+      autoFetch &&
+      debouncedInputValue &&
+      !filterOptionsLocally &&
+      !isClearInput &&
+      !isSelected
+    ) {
+      fetchData();
+    }
+
+    // mở ra phát nào là call api phát ý và dùng tìm kiếm không call apiapi
+    if (asyncRequestDeps && values[asyncRequestDeps] && !autoFetch && isOpen && filterOptionsLocally) {
+      console.log('coll 12312');
+      fetchData();
+    }
+
+    // call lần đầu để cho vào filterOptionsLocally và tìm kiếm không call api
+    if (asyncRequestDeps && values[asyncRequestDeps] && autoFetch && !hasFetchedData && filterOptionsLocally) {
+      console.log('coll 122');
+      fetchData();
+    }
+
     // thay đổi input sẽ call api không tìm kiếm trong options đã có
-    if (debouncedInputValue && !isSelected && isOpen && !isClearInput && !filterOptionsLocally) {
+    if (
+      debouncedInputValue &&
+      !isSelected &&
+      isOpen &&
+      !isClearInput &&
+      !filterOptionsLocally &&
+      !asyncRequestDeps &&
+      !values[asyncRequestDeps]
+    ) {
+      console.log('coll 2');
       fetchData();
     }
 
     // đóng mở sẽ call api không tìm kiếm trong options đã có
-    if (isOpen && !autoFetch && !debouncedInputValue && !isClearInput && !filterOptionsLocally) {
+    if (
+      isOpen &&
+      !autoFetch &&
+      !debouncedInputValue &&
+      !isClearInput &&
+      !filterOptionsLocally &&
+      !asyncRequestDeps &&
+      !values[asyncRequestDeps]
+    ) {
+      console.log('coll 3');
       fetchData();
     }
 
     // call api khi chưa có options và autoFectch là true và filterOptionsLocally là true (call khi lần đầu mount)
-    if (autoFetch && filterOptionsLocally && !hasFetchedData) {
+    if (autoFetch && filterOptionsLocally && !hasFetchedData && !asyncRequestDeps && !values[asyncRequestDeps]) {
+      console.log('values[asyncRequestDeps]', values[asyncRequestDeps]);
+      console.log('values', asyncRequestDeps);
+      console.log('coll 4');
       fetchData();
     }
 
     // sẽ call api khi chưa có options và autoFectch là false vì phải call api thì filterdOptions mới có dữ liệu (call trong lần mở đầu tiên)
-    if (isOpen && !autoFetch && filterOptionsLocally && !hasFetchedData) {
+    if (
+      isOpen &&
+      !autoFetch &&
+      filterOptionsLocally &&
+      !hasFetchedData &&
+      !asyncRequestDeps &&
+      !values[asyncRequestDeps]
+    ) {
+      console.log('coll 5');
       fetchData();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedInputValue, isOpen]);
+  }, [debouncedInputValue, isOpen, values[asyncRequestDeps]]);
+
+  useEffect(() => {
+    if (asyncRequestDeps) {
+      setHasFetchedData(false);
+      setValue('');
+      setInputValue('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values[asyncRequestDeps], asyncRequestDeps]);
 
   const fetchData = async () => {
     if (!asyncRequest) return;
@@ -145,7 +237,7 @@ const Autocomplete = <Item, Response = Item[]>({
     }
 
     setInputValue(newValue);
-    setValue(newValue);
+    // setValue(newValue);
     setIsSelected(false);
     setIsClearInput(false);
 
@@ -203,13 +295,13 @@ const Autocomplete = <Item, Response = Item[]>({
             error={error}
             disabled={disabled}
             className={clsx({
-              '!border-blue-300': isOpen,
-              'group-hover:border-blue-300': !error,
+              '!border-blue-400': isOpen,
+              'group-hover:border-blue-400': !error,
             })}
             iconClassName={clsx({
-              '!text-blue-300': isOpen,
-              '!border-blue-300': isOpen,
-              'group-hover:text-blue-300 group-hover:border-blue-300': !error,
+              '!text-blue-400': isOpen,
+              '!border-blue-400': isOpen,
+              'group-hover:text-blue-400 group-hover:border-blue-400': !error,
             })}
           />
           <OptionList
@@ -219,8 +311,8 @@ const Autocomplete = <Item, Response = Item[]>({
             getOptionLabel={getOptionLabel}
             isOpen={isOpen}
             handleSelectOption={handleSelectOption}
-            className={clsx('group-hover:border-blue-300', {
-              '!border-blue-300': isOpen,
+            className={clsx('group-hover:border-blue-400', {
+              '!border-blue-400': isOpen,
             })}
           />
         </div>
@@ -261,13 +353,13 @@ const Autocomplete = <Item, Response = Item[]>({
               error={error}
               disabled={disabled}
               className={clsx({
-                '!border-blue-300': isOpen,
-                'group-hover:border-blue-300': !error,
+                '!border-blue-400': isOpen,
+                'group-hover:border-blue-400': !error,
               })}
               iconClassName={clsx({
-                '!text-blue-300': isOpen,
-                '!border-blue-300': isOpen,
-                'group-hover:text-blue-300 group-hover:border-blue-300': !error,
+                '!text-blue-400': isOpen,
+                '!border-blue-400': isOpen,
+                'group-hover:text-blue-400 group-hover:border-blue-400': !error,
               })}
             />
             <OptionList
@@ -277,8 +369,8 @@ const Autocomplete = <Item, Response = Item[]>({
               getOptionLabel={getOptionLabel}
               isOpen={isOpen}
               handleSelectOption={handleSelectOption}
-              className={clsx('group-hover:border-blue-300', {
-                '!border-blue-300': isOpen,
+              className={clsx('group-hover:border-blue-400', {
+                '!border-blue-400': isOpen,
               })}
             />
           </div>
