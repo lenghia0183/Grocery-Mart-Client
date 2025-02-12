@@ -12,6 +12,8 @@ import logoZaloPay from './logoZaloPay.png';
 import logoGHN from './logoGHN.webp';
 import codMethod from './codMethod.png';
 import bankingMethod from './bankingMethod.png';
+import avatarCover from './avatarCover.avif';
+import avatarTest from './avatarTest.jpg';
 type Images = {
   [key: string]: StaticImageData;
 };
@@ -30,6 +32,8 @@ const images: Images = {
   logoGHN: logoGHN,
   codMethod: codMethod,
   bankingMethod: bankingMethod,
+  avatarCover: avatarCover,
+  avatarTest: avatarTest,
 };
 
 export default images;
