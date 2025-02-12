@@ -106,12 +106,6 @@ const Checkout = (): JSX.Element => {
   const formRef = useRef<FormikProps<CheckoutFormValues> | null>(null);
   const [values, setValues] = useState<CheckoutFormValues>(initialValues);
   const totalPrice = items.reduce((total, item) => total + item.quantity * item.price, 0);
-  // useEffect(() => {
-  //   const formValues = formRef?.current?.values;
-  //   if (formValues) {
-  //     setValues(formValues);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const { province = '', district = '', ward = '' } = values;
@@ -170,10 +164,10 @@ const Checkout = (): JSX.Element => {
           // console.log('values', values);
           return (
             <Form>
-              <main className="p-10 bg-gray-100">
+              <main className="p-10 bg-gray-100 dark:bg-dark-500">
                 <div className="container grid grid-cols-12 gap-5">
                   {/* Thông tin khách hàng */}
-                  <div className="col-span-8 p-10 bg-white shadow-md rounded-lg text-dark">
+                  <div className="col-span-8 p-10 bg-white dark:bg-dark-400 shadow-md rounded-lg text-dark dark:text-white">
                     <h2 className="text-2xl font-medium">Thông tin khách hàng</h2>
                     <Divider />
 
@@ -314,7 +308,7 @@ const Checkout = (): JSX.Element => {
                     <h2 className="mt-10 text-2xl font-medium">Hình thức thanh toán</h2>
                     <Divider />
 
-                    <RadioGroup name="paymentMethod" className="grid grid-cols-12 gap-7">
+                    <RadioGroup name="paymentMethod" className="grid grid-cols-12 gap-7 text-dark dark:text-white">
                       {/* cod */}
 
                       <Radio
@@ -341,7 +335,7 @@ const Checkout = (): JSX.Element => {
                         <Radio
                           value="MoMo"
                           label={
-                            <div className="flex items-center justify-between py-4 text-base text-dark gap-3">
+                            <div className="flex items-center justify-between py-4 text-base  gap-3">
                               <Image src={images.logoMomo} width={90} height={90} alt="" />
                               <p className="flex-shrink-0">Thanh toán qua ví MoMo</p>
                             </div>
@@ -351,7 +345,7 @@ const Checkout = (): JSX.Element => {
                         <Radio
                           value="ZaloPay"
                           label={
-                            <div className="flex items-center justify-between py-4 text-base text-dark gap-3">
+                            <div className="flex items-center justify-between py-4 text-base  gap-3">
                               <Image src={images.logoZaloPay} width={90} height={90} alt="" />
                               <p className="flex-shrink-0">Thanh toán qua ví MoMo</p>
                             </div>
@@ -362,12 +356,12 @@ const Checkout = (): JSX.Element => {
                   </div>
 
                   {/* Tóm tắt đơn hàng */}
-                  <div className="col-span-4">
-                    <div className="py-10 px-5 bg-white rounded-md  border-gray-400 shadow-md ">
+                  <div className="col-span-4 text-dark dark:text-white">
+                    <div className="py-10 px-5 bg-white dark:bg-dark-400 rounded-md  border-gray-400 shadow-md ">
                       <h2 className="text-2xl font-medium">Danh sách sản phẩm</h2>
                       <Divider />
 
-                      <div className="h-[350px] overflow-y-auto border border-gray p-3 mt-5">
+                      <div className="h-[350px] overflow-y-auto border  border-gray p-3 mt-5">
                         {items.map((item) => {
                           return (
                             <div key={item.id}>
@@ -393,7 +387,7 @@ const Checkout = (): JSX.Element => {
                       </div>
                     </div>
 
-                    <div className="py-10 px-5 bg-white rounded-md shadow-md mt-10">
+                    <div className="py-10 px-5 bg-white dark:bg-dark-400   rounded-md shadow-md mt-10">
                       <h2 className="text-2xl font-medium">Danh sách chi phí</h2>
                       <Divider />
 

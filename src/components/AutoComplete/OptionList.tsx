@@ -26,7 +26,7 @@ const OptionList = <Item,>({
         maxHeight: '200px',
       }}
       className={clsx(
-        'bg-white rounded-md border border-gray-500 absolute w-full top-[107%] overflow-y-scroll transition-all duration-300 scale-y-0 origin-top opacity-0 z-10',
+        'bg-white dark:bg-dark-400 rounded-md border border-gray-500 absolute w-full top-[107%] overflow-y-scroll transition-all duration-300 scale-y-0 origin-top opacity-0 z-10',
         {
           'opacity-0': !isOpen,
           'scale-y-100 !opacity-100': isOpen,
@@ -40,8 +40,8 @@ const OptionList = <Item,>({
         options?.map((option, index) => (
           <li
             key={index}
-            className={clsx('p-2 hover:bg-gray-200', {
-              'bg-yellow-300 hover:!bg-yellow-300': inputValue === getOptionLabel(option),
+            className={clsx('p-2 hover:bg-gray-200 dark:hover:bg-gray-400', {
+              'bg-yellow-300 dark:bg-yellow-400 hover:!bg-yellow-300 dark:hover:!bg-yellow-400 text-dark': inputValue === getOptionLabel(option),
             })}
             onClick={() => handleSelectOption(option as Item)}
           >

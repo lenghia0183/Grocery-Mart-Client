@@ -62,7 +62,7 @@ const Input: React.FC<IInputProps> = ({
             {
               'border-red-400': error,
               'border-gray-500': !error,
-              '!bg-gray-50 !border-gray-300': disabled,
+              '!bg-gray-50 dark:!bg-gray-500 !border-gray-300': disabled,
             },
 
             className,
@@ -101,7 +101,7 @@ const Input: React.FC<IInputProps> = ({
           {
             'border-red-400 text-red-400': error && !disabled,
             'border-gray-500 text-gray-500': !error && !disabled,
-            'bg-gray-50 border-gray-300 text-gray-300': disabled,
+            'bg-gray-50 dark:bg-gray-500 border-gray-300 text-gray-300 dark:text-white': disabled,
           },
           iconClassName,
         )}
