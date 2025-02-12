@@ -172,5 +172,13 @@
     "comingSoon": "Chức năng này sẽ sớm được ra mắt",
     "quantity": "Số lượng",
     "addToCart": "Thêm vào giỏ hàng"
+  },
+
+  "changeAddress": {
+    "province": "Tỉnh/Thành phố",
+    "district": "Quận/Huyện",
+    "ward": "Phường/Xã",
+    "address": "Địa chỉ",
+    "addressPlaceholder": "Nhập địa chỉ chi tiết"
   }
 }

@@ -12,6 +12,7 @@ import { usePathname } from '@/i18n/routing';
 const accountLinks = [
   { name: 'Thông tin tài khoản', path: PATH.PROFILE_EDIT, icon: 'account' },
   { name: 'Đổi mật khẩu', path: PATH.CHANGE_PASSWORD, icon: 'password' },
+  { name: 'Địa chỉ', path: PATH.CHANGE_ADDRESS, icon: 'address' },
 ];
 
 const transactionLinks = [

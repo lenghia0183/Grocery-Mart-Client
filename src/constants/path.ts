@@ -15,6 +15,7 @@ export const PATH = {
   PROFILE_EDIT: '/profile/me',
   VIEWED_PRODUCTS: '/profile/viewed-products',
   CHANGE_PASSWORD: '/profile/change-password',
+  CHANGE_ADDRESS: '/profile/change-address',
   FAVORITE: '/profile/favorites',
   ORDER: '/profile/order',
   CHECKOUT: '/checkout',
