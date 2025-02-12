@@ -155,5 +155,21 @@
     "totalItems": "Total Product Quantity",
     "checkout": "Proceed to Checkout",
     "reset": "Reset"
+  },
+  "productDetail": {
+    "productInfo": "Product Information",
+    "productComments": "Comments",
+    "stockStatus": "Stock Status:",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "brand": "Brand:",
+    "productCode": "Product Code:",
+    "reviews": "reviews",
+    "productPrice": "Product Price:",
+    "productDescription": "Product Description:",
+    "announcement": "Announcement",
+    "comingSoon": "This feature will be available soon",
+    "quantity": "Quantity",
+    "addToCart": "Add to Cart"
   }
 }

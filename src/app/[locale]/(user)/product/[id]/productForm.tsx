@@ -6,6 +6,7 @@ import Button from '@/components/Button';
 import IconButton from '@/components/IconButton';
 import formatCurrency from '@/utils/formatCurrency';
 import LabelValue from '@/components/LabelValue';
+import { useTranslations } from 'next-intl';
 
 interface ProductFormProps {
   product: {
@@ -20,10 +21,12 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
+  const t = useTranslations('productDetail');
+
   return (
     <Formik initialValues={{ quantity: 1 }} onSubmit={(values) => console.log('Submit', values)}>
       <Form>
-        <p className="text-2xl font-medium mt-3 dark:text-white-200">Số lượng</p>
+        <p className="text-2xl font-medium mt-3 dark:text-white-200">{t('quantity')}</p>
         <div className="flex mt-3">
           {/* left column */}
           <div className="flex-1">
@@ -45,7 +48,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
             />
 
             <div className="flex gap-5 mt-5">
-              <Button size="large">Thêm vào giỏ hàng</Button>
+              <Button size="large">{t('addToCart')}</Button>
               <IconButton
                 iconName="heart"
                 variant="outlined"

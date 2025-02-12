@@ -156,5 +156,21 @@
     "totalItems": "Tổng số lượng sản phẩm",
     "checkout": "Tiến hành thanh toán",
     "reset": "Làm mới"
+  },
+  "productDetail": {
+    "productInfo": "Thông tin sản phẩm",
+    "productComments": "Bình luận",
+    "stockStatus": "Tình trạng tồn kho:",
+    "inStock": "Còn hàng",
+    "outOfStock": "Hết hàng",
+    "brand": "Thương hiệu:",
+    "productCode": "Mã sản phẩm:",
+    "reviews": "đánh giá",
+    "productPrice": "Giá sản phẩm:",
+    "productDescription": "Mô tả sản phẩm:",
+    "announcement": "Thông báo",
+    "comingSoon": "Chức năng này sẽ sớm được ra mắt",
+    "quantity": "Số lượng",
+    "addToCart": "Thêm vào giỏ hàng"
   }
 }
