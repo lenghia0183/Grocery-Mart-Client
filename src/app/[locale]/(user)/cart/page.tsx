@@ -8,8 +8,7 @@ import formatCurrency from '@/utils/formatCurrency';
 import Icon from '@/components/Icon';
 import Image from '@/components/Image';
 import images from '@/asset/images';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import { PATH } from '@/constants/path';
 import { useTranslations } from 'next-intl';
 
@@ -56,8 +55,7 @@ const Cart = (): JSX.Element => {
 
   return (
     <>
-      <Header />
-      <div className="bg-gray-100 dark:bg-dark-500 py-10 dark:text-white-200">
+      <div className="bg-gray-100 dark:bg-dark-500 py-14 dark:text-white-200">
         <main className="container">
           <div className="grid grid-cols-12 gap-x-10">
             {/* Danh sách sản phẩm trong giỏ hàng */}
@@ -119,7 +117,6 @@ const Cart = (): JSX.Element => {
           </div>
         </main>
       </div>
-      <Footer />
     </>
   );
 };

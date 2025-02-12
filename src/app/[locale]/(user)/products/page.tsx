@@ -1,8 +1,6 @@
 import React from 'react';
 import ProductFilterSideBar from './ProductFilterSideBar';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import GoToTop from '@/components/GoToTop';
+
 import ProductList from '@/components/ProductList';
 import ProductFilterTopBar from './ProductFilterTopBar';
 import { getQueryState } from '@/utils/getQueryState';
@@ -14,8 +12,7 @@ const ProductPage = async ({ searchParams }: { searchParams: { [key: string]: st
   console.log('keyword', keyword);
 
   return (
-    <div className="bg-gray-600 dark:bg-dark-500">
-      <Header />
+    <div className="bg-gray-600 dark:bg-dark-500 py-14">
       <div className="container mx-auto grid grid-cols-12 mt-10">
         {/* Sidebar */}
         <aside className="col-span-3 mr-16">
@@ -28,8 +25,6 @@ const ProductPage = async ({ searchParams }: { searchParams: { [key: string]: st
           <ProductList className="p-0" listClassName="!grid-cols-4 !gap-3" />
         </main>
       </div>
-      <Footer />
-      <GoToTop />
     </div>
   );
 };

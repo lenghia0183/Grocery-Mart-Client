@@ -4,8 +4,6 @@ import images from '@/asset/images';
 import Autocomplete from '@/components/AutoComplete';
 import Button from '@/components/Button';
 import Divider from '@/components/Divider';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
 import Icon from '@/components/Icon';
 import Image from '@/components/Image';
 import LabelValue from '@/components/LabelValue';
@@ -148,11 +146,11 @@ const Checkout = (): JSX.Element => {
         fetchServicePrice();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values?.province, values?.district, values?.ward]);
 
   return (
     <>
-      <Header />
       <Formik<CheckoutFormValues>
         innerRef={(f) => {
           formRef.current = f;
@@ -167,7 +165,7 @@ const Checkout = (): JSX.Element => {
           // console.log('values', values);
           return (
             <Form>
-              <main className="p-10 bg-gray-100 dark:bg-dark-500">
+              <main className="p-14 bg-gray-100 dark:bg-dark-500">
                 <div className="container grid grid-cols-12 gap-5">
                   {/* Thông tin khách hàng */}
                   <div className="col-span-8 p-10 bg-white dark:bg-dark-400 shadow-md rounded-lg text-dark dark:text-white-200">
@@ -445,7 +443,6 @@ const Checkout = (): JSX.Element => {
           );
         }}
       </Formik>
-      <Footer />
     </>
   );
 };

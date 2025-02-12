@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { Formik, Form } from 'formik';
-import Button from '../../../components/Button';
+
 import { useQueryState } from '@/hooks/useQueryState';
 import clsx from 'clsx';
+import Button from '@/components/Button';
 
 const priceOptions = [
   { label: 'Giá: Tăng dần', value: 'price:asc' },

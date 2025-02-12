@@ -1,7 +1,5 @@
 import React from 'react';
 import ProductGallery from '@/components/ProductGallery';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import ProductForm from './productForm';
 import LabelValue from '@/components/LabelValue';
@@ -35,8 +33,7 @@ const fakeProduct = {
 const ProductDetail: React.FC = () => {
   return (
     <>
-      <Header />
-      <div className="dark:bg-dark-500 py-10">
+      <div className="dark:bg-dark-500 py-14">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
             {/* Left Column */}
@@ -97,8 +94,6 @@ const ProductDetail: React.FC = () => {
         </div>
         <RelatedProducts />
       </div>
-
-      <Footer />
     </>
   );
 };
