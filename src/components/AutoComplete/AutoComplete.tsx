@@ -130,13 +130,11 @@ const Autocomplete = <Item, Response = Item[]>({
 
     // mở ra phát nào là call api phát ý và dùng tìm kiếm không call apiapi
     if (asyncRequestDeps && values[asyncRequestDeps] && !autoFetch && isOpen && filterOptionsLocally) {
-      console.log('coll 12312');
       fetchData();
     }
 
     // call lần đầu để cho vào filterOptionsLocally và tìm kiếm không call api
     if (asyncRequestDeps && values[asyncRequestDeps] && autoFetch && !hasFetchedData && filterOptionsLocally) {
-      console.log('coll 122');
       fetchData();
     }
 
@@ -150,7 +148,6 @@ const Autocomplete = <Item, Response = Item[]>({
       !asyncRequestDeps &&
       !values[asyncRequestDeps]
     ) {
-      console.log('coll 2');
       fetchData();
     }
 
@@ -164,15 +161,11 @@ const Autocomplete = <Item, Response = Item[]>({
       !asyncRequestDeps &&
       !values[asyncRequestDeps]
     ) {
-      console.log('coll 3');
       fetchData();
     }
 
     // call api khi chưa có options và autoFectch là true và filterOptionsLocally là true (call khi lần đầu mount)
     if (autoFetch && filterOptionsLocally && !hasFetchedData && !asyncRequestDeps && !values[asyncRequestDeps]) {
-      console.log('values[asyncRequestDeps]', values[asyncRequestDeps]);
-      console.log('values', asyncRequestDeps);
-      console.log('coll 4');
       fetchData();
     }
 
@@ -185,7 +178,6 @@ const Autocomplete = <Item, Response = Item[]>({
       !asyncRequestDeps &&
       !values[asyncRequestDeps]
     ) {
-      console.log('coll 5');
       fetchData();
     }
 

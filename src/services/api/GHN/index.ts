@@ -16,6 +16,38 @@ export interface WardData {
   WardName: string;
 }
 
+interface ShipPriceData {
+  service_type_id: number;
+  to_district_id?: number;
+  to_ward_code: string;
+  insurance_value: number;
+  weight: number;
+  items: {
+    name: string;
+    quantity: number;
+    height: number;
+    weight: number;
+    width: number;
+    length: number;
+  }[];
+}
+
+interface ShipPriceResponseData {
+  total: number;
+  service_fee: number;
+  insurance_fee: number;
+  pick_station_fee: number;
+  coupon_value: number;
+  r2s_fee: number;
+  return_again: number;
+  document_return: number;
+  double_check: number;
+  cod_fee: number;
+  pick_remote_areas_fee: number;
+  deliver_remote_areas_fee: number;
+  cod_failed_fee: number;
+}
+
 export const getProvinceData = (): Promise<ApiResponse<ProvinceData[]>> => {
   const url = '/master-data/province';
   return ghnApi.get<ProvinceData[]>(url);
@@ -33,4 +65,9 @@ export const getWardData = (districtID: string | number): Promise<ApiResponse<Wa
   return ghnApi.get<WardData[]>(url, {
     params: { district_id: districtID },
   });
+};
+
+export const getShipPrice = (data: ShipPriceData): Promise<ApiResponse<ShipPriceResponseData>> => {
+  const url = '/v2/shipping-order/fee';
+  return ghnApi.post(url, data);
 };

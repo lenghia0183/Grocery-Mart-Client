@@ -105,7 +105,7 @@ const handleAxiosError = <T>(err: unknown): ApiResponse<T> => {
 export const createApi = (instance: AxiosInstance) => ({
   instance,
 
-  post: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T>> => {
+  post: async <T, P>(endpoint: string, params: P): Promise<ApiResponse<T>> => {
     try {
       return await instance.post(endpoint, params);
     } catch (err: unknown) {

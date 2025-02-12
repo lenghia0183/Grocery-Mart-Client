@@ -8,14 +8,24 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Icon from '@/components/Icon';
 import Image from '@/components/Image';
+import LabelValue from '@/components/LabelValue';
 import Radio from '@/components/Radio';
 import RadioGroup from '@/components/RadioGroup';
 import TextArea from '@/components/TextArea';
 import TextField from '@/components/TextField';
-import { DistrictData, getDistrictData, getProvinceData, getWardData, ProvinceData } from '@/services/api/GHN';
+import {
+  DistrictData,
+  getDistrictData,
+  getProvinceData,
+  getShipPrice,
+  getWardData,
+  ProvinceData,
+  WardData,
+} from '@/services/api/GHN';
 import { ApiResponse } from '@/types/ApiResponse';
 import formatCurrency from '@/utils/formatCurrency';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
+import { useEffect, useRef, useState } from 'react';
 const initialValues: CheckoutFormValues = {
   buyerName: '',
   buyerEmail: '',
@@ -24,9 +34,10 @@ const initialValues: CheckoutFormValues = {
   receiverPhone: '',
   province: null,
   district: null,
-  ward: '',
+  ward: null,
   method: 'ghn',
   paymentMethod: '',
+  shippingFee: 0,
 };
 
 interface CheckoutFormValues {
@@ -37,18 +48,126 @@ interface CheckoutFormValues {
   receiverPhone: string;
   province: ProvinceData | null;
   district: DistrictData | null;
-  ward: string;
+  ward: WardData | null;
   method: string;
   paymentMethod: string;
+  shippingFee: number;
 }
 
+const items = [
+  {
+    id: 'PROD123456',
+    name: 'Organic Matcha Green Tea Powder - Premium Grade',
+    price: 150000.0,
+    images: ['https://img.freepik.com/free-photo/matcha-green-tea-powder-wooden-bowl_1150-11201.jpg'],
+    inStock: true,
+    branch: 'Japanese Organic Tea Co.',
+    quantity: 2,
+  },
+  {
+    id: 'PROD789012',
+    name: 'Arabica Coffee Beans - 500g',
+    price: 120000.0,
+    images: ['https://img.freepik.com/free-photo/coffee-beans-sack_1339-6433.jpg'],
+    inStock: false,
+    branch: 'Vietnam Premium Coffee',
+    quantity: 1,
+  },
+  {
+    id: 'PROD345678',
+    name: 'Dark Chocolate 85% Cocoa - Sugar Free',
+    price: 95000.0,
+    images: ['https://img.freepik.com/free-photo/dark-chocolate-bars_114579-1330.jpg'],
+    inStock: true,
+    branch: 'Belgian Chocolate Factory',
+    quantity: 3,
+  },
+  {
+    id: 'PROD7890121',
+    name: 'Arabica Coffee Beans - 500g',
+    price: 120000.0,
+    images: ['https://img.freepik.com/free-photo/coffee-beans-sack_1339-6433.jpg'],
+    inStock: false,
+    branch: 'Vietnam Premium Coffee',
+    quantity: 1,
+  },
+  {
+    id: 'PROD3456781',
+    name: 'Dark Chocolate 85% Cocoa - Sugar Free',
+    price: 95000.0,
+    images: ['https://img.freepik.com/free-photo/dark-chocolate-bars_114579-1330.jpg'],
+    inStock: true,
+    branch: 'Belgian Chocolate Factory',
+    quantity: 3,
+  },
+];
+
 const Checkout = (): JSX.Element => {
+  const formRef = useRef<FormikProps<CheckoutFormValues> | null>(null);
+  const [values, setValues] = useState<CheckoutFormValues>(initialValues);
+  const totalPrice = items.reduce((total, item) => total + item.quantity * item.price, 0);
+  // useEffect(() => {
+  //   const formValues = formRef?.current?.values;
+  //   if (formValues) {
+  //     setValues(formValues);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const { province = '', district = '', ward = '' } = values;
+
+    if (formRef.current) {
+      const { setFieldValue } = formRef?.current;
+      setFieldValue('shippingFee', 0);
+      if (province && district && ward) {
+        const fetchServicePrice = async () => {
+          const servicePrice = await getShipPrice({
+            service_type_id: 2,
+            to_district_id: district?.DistrictID,
+            to_ward_code: ward?.WardCode,
+            insurance_value: items?.reduce((total, item) => {
+              return total + item.quantity * item.price;
+            }, 0),
+            weight: items?.reduce((total, item) => {
+              return total + item.quantity * 700;
+            }, 0),
+            items: items?.map((i) => {
+              return {
+                name: i?.name,
+                quantity: i?.quantity,
+                height: 30,
+                weight: 700,
+                width: 30,
+                length: 30,
+              };
+            }),
+          });
+
+          if (servicePrice && servicePrice.data) {
+            setFieldValue('shippingFee', servicePrice.data.total);
+          }
+        };
+
+        fetchServicePrice();
+      }
+    }
+  }, [values?.province, values?.district, values?.ward]);
+
   return (
     <>
       <Header />
-      <Formik<CheckoutFormValues> initialValues={initialValues} onSubmit={(values) => console.log(values)}>
-        {({ values }) => {
-          console.log('values', values);
+      <Formik<CheckoutFormValues>
+        innerRef={(f) => {
+          formRef.current = f;
+          if (f?.values) {
+            setValues(f?.values);
+          }
+        }}
+        initialValues={initialValues}
+        onSubmit={(values) => console.log(values)}
+      >
+        {({ values, resetForm }) => {
+          // console.log('values', values);
           return (
             <Form>
               <main className="p-10 bg-gray-100">
@@ -179,7 +298,8 @@ const Checkout = (): JSX.Element => {
                           <div className="flex-shrink-0">
                             <Image src={images.logoGHN} alt="Grocery-mart" width={170} />
                             <p>
-                              Giao hàng tận nơi có phí - <span className="font-semibold">{formatCurrency(0)}</span>
+                              Giao hàng tận nơi có phí -{' '}
+                              <span className="font-semibold">{formatCurrency(values.shippingFee)}</span>
                             </p>
                             <p className="text-red-500 font-medium">Miễn phí vận chuyển cho đơn từ 500.000đ</p>
                           </div>
@@ -242,7 +362,81 @@ const Checkout = (): JSX.Element => {
                   </div>
 
                   {/* Tóm tắt đơn hàng */}
-                  <div className="col-span-4 p-10 bg-white shadow-md rounded-lg"></div>
+                  <div className="col-span-4">
+                    <div className="py-10 px-5 bg-white rounded-md  border-gray-400 shadow-md ">
+                      <h2 className="text-2xl font-medium">Danh sách sản phẩm</h2>
+                      <Divider />
+
+                      <div className="h-[350px] overflow-y-auto border border-gray p-3 mt-5">
+                        {items.map((item) => {
+                          return (
+                            <div key={item.id}>
+                              <div className="flex gap-5 items-center mt-3">
+                                <Image
+                                  src={item.images[0]}
+                                  width={60}
+                                  height={60}
+                                  alt=""
+                                  className="w-[60px] h-[60px] flex-shrink-0"
+                                />
+                                <div>
+                                  <p className="line-clamp-2">{item.name}</p>
+                                  <p className="text-gray-500">
+                                    {item.quantity} x {formatCurrency(item.price)}
+                                  </p>
+                                </div>
+                              </div>
+                              <Divider />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="py-10 px-5 bg-white rounded-md shadow-md mt-10">
+                      <h2 className="text-2xl font-medium">Danh sách chi phí</h2>
+                      <Divider />
+
+                      <LabelValue label={'Tổng số sản phẩm'} value={items.length} className="justify-between" />
+                      <LabelValue
+                        label={'Tổng tiền sản phẩm'}
+                        value={formatCurrency(totalPrice)}
+                        className="justify-between"
+                      />
+                      <LabelValue
+                        label={'Phí ship'}
+                        value={formatCurrency(values.shippingFee)}
+                        className="justify-between"
+                      />
+                      <LabelValue label={'Phụ phí'} value={formatCurrency(0)} className="justify-between" />
+                      <Divider />
+
+                      <LabelValue
+                        label={'Tổng tiền thanh toán'}
+                        value={formatCurrency(totalPrice + values.shippingFee)}
+                        className="justify-between"
+                      />
+
+                      <TextArea name="note" label="Ghi chú" rows={5} className="mt-10" />
+
+                      <Button full rounded className="mt-5 py-3">
+                        Thanh toán
+                      </Button>
+
+                      <Button
+                        bgColor="gray-300"
+                        bgHoverColor="gray-400"
+                        full
+                        rounded
+                        className="mt-5 py-3"
+                        onClick={() => {
+                          resetForm();
+                        }}
+                      >
+                        Làm mới
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </main>
             </Form>
