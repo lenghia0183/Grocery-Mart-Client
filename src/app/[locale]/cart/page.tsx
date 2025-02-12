@@ -57,7 +57,7 @@ const Cart = (): JSX.Element => {
   return (
     <>
       <Header />
-      <div className="bg-gray-100 dark:bg-dark-500 py-10 dark:text-white">
+      <div className="bg-gray-100 dark:bg-dark-500 py-10 dark:text-white-200">
         <main className="container">
           <div className="grid grid-cols-12 gap-x-10">
             {/* Danh sách sản phẩm trong giỏ hàng */}

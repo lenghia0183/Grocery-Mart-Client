@@ -15,14 +15,14 @@ const SignUp: React.FC = async () => {
         <div className="col-span-6 flex items-center justify-center h-full">
           <div>
             <Image src={images.login} alt="Grocery Mart" />
-            <p className="w-[70%] text-center mt-10 text-dark dark:text-white">{t('desc01')}</p>
+            <p className="w-[70%] text-center mt-10 text-dark dark:text-white-200">{t('desc01')}</p>
           </div>
         </div>
 
         <div className="col-span-6 h-full p-24 pt-0 text-center flex flex-col  justify-center">
           <Logo className="mx-auto" />
 
-          <h2 className="text-[30px] mt-10 dark:text-white text-gray">{t('greeting')}</h2>
+          <h2 className="text-[30px] mt-10 dark:text-white-200 text-gray">{t('greeting')}</h2>
           <p className="text-gray-500 mt-7">{t('desc02')}</p>
 
           <SignUpForm />

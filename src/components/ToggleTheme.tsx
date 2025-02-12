@@ -16,7 +16,7 @@ const ToggleTheme = () => {
       {/* Nút cho Light Mode */}
       <button
         onClick={() => handleThemeChange('light')}
-        className="p-2 rounded bg-gray-300 dark:bg-gray-700 text-black dark:text-white"
+        className="p-2 rounded bg-gray-300 dark:bg-gray-700 text-black dark:text-white-200"
       >
         Light Mode
       </button>
@@ -24,7 +24,7 @@ const ToggleTheme = () => {
       {/* Nút cho Dark Mode */}
       <button
         onClick={() => handleThemeChange('dark')}
-        className="p-2 rounded bg-gray-300 dark:bg-gray-700 text-black dark:text-white"
+        className="p-2 rounded bg-gray-300 dark:bg-gray-700 text-black dark:text-white-200"
       >
         Dark Mode
       </button>
@@ -32,7 +32,7 @@ const ToggleTheme = () => {
       {/* Nút cho System Mode */}
       <button
         onClick={() => handleThemeChange('system')}
-        className="p-2 rounded bg-gray-300 dark:bg-gray-700 text-black dark:text-white"
+        className="p-2 rounded bg-gray-300 dark:bg-gray-700 text-black dark:text-white-200"
       >
         System Mode
       </button>

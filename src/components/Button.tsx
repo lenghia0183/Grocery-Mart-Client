@@ -86,7 +86,7 @@ const Button: React.FC<ButtonProps> = ({
       textColorClass || 'text-blue-500',
       borderColorClass || 'border-blue-500',
       bgHoverColorClass || 'hover:bg-blue-200',
-      textHoverColorClass || 'hover:text-white',
+      textHoverColorClass || 'hover:text-white-200',
       borderHoverColorClass || '',
     ),
     text: clsx(

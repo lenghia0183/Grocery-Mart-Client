@@ -42,7 +42,7 @@ const CartItem = ({ product }: CartItemProps): JSX.Element => {
 
             <div className="flex justify-between flex-1">
               <div className="flex flex-col justify-between">
-                <h2 className="text-xl font-semibold w-[80%] line-clamp-2 dark:text-white">{product.name}</h2>
+                <h2 className="text-xl font-semibold w-[80%] line-clamp-2 dark:text-white-200">{product.name}</h2>
                 <div className="flex items-center gap-2">
                   <p className="text-gray-500 text-lg">{formatCurrency(product.price)}</p>
                   <Divider vertical={true} length="20px" thickness="2px" color="gray-500" />

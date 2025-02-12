@@ -28,7 +28,7 @@ const ProductList = async ({ className, listClassName }: ProductListProps): Prom
 
   return (
     <div className={clsx('container', className, listClassName)}>
-      <h2 className="mt-10 mb-5 text-2xl font-semibold text-dark dark:text-white">{t('latest')}</h2>
+      <h2 className="mt-10 mb-5 text-2xl font-semibold text-dark dark:text-white-200">{t('latest')}</h2>
 
       <ul className={clsx('grid grid-cols-5 gap-7', listClassName)}>
         {productList.map((product, index) => (

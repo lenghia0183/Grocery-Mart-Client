@@ -23,11 +23,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   return (
     <Formik initialValues={{ quantity: 1 }} onSubmit={(values) => console.log('Submit', values)}>
       <Form>
-        <p className="text-2xl font-medium mt-3 dark:text-white">Số lượng</p>
+        <p className="text-2xl font-medium mt-3 dark:text-white-200">Số lượng</p>
         <div className="flex mt-3">
           {/* left column */}
           <div className="flex-1">
-            <QuantityInput name="quantity" width="140px" height="50px" buttonClassName="dark:text-white" />
+            <QuantityInput name="quantity" width="140px" height="50px" buttonClassName="dark:text-white-200" />
           </div>
 
           {/* right column */}

@@ -46,11 +46,11 @@ const ProductDetail: React.FC = () => {
 
             {/* Right Column */}
             <div className="col-span-7 bg-gray-600 dark:bg-dark-400 p-14 flex flex-col gap-4 rounded-xl">
-              <h1 className="text-[28px] dark:text-white font-semibold">{fakeProduct.name}</h1>
+              <h1 className="text-[28px] dark:text-white-200 font-semibold">{fakeProduct.name}</h1>
 
               <div className="flex text-lg flex-col gap-y-3">
                 <LabelValue
-                  labelClassName="!font-normal dark:text-white"
+                  labelClassName="!font-normal dark:text-white-200"
                   valueClassName="text-blue-500 dark:text-blue-400"
                   label="Tình trạng tồn kho:"
                   value={fakeProduct.inStock ? 'Còn hàng' : 'Hết hàng'}
@@ -58,7 +58,7 @@ const ProductDetail: React.FC = () => {
 
                 <div className="flex items-center gap-2">
                   <LabelValue
-                    labelClassName="!font-normal dark:text-white"
+                    labelClassName="!font-normal dark:text-white-200"
                     valueClassName="text-blue-500 dark:text-blue-400"
                     label="Thương hiệu:"
                     value={fakeProduct.branch}
@@ -67,18 +67,18 @@ const ProductDetail: React.FC = () => {
                   <div className="w-[2px] bg-dark-300 h-[20px]"></div>
 
                   <LabelValue
-                    labelClassName="!font-normal dark:text-white"
+                    labelClassName="!font-normal dark:text-white-200"
                     valueClassName="text-blue-500 dark:text-blue-400"
                     label="Mã sản phẩm:"
                     value={fakeProduct.id}
                   />
                 </div>
 
-                <div className="flex items-center gap-2 dark:text-white">
+                <div className="flex items-center gap-2 dark:text-white-200">
                   <Icon name="star" color="yellow" />({fakeProduct.rating}) 350 reviews
                 </div>
 
-                <p className="dark:text-white">{fakeProduct.description}</p>
+                <p className="dark:text-white-200">{fakeProduct.description}</p>
 
                 <ProductForm product={fakeProduct} />
               </div>

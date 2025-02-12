@@ -118,7 +118,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
         onBlur={handleBlur}
         onChange={handleInputChange}
         className={clsx(
-          'max-w-9 text-center outline-none bg-transparent text-dark dark:text-white',
+          'max-w-9 text-center outline-none bg-transparent text-dark dark:text-white-200',
           {
             'text-gray-300 ': disabled,
           },

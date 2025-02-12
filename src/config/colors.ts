@@ -47,10 +47,10 @@ const colors: Colors = {
     // Đã có trước
     DEFAULT: '#FFFFFF',
     100: '#f9f9f9', // Màu mới
-    200: '#f0f0f0', // Màu mới
+    200: 'rgb(240 246 252)', // màu text
     300: '#e0e0e0', // Màu mới
     400: '#b9babe', // Đã có trước
-    500: '#FFFFFF', // Đã có trước
+    500: '#FFFFFF', // màu bg
   },
 
   gray: {

@@ -43,7 +43,7 @@ const Header: React.FC = () => {
                 key={index}
                 href={item.href}
                 variant="text"
-                className="px-[15px] text-lg text-dark dark:text-white"
+                className="px-[15px] text-lg text-dark dark:text-white-200"
               >
                 {item.label}
               </Button>
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 text-dark dark:text-white">
+        <div className="flex gap-3 text-dark dark:text-white-200">
           <IconButton
             iconName="search"
             variant="contained"
@@ -68,7 +68,7 @@ const Header: React.FC = () => {
           {/* Wishlist & Cart */}
           <div className="flex items-center gap-3 bg-white dark:bg-dark-500 rounded-md shadow-button-light dark:shadow-button-dark">
             {/* Wishlist */}
-            <div className="flex items-center gap-2 py-3 pl-5 hover:text-blue-300 dark:text-white">
+            <div className="flex items-center gap-2 py-3 pl-5 hover:text-blue-300 dark:text-white-200">
               <IconButton
                 iconName="heart"
                 variant="text"
@@ -85,7 +85,7 @@ const Header: React.FC = () => {
             <div className="w-[1px] h-[60%] bg-gray-400"></div>
 
             {/* Cart */}
-            <div className="flex items-center gap-2 py-3 pr-5 hover:text-blue-300 dark:text-white">
+            <div className="flex items-center gap-2 py-3 pr-5 hover:text-blue-300 dark:text-white-200">
               <IconButton
                 iconName="cart"
                 variant="text"

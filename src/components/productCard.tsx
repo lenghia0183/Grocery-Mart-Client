@@ -23,7 +23,7 @@ const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
   return (
     <div
       className={clsx(
-        'h-full p-4 rounded-2xl bg-white dark:bg-dark-400 shadow-product-card-light dark:shadow-product-card-dark text-dark dark:text-white hover:bg-gray-400 transition-all',
+        'h-full p-4 rounded-2xl bg-white dark:bg-dark-400 shadow-product-card-light dark:shadow-product-card-dark text-dark dark:text-white-200 hover:bg-gray-400 transition-all',
         className,
       )}
     >

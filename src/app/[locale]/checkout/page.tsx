@@ -167,7 +167,7 @@ const Checkout = (): JSX.Element => {
               <main className="p-10 bg-gray-100 dark:bg-dark-500">
                 <div className="container grid grid-cols-12 gap-5">
                   {/* Thông tin khách hàng */}
-                  <div className="col-span-8 p-10 bg-white dark:bg-dark-400 shadow-md rounded-lg text-dark dark:text-white">
+                  <div className="col-span-8 p-10 bg-white dark:bg-dark-400 shadow-md rounded-lg text-dark dark:text-white-200">
                     <h2 className="text-2xl font-medium">Thông tin khách hàng</h2>
                     <Divider />
 
@@ -308,7 +308,7 @@ const Checkout = (): JSX.Element => {
                     <h2 className="mt-10 text-2xl font-medium">Hình thức thanh toán</h2>
                     <Divider />
 
-                    <RadioGroup name="paymentMethod" className="grid grid-cols-12 gap-7 text-dark dark:text-white">
+                    <RadioGroup name="paymentMethod" className="grid grid-cols-12 gap-7 text-dark dark:text-white-200">
                       {/* cod */}
 
                       <Radio
@@ -317,7 +317,7 @@ const Checkout = (): JSX.Element => {
                         width="unset"
                         labelClassName="w-full"
                         label={
-                          <div className="w-full h-fit flex items-center gap-2 bg-green-200 pr-3 text-lg font-semibold text-white  rounded-sm col-span-6 flex-shrink-0">
+                          <div className="w-full h-fit flex items-center gap-2 bg-green-200 pr-3 text-lg font-semibold text-white-200  rounded-sm col-span-6 flex-shrink-0">
                             <Image src={images.codMethod} width={60} alt="" />
                             <p>Thanh toán trực tuyến</p>
                           </div>
@@ -326,7 +326,7 @@ const Checkout = (): JSX.Element => {
 
                       <div className="col-span-6">
                         <div className="flex items-center gap-3">
-                          <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white  rounded-sm flex-shrink-0">
+                          <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white-200  rounded-sm flex-shrink-0">
                             <Image src={images.bankingMethod} width={60} alt="" />
                             <p>Thanh toán trực tuyến</p>
                           </div>
@@ -356,7 +356,7 @@ const Checkout = (): JSX.Element => {
                   </div>
 
                   {/* Tóm tắt đơn hàng */}
-                  <div className="col-span-4 text-dark dark:text-white">
+                  <div className="col-span-4 text-dark dark:text-white-200">
                     <div className="py-10 px-5 bg-white dark:bg-dark-400 rounded-md  border-gray-400 shadow-md ">
                       <h2 className="text-2xl font-medium">Danh sách sản phẩm</h2>
                       <Divider />

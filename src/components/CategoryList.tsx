@@ -13,7 +13,7 @@ const CategoryList = async (): Promise<JSX.Element> => {
 
   return (
     <div className="container">
-      <h2 className="text-2xl font-semibold mt-10 mb-5 text-dark dark:text-white">{t('category')}</h2>
+      <h2 className="text-2xl font-semibold mt-10 mb-5 text-dark dark:text-white-200">{t('category')}</h2>
       <ul className="grid grid-cols-3 gap-4">
         {categoryList.map((category) => (
           <li
@@ -29,7 +29,7 @@ const CategoryList = async (): Promise<JSX.Element> => {
                 className="rounded-[16px] w-[100px] h-[100px]"
               />
             </div>
-            <div className="text-dark dark:text-white">
+            <div className="text-dark dark:text-white-200">
               <div className="font-semibold text-xl ">20k - 150k</div>
               <div className="text-lg">{category.name + 'Grocery-mart'}</div>
             </div>

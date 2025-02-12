@@ -13,7 +13,7 @@ function Logo({ className }: LogoProps): JSX.Element {
     <Link
       href={PATH.HOME}
       className={clsx(
-        'flex items-center gap-3 text-2xl font-semibold text-dark-500 dark:text-white select-none',
+        'flex items-center gap-3 text-2xl font-semibold text-dark-500 dark:text-white-200 select-none',
         className,
       )}
       title="Grocery Mart Logo"
