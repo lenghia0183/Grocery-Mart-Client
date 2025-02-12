@@ -25,6 +25,7 @@ import {
 import { ApiResponse } from '@/types/ApiResponse';
 import formatCurrency from '@/utils/formatCurrency';
 import { Form, Formik, FormikProps } from 'formik';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 const initialValues: CheckoutFormValues = {
   buyerName: '',
@@ -107,6 +108,8 @@ const Checkout = (): JSX.Element => {
   const [values, setValues] = useState<CheckoutFormValues>(initialValues);
   const totalPrice = items.reduce((total, item) => total + item.quantity * item.price, 0);
 
+  const t = useTranslations('checkout');
+
   useEffect(() => {
     const { province = '', district = '', ward = '' } = values;
 
@@ -168,23 +171,28 @@ const Checkout = (): JSX.Element => {
                 <div className="container grid grid-cols-12 gap-5">
                   {/* Thông tin khách hàng */}
                   <div className="col-span-8 p-10 bg-white dark:bg-dark-400 shadow-md rounded-lg text-dark dark:text-white-200">
-                    <h2 className="text-2xl font-medium">Thông tin khách hàng</h2>
+                    <h2 className="text-2xl font-medium">{t('customerInfo')}</h2>
                     <Divider />
 
                     {/* Người mua hàng */}
                     <div className="mt-5">
-                      <h3 className="text-xl font-medium">Người mua hàng</h3>
+                      <h3 className="text-xl font-medium">{t('buyer')}</h3>
                       <div className="grid grid-cols-12 gap-7 gap-y-11 px-2 mt-5">
                         <TextField
                           name="buyerName"
-                          label="Họ và tên"
+                          label={t('buyerName')}
                           className="col-span-full sm:col-span-6"
                           required
                         />
-                        <TextField name="buyerEmail" label="Email" className="col-span-full sm:col-span-6" required />
+                        <TextField
+                          name="buyerEmail"
+                          label={t('buyerEmail')}
+                          className="col-span-full sm:col-span-6"
+                          required
+                        />
                         <TextField
                           name="buyerPhone"
-                          label="Số điện thoại"
+                          label={t('buyerPhone')}
                           className="col-span-full sm:col-span-6"
                           required
                         />
@@ -193,17 +201,17 @@ const Checkout = (): JSX.Element => {
 
                     {/* Người nhận hàng */}
                     <div className="mt-10">
-                      <h3 className="text-xl font-medium">Người nhận hàng</h3>
+                      <h3 className="text-xl font-medium">{t('receiver')}</h3>
                       <div className="grid grid-cols-12 gap-x-7 gap-y-7 px-2 mt-5">
                         <TextField
                           name="receiverName"
-                          label="Họ và tên"
+                          label={t('receiverName')}
                           className="col-span-full sm:col-span-6"
                           required
                         />
                         <TextField
                           name="receiverPhone"
-                          label="Số điện thoại"
+                          label={t('receiverPhone')}
                           className="col-span-full sm:col-span-6"
                           required
                         />
@@ -215,22 +223,22 @@ const Checkout = (): JSX.Element => {
                           bgHoverColor="none"
                           size="zeroPadding"
                         >
-                          Sử dụng thông tin người mua hàng
+                          {t('useBuyerInfo')}
                         </Button>
                       </div>
                     </div>
 
                     {/* Thông tin giao hàng */}
-                    <h2 className="mt-10 text-2xl font-medium">Thông tin giao hàng</h2>
+                    <h2 className="mt-10 text-2xl font-medium">{t('shippingInfo')}</h2>
                     <Divider />
                     <div className="grid grid-cols-12 gap-7 mt-7">
                       {/* Địa chỉ giao hàng */}
                       <div className="col-span-6">
-                        <h3 className="text-xl font-medium">Địa chỉ giao hàng</h3>
+                        <h3 className="text-xl font-medium">{t('shippingAddress')}</h3>
                         <div className="flex flex-col gap-7 mt-7">
                           <Autocomplete<ProvinceData, ApiResponse<ProvinceData[]>>
                             name="province"
-                            label="Tỉnh/Thành phố"
+                            label={t('province')}
                             asyncRequest={async () => {
                               const response = await getProvinceData();
                               return response;
@@ -246,7 +254,7 @@ const Checkout = (): JSX.Element => {
 
                           <Autocomplete<DistrictData, ApiResponse<DistrictData[]>>
                             name="district"
-                            label="Quận/Huyện"
+                            label={t('district')}
                             asyncRequest={async () => {
                               const response = await getDistrictData(values?.province?.ProvinceID || '');
                               return response;
@@ -265,7 +273,7 @@ const Checkout = (): JSX.Element => {
                           />
                           <Autocomplete
                             name="ward"
-                            label="Phường/Xã"
+                            label={t('ward')}
                             asyncRequest={async () => {
                               const response = await getWardData(values?.district?.DistrictID || '');
                               return response;
@@ -287,25 +295,25 @@ const Checkout = (): JSX.Element => {
 
                       {/* Đơn vị vận chuyển */}
                       <div className="col-span-6">
-                        <h3 className="text-xl font-medium">Đơn vị vận chuyển</h3>
+                        <h3 className="text-xl font-medium">{t('shippingCompany')}</h3>
                         <div className="flex items-center gap-5 p-5 mt-7 border border-dashed">
                           <div className="flex-shrink-0">
                             <Image src={images.logoGHN} alt="Grocery-mart" width={170} />
                             <p>
-                              Giao hàng tận nơi có phí -{' '}
+                              {t('shippingWithFee')} -{' '}
                               <span className="font-semibold">{formatCurrency(values.shippingFee)}</span>
                             </p>
-                            <p className="text-red-500 font-medium">Miễn phí vận chuyển cho đơn từ 500.000đ</p>
+                            <p className="text-red-500 font-medium">{t('freeShipping')}</p>
                           </div>
                           <Radio name="method" value="ghn" />
                         </div>
                       </div>
 
-                      <TextArea name="street" label="Địa chỉ" className="col-span-full" rows={5} required />
+                      <TextArea name="street" label={t('address')} className="col-span-full" rows={5} required />
                     </div>
 
                     {/* Hình thức thanh toán */}
-                    <h2 className="mt-10 text-2xl font-medium">Hình thức thanh toán</h2>
+                    <h2 className="mt-10 text-2xl font-medium">{t('paymentMethod')}</h2>
                     <Divider />
 
                     <RadioGroup name="paymentMethod" className="grid grid-cols-12 gap-7 text-dark dark:text-white-200">
@@ -319,7 +327,7 @@ const Checkout = (): JSX.Element => {
                         label={
                           <div className="w-full h-fit flex items-center gap-2 bg-green-200 pr-3 text-lg font-semibold text-white-200  rounded-sm col-span-6 flex-shrink-0">
                             <Image src={images.codMethod} width={60} alt="" />
-                            <p>Thanh toán trực tuyến</p>
+                            <p>{t('cod')}</p>
                           </div>
                         }
                       />
@@ -328,7 +336,7 @@ const Checkout = (): JSX.Element => {
                         <div className="flex items-center gap-3">
                           <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white-200  rounded-sm flex-shrink-0">
                             <Image src={images.bankingMethod} width={60} alt="" />
-                            <p>Thanh toán trực tuyến</p>
+                            <p>{t('onlinePayment')}</p>
                           </div>
                         </div>
 
@@ -337,7 +345,7 @@ const Checkout = (): JSX.Element => {
                           label={
                             <div className="flex items-center justify-between py-4 text-base  gap-3">
                               <Image src={images.logoMomo} width={90} height={90} alt="" />
-                              <p className="flex-shrink-0">Thanh toán qua ví MoMo</p>
+                              <p className="flex-shrink-0">{t('MoMoPayment')}</p>
                             </div>
                           }
                         />
@@ -347,7 +355,7 @@ const Checkout = (): JSX.Element => {
                           label={
                             <div className="flex items-center justify-between py-4 text-base  gap-3">
                               <Image src={images.logoZaloPay} width={90} height={90} alt="" />
-                              <p className="flex-shrink-0">Thanh toán qua ví MoMo</p>
+                              <p className="flex-shrink-0">{t('ZaloPayment')}</p>
                             </div>
                           }
                         />
@@ -358,7 +366,7 @@ const Checkout = (): JSX.Element => {
                   {/* Tóm tắt đơn hàng */}
                   <div className="col-span-4 text-dark dark:text-white-200">
                     <div className="py-10 px-5 bg-white dark:bg-dark-400 rounded-md  border-gray-400 shadow-md ">
-                      <h2 className="text-2xl font-medium">Danh sách sản phẩm</h2>
+                      <h2 className="text-2xl font-medium">{t('productList')}</h2>
                       <Divider />
 
                       <div className="h-[350px] overflow-y-auto border  border-gray p-3 mt-5">
@@ -388,33 +396,33 @@ const Checkout = (): JSX.Element => {
                     </div>
 
                     <div className="py-10 px-5 bg-white dark:bg-dark-400   rounded-md shadow-md mt-10">
-                      <h2 className="text-2xl font-medium">Danh sách chi phí</h2>
+                      <h2 className="text-2xl font-medium">{t('listFee')}</h2>
                       <Divider />
 
-                      <LabelValue label={'Tổng số sản phẩm'} value={items.length} className="justify-between" />
+                      <LabelValue label={t('totalItems')} value={items.length} className="justify-between" />
                       <LabelValue
-                        label={'Tổng tiền sản phẩm'}
+                        label={t('totalPrice')}
                         value={formatCurrency(totalPrice)}
                         className="justify-between"
                       />
                       <LabelValue
-                        label={'Phí ship'}
+                        label={t('shippingFee')}
                         value={formatCurrency(values.shippingFee)}
                         className="justify-between"
                       />
-                      <LabelValue label={'Phụ phí'} value={formatCurrency(0)} className="justify-between" />
+                      <LabelValue label={t('extraFee')} value={formatCurrency(0)} className="justify-between" />
                       <Divider />
 
                       <LabelValue
-                        label={'Tổng tiền thanh toán'}
+                        label={t('totalPayment')}
                         value={formatCurrency(totalPrice + values.shippingFee)}
                         className="justify-between"
                       />
 
-                      <TextArea name="note" label="Ghi chú" rows={5} className="mt-10" />
+                      <TextArea name="note" label={t('note')} rows={5} className="mt-10" />
 
                       <Button full rounded className="mt-5 py-3">
-                        Thanh toán
+                        {t('checkout')}
                       </Button>
 
                       <Button
@@ -427,7 +435,7 @@ const Checkout = (): JSX.Element => {
                           resetForm();
                         }}
                       >
-                        Làm mới
+                        {t('reset')}
                       </Button>
                     </div>
                   </div>
