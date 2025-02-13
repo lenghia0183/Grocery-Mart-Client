@@ -1,4 +1,9 @@
 {
+  "metaData": {
+    "title": "Grocery Mart | Cà phê, trà và cacao cao cấp",
+    "description": "Mua sắm những loại cà phê, trà và cacao tốt nhất tại Grocery Mart. Khám phá các sản phẩm chất lượng cao được nguồn gốc từ những người trồng và nhà rang xay hàng đầu trên thế giới."
+  },
+
   "testPage": {
     "openDialog": "Mở hộp thoại"
   },

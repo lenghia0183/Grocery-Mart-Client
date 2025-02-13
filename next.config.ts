@@ -3,6 +3,9 @@ import type { NextConfig } from 'next';
 
 const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
+  typescript: {
+    // ignoreBuildErrors: true,
+  },
   images: {
     domains: [
       'res.cloudinary.com',

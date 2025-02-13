@@ -2,6 +2,10 @@
   "testPage": {
     "openDialog": "Open Dialog"
   },
+  "metaData": {
+    "title": "Grocery Mart | Premium Coffee, Tea, and Cacao",
+    "description": "Shop the finest selection of coffee, tea, and cacao at Grocery Mart. Discover high-quality products sourced from the best growers and roasters worldwide."
+  },
   "common": {
     "account": "Account",
     "logout": "Logout",
