@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosError, AxiosResponse, AxiosHeaders } from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
-import { getLocalStorageItem, setLocalStorageItem } from '../../utils/localStorage';
+
 import { ApiResponse } from '@/types/ApiResponse';
+import { getLocalStorageItem, setLocalStorageItem } from '@/utils/localStorage';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 const BASE_URL_GHN = process.env.NEXT_PUBLIC_BASE_URL_GHN || '';

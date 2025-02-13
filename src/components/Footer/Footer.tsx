@@ -2,8 +2,9 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import Logo from '@/components/Logo';
-import Icon from '../Icon';
+
 import EmailSignup from './EmailSignUp';
+import Icon from '@/components/Icon';
 
 type FooterSection = {
   title: string;

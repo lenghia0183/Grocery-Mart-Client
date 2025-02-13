@@ -2,9 +2,9 @@
 
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import Button from '../Button';
-import TextField from '../TextField';
-import Icon from '../Icon';
+import TextField from '@/components/TextField';
+import Button from '@/components/Button';
+import Icon from '@/components/Icon';
 
 interface FormValues {
   email: string;

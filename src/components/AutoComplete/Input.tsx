@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import Icon from '../Icon';
-import Loading from '../Loading';
 import clsx from 'clsx';
+import Icon from '@/components/Icon';
+import Loading from '@/components/Loading';
 
 export interface IInputProps {
   height?: string;
