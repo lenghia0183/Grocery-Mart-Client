@@ -5,7 +5,11 @@ import ProductList from '@/components/ProductList';
 import ProductFilterTopBar from './ProductFilterTopBar';
 import { getQueryState } from '@/utils/getQueryState';
 
-const ProductPage = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
+const ProductPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const { filters, page, keyword } = await getQueryState(searchParams);
   console.log('filter server', filters);
   console.log('page', page);
