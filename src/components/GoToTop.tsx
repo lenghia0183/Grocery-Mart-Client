@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
-import Icon from './Icon';
+import Icon from '@/components/Icon';
 
 const GoToTop: React.FC = () => {
   const [scrollPercentage, setScrollPercentage] = useState<number>(0);

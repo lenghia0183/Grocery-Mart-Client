@@ -4,6 +4,7 @@ import CategoryList from '@/components/CategoryList';
 import Footer from '@/components/Footer/Footer';
 import GoToTop from '@/components/GoToTop';
 import Header from '@/components/Header';
+
 import ProductList from '@/components/ProductList';
 
 export default function Test() {
