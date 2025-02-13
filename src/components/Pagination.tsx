@@ -121,7 +121,7 @@ const Pagination: FC<PaginationProps> = ({
             className={clsx(
               'flex items-center justify-center flex-shrink-0 rounded-full text-gray-500 font-semibold border cursor-pointer border-gray-500 hover:text-blue hover:border-blue transition duration-300',
               buttonClassName,
-              { 'bg-blue text-white-200 hover:text-white-200 !border-blue': isActive },
+              { 'bg-blue !text-dark hover:text-dark !border-blue': isActive },
             )}
             onClick={() => handlePageClick(i)}
           >

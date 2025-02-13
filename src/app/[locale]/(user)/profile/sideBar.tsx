@@ -43,7 +43,7 @@ function SideBar() {
       <div className="mb-6 mt-7">
         <div className="flex h-fit items-stretch">
           <div className="w-[3px] bg-blue-400"></div>
-          <h2 className="flex-1 font-semibold text-dark text-lg bg-gray-100 h-full flex items-center p-2 mb-0">
+          <h2 className="flex-1 font-semibold text-dark text-base bg-gray-100 h-full flex items-center p-2 mb-0">
             QUẢN LÝ TÀI KHOẢN
           </h2>
         </div>
@@ -52,7 +52,7 @@ function SideBar() {
             <li key={link.path}>
               <Link
                 href={link.path}
-                className={`flex items-center space-x-2 p-2 text-lg font-medium rounded hover:text-blue transition-all ${
+                className={`flex items-center space-x-2 p-2 text-base font-medium rounded hover:text-blue transition-all ${
                   pathname === link.path ? 'text-blue' : 'text-dark'
                 }`}
               >
@@ -67,7 +67,7 @@ function SideBar() {
       <div>
         <div className="flex h-fit items-stretch">
           <div className="w-[3px] bg-blue-400"></div>
-          <h2 className="flex-1 font-semibold text-dark text-lg bg-gray-100 h-full flex items-center p-2 mb-0">
+          <h2 className="flex-1 font-semibold text-dark text-base bg-gray-100 h-full flex items-center p-2 mb-0">
             QUẢN LÝ GIAO DỊCH
           </h2>
         </div>
@@ -76,7 +76,7 @@ function SideBar() {
             <li key={link.path}>
               <Link
                 href={link.path}
-                className={`flex items-center space-x-2 p-2 text-lg font-medium rounded hover:text-blue transition-all ${
+                className={`flex items-center space-x-2 p-2 text-base font-medium rounded hover:text-blue transition-all ${
                   pathname === link.path ? 'text-blue' : 'text-dark'
                 }`}
               >
