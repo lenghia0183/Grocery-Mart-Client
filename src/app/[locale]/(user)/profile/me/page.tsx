@@ -21,7 +21,7 @@ const initialValues: ProfileFormValues = {
 
 const Profile = (): JSX.Element => {
   return (
-    <div className="p-7 bg-white shadow-md rounded-lg">
+    <div className="p-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white">
       <h2 className="text-2xl font-medium">Thông tin cá nhân</h2>
       <Divider />
 

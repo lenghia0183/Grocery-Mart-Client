@@ -25,7 +25,7 @@ function SideBar() {
   const pathname = usePathname();
 
   return (
-    <nav className="sm:pb-[200px] pb-[100px] bg-white shadow-md rounded-xl overflow-hidden">
+    <nav className="sm:pb-[200px] pb-[100px] bg-white dark:bg-dark-400 shadow-md rounded-xl overflow-hidden dark:text-white">
       <div className="mb-4   relative">
         <Image src={images.avatarCover} alt="grocery-mart" height={250} className="h-[250px] w-full" />
         <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center justify-center w-full">
@@ -43,7 +43,7 @@ function SideBar() {
       <div className="mb-6 mt-7">
         <div className="flex h-fit items-stretch">
           <div className="w-[3px] bg-blue-400"></div>
-          <h2 className="flex-1 font-semibold text-dark text-base bg-gray-100 h-full flex items-center p-2 mb-0">
+          <h2 className="flex-1 font-semibold dark:text-white text-base bg-gray-100 dark:bg-dark-500 h-full flex items-center p-2 mb-0">
             QUẢN LÝ TÀI KHOẢN
           </h2>
         </div>
@@ -53,7 +53,7 @@ function SideBar() {
               <Link
                 href={link.path}
                 className={`flex items-center space-x-2 p-2 text-base font-medium rounded hover:text-blue transition-all ${
-                  pathname === link.path ? 'text-blue' : 'text-dark'
+                  pathname === link.path ? 'text-blue' : ''
                 }`}
               >
                 <Icon name={link.icon} size={1.3} color="inherit" />
@@ -67,7 +67,7 @@ function SideBar() {
       <div>
         <div className="flex h-fit items-stretch">
           <div className="w-[3px] bg-blue-400"></div>
-          <h2 className="flex-1 font-semibold text-dark text-base bg-gray-100 h-full flex items-center p-2 mb-0">
+          <h2 className="flex-1 font-semibold  text-base bg-gray-100 dark:bg-dark-500 h-full flex items-center p-2 mb-0">
             QUẢN LÝ GIAO DỊCH
           </h2>
         </div>
@@ -77,7 +77,7 @@ function SideBar() {
               <Link
                 href={link.path}
                 className={`flex items-center space-x-2 p-2 text-base font-medium rounded hover:text-blue transition-all ${
-                  pathname === link.path ? 'text-blue' : 'text-dark'
+                  pathname === link.path ? 'text-blue' : ''
                 }`}
               >
                 <Icon name={link.icon} size={1.3} color="inherit" />

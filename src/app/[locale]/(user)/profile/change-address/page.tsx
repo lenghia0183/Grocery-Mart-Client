@@ -33,7 +33,7 @@ const initialValues: ChangeAddressFormValues = {
 const ChangeAddress = (): JSX.Element => {
   const t = useTranslations('changeAddress');
   return (
-    <div className="p-7 bg-white shadow-md rounded-lg">
+    <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
       <h2 className="text-2xl font-medium">Đổi địa chỉ</h2>
       <Divider />
 

@@ -19,7 +19,7 @@ const initialValues: ChangePasswordFormValues = {
 
 const ChangePassword = (): JSX.Element => {
   return (
-    <div className="p-7 bg-white shadow-md rounded-lg">
+    <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
       <h2 className="text-2xl font-medium">Đổi mật khẩu</h2>
       <Divider />
 
