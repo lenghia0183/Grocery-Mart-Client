@@ -19,7 +19,6 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
-  console.log('className', className);
   return (
     <div
       className={clsx(

@@ -116,27 +116,47 @@ export const useQueryState = (
         ...queryObj,
         ...obj,
       };
-      console.log('queryObj', queryObj);
-      console.log('obj', obj);
-      console.log('updateUrl', updatedQuery);
+
       const searchParams = new URLSearchParams();
 
       Object.entries(updatedQuery).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          if (typeof value === 'object') {
-            searchParams.set(key, JSON.stringify(value));
-          } else {
-            searchParams.set(key, String(value));
-          }
+        const cleanedValue = deepClean(value); // Áp dụng deepClean để loại bỏ giá trị rỗng
+
+        if (cleanedValue !== undefined) {
+          searchParams.set(key, JSON.stringify(cleanedValue));
         } else {
           searchParams.delete(key);
         }
       });
-
       router.replace(`${pathname}?${searchParams.toString()}`);
     },
     [pathname, queryObj, initialQueryPrefix],
   );
+
+  const deepClean = (data: unknown): unknown => {
+    if (Array.isArray(data)) {
+      // Lọc bỏ các phần tử rỗng và gọi đệ quy để xử lý phần tử lồng nhau
+      const cleanedArray = data.map(deepClean).filter((v) => v !== undefined && v !== null && v !== '');
+      return cleanedArray.length > 0 ? cleanedArray : undefined;
+    }
+
+    if (typeof data === 'object' && data !== null) {
+      // Lọc object để loại bỏ các key có giá trị undefined, null, '', object/mảng rỗng
+      const cleanedObject = Object.fromEntries(
+        Object.entries(data)
+          .map(([key, value]) => [key, deepClean(value)]) // Gọi đệ quy
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          .filter(([_, v]) => v !== undefined), // Chỉ giữ lại các giá trị hợp lệ
+      );
+      return Object.keys(cleanedObject).length > 0 ? cleanedObject : undefined;
+    }
+
+    if (data === undefined || data === null || data === '') {
+      return undefined;
+    }
+
+    return data;
+  };
 
   const setMultiple = useCallback(
     (payload: Record<string, unknown>) => {
@@ -148,12 +168,10 @@ export const useQueryState = (
       const searchParams = new URLSearchParams();
 
       Object.entries(updatedQuery).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          if (typeof value === 'object') {
-            searchParams.set(key, JSON.stringify(value));
-          } else {
-            searchParams.set(key, String(value));
-          }
+        const cleanedValue = deepClean(value); // Áp dụng deepClean để loại bỏ giá trị rỗng
+
+        if (cleanedValue !== undefined) {
+          searchParams.set(key, JSON.stringify(cleanedValue));
         } else {
           searchParams.delete(key);
         }
