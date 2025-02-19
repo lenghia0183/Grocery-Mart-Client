@@ -5,17 +5,11 @@ import Icon from './Icon';
 import Image from './Image';
 import clsx from 'clsx';
 import formatCurrency from '@/utils/formatCurrency';
+import { Product } from '@/types/product';
 
 interface ProductCardProps {
   className?: string;
-  data: {
-    thumbnail: string;
-    alt: string;
-    nameProduct: string;
-    maker: string;
-    price: number;
-    startRate: number;
-  };
+  data: Product;
 }
 
 const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
@@ -30,24 +24,24 @@ const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
         <Image
           width={220}
           height={220}
-          src={data.thumbnail}
+          src={data.image}
           className="w-[220px] h-[220px] rounded-md bg-white dark:bg-dark-500"
-          alt={data.alt}
+          alt={data.name}
         />
       </div>
 
       <div className="mt-4">
         <h2 className="text-lg font-semibold h-[60px] transition-transform duration-300 overflow-hidden line-clamp-2">
-          {data.nameProduct}
+          {data.name}
         </h2>
 
-        <h3 className="text-sm text-gray-500 mt-4">{data.maker}</h3>
+        <h3 className="text-sm text-gray-500 mt-4">{data.manufacturerId.name}</h3>
 
         <div className="flex justify-between my-3">
           <span className="text-base font-semibold">{formatCurrency(data.price)}</span>
           <div className="flex items-center gap-1">
             <Icon name="star" color="yellow-500" width="18px" height="18px" />
-            <span className="text-base font-medium">{data.startRate}</span>
+            <span className="text-base font-medium">{data.ratings}</span>
           </div>
         </div>
       </div>
