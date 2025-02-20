@@ -1,7 +1,7 @@
 import { QueryState } from '@/hooks/useQueryState';
 
 export const getQueryState = async (
-  query: { [key: string]: string | string[] | undefined } | Promise<{ [key: string]: string | string[] | undefined }>,
+  query: Record<string, string | string[] | undefined> | Promise<Record<string, string | string[] | undefined>>,
   initialQuery: Partial<QueryState> = { order: 'asc', pageSize: 8 },
   prefix: string = '',
 ): Promise<QueryState> => {
@@ -11,8 +11,6 @@ export const getQueryState = async (
     Object.entries(initialQuery).map(([key, value]) => [`${prefix}${key}`, value]),
   );
 
-  const queryObj = { ...initialQueryPrefix, ...resolvedQuery };
-
   const jsonParse = <T>(str: string | null | undefined, fallback: T): T => {
     try {
       return str ? JSON.parse(str) : fallback;
@@ -21,23 +19,22 @@ export const getQueryState = async (
     }
   };
 
-  const page = Number(queryObj[`${prefix}page`] ?? 1);
-  const pageSize = Number(queryObj[`${prefix}limit`] ?? 8);
+  const queryObj = {
+    ...initialQueryPrefix,
+    ...resolvedQuery,
+  };
+
   const filters = jsonParse<Record<string, unknown>>(queryObj[`${prefix}filters`] as string, {});
   const quickFilters = jsonParse<Record<string, unknown>>(queryObj[`${prefix}quickFilters`] as string, {});
-  const keyword = String(queryObj[`${prefix}keyword`] ?? '');
-  const tab = String(queryObj[`${prefix}tab`] ?? initialQueryPrefix[`${prefix}tab`] ?? undefined);
-  const order = String(queryObj[`${prefix}order`] ?? 'asc');
-  const orderBy = String(queryObj[`${prefix}orderBy`] ?? '');
 
   return {
-    page,
-    pageSize,
+    page: parseInt(queryObj[`${prefix}page`] as string) || 1,
+    pageSize: parseInt(queryObj[`${prefix}limit`] as string) || 8,
     filters,
     quickFilters,
-    keyword,
-    tab,
-    order,
-    orderBy,
+    keyword: String(queryObj[`${prefix}keyword`] ?? ''),
+    tab: String(queryObj[`${prefix}tab`] ?? initialQueryPrefix[`${prefix}tab`] ?? ''),
+    order: String(queryObj[`${prefix}order`] ?? 'asc'),
+    orderBy: String(queryObj[`${prefix}orderBy`] ?? ''),
   };
 };

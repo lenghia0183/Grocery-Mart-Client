@@ -1,3 +1,4 @@
+import { Pagination } from './ApiResponse';
 import { Category } from './category';
 import { Manufacturer } from './manufacturer';
 
@@ -11,4 +12,7 @@ export interface Product {
   inStock: boolean;
   ratings: number;
   image: string;
+}
+export interface GetProductResponse extends Pagination {
+  products: Product[];
 }

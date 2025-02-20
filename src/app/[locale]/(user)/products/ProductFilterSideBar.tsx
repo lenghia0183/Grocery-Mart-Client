@@ -59,7 +59,7 @@ const ProductFilterSideBar: React.FC = () => {
     },
   });
 
-  console.log('filter', filters);
+  console.log('filter side bar', filters);
 
   return (
     <Formik
@@ -78,7 +78,7 @@ const ProductFilterSideBar: React.FC = () => {
         setMultiple({
           keyword: values.keyword,
           filters: {
-            rating: values.rating,
+            minRating: values.rating,
             category: values.category,
             minPrice: values.minPrice,
             maxPrice: values.maxPrice,

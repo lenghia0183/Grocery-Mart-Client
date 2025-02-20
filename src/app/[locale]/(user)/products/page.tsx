@@ -4,12 +4,13 @@ import ProductFilterTopBar from './ProductFilterTopBar';
 import ProductList from '@/components/ProductList';
 import { getQueryState } from '@/utils/getQueryState';
 
+import ProductListSkeleton from '@/components/Skeletons/ProductListSkeleton';
+
 const ProductPage = async ({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { filters, page, keyword } = await getQueryState(searchParams);
 
   return (
@@ -22,9 +23,14 @@ const ProductPage = async ({
         <main className="col-span-9">
           <ProductFilterTopBar />
 
-          {/* Bọc ProductList trong Suspense để hiển thị loading */}
-          <Suspense fallback={<div className="text-yellow-500 text-center py-5">Đang tải sản phẩm...</div>}>
-            <ProductList className="p-0" listClassName="!grid-cols-4 !gap-3" />
+          <Suspense fallback={<ProductListSkeleton />}>
+            <ProductList
+              className="p-0"
+              listClassName="!grid-cols-4 !gap-3"
+              page={page}
+              filters={filters}
+              keyWords={keyword}
+            />
           </Suspense>
         </main>
       </div>

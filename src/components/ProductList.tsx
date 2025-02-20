@@ -3,34 +3,32 @@
 import { getTranslations } from 'next-intl/server';
 import clsx from 'clsx';
 import Pagination from './Pagination';
+
+import { GetProductResponse, Product } from '@/types/product';
 import ProductCard from './productCard';
-import { Product } from '@/types/product';
+import { api } from '@/services/api/axios';
 
-const fetchProducts = async () => {
-  try {
-    const response = await fetch('https://mid-autumn-api-1.onrender.com/api/v1/product?limit=8&page=1', {
-      cache: 'no-store',
-    });
+interface ProductListProps {
+  className?: string;
+  listClassName?: string;
+  filters?: Record<string, unknown>;
+  keyWords?: string;
+  page?: number;
+}
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
+const fetchProducts = async (page: number, filters: Record<string, unknown>) => {
+  const response = await api.get<GetProductResponse>('v1/product', { params: { page: page, limit: 8, filters } });
 
-    const data = await response.json();
-    console.log('data', data);
-    return data?.data?.products || [];
-  } catch (error) {
-    console.error('Lỗi fetch sản phẩm:', error);
-    return [];
-  }
+  return response?.data;
 };
 
-const ProductList = async ({ className, listClassName }: { className?: string; listClassName?: string }) => {
+const ProductList = async ({ className, listClassName, page = 1, filters = {} }: ProductListProps) => {
   const t = await getTranslations('home');
-  const productList = (await fetchProducts()) || [];
+  const productResponse = await fetchProducts(page, filters);
+  const productList = productResponse?.products || [];
 
   return (
-    <div className={clsx('container', className, listClassName)}>
+    <div className={clsx('container', className)}>
       <h2 className="mt-10 mb-5 text-2xl font-semibold text-dark dark:text-white-200">{t('latest')}</h2>
 
       <ul className={clsx('grid grid-cols-5 gap-7', listClassName)}>
@@ -39,7 +37,7 @@ const ProductList = async ({ className, listClassName }: { className?: string; l
         ))}
       </ul>
 
-      <Pagination pageCount={10} className="mt-10" />
+      <Pagination pageCount={productResponse?.totalPage || 1} className="mt-10" />
     </div>
   );
 };

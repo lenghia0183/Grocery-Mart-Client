@@ -61,7 +61,6 @@ export const useQueryState = (
   );
 
   const jsonParse = <T>(str: string | null, fallback: T): T => {
-    // console.log('srt', str);
     try {
       return str ? JSON.parse(str) : fallback;
     } catch {
@@ -71,9 +70,8 @@ export const useQueryState = (
 
   const queryObj = useMemo(() => {
     const params = Object.fromEntries(searchParams.entries());
-    // console.log('params', params);
+
     const result = { ...initialQueryPrefix, ...params };
-    // console.log('result', result);
 
     if (!queryObjRef.current || JSON.stringify(result) !== JSON.stringify(queryObjRef.current)) {
       queryObjRef.current = result;
@@ -120,10 +118,11 @@ export const useQueryState = (
       const searchParams = new URLSearchParams();
 
       Object.entries(updatedQuery).forEach(([key, value]) => {
-        const cleanedValue = deepClean(value); // Áp dụng deepClean để loại bỏ giá trị rỗng
+        const cleanedValue = deepClean(value);
 
         if (cleanedValue !== undefined) {
-          searchParams.set(key, JSON.stringify(cleanedValue));
+          const valueToSet = typeof cleanedValue === 'object' ? JSON.stringify(cleanedValue) : String(cleanedValue);
+          searchParams.set(key, valueToSet);
         } else {
           searchParams.delete(key);
         }
@@ -168,14 +167,16 @@ export const useQueryState = (
       const searchParams = new URLSearchParams();
 
       Object.entries(updatedQuery).forEach(([key, value]) => {
-        const cleanedValue = deepClean(value); // Áp dụng deepClean để loại bỏ giá trị rỗng
+        const cleanedValue = deepClean(value);
 
         if (cleanedValue !== undefined) {
-          searchParams.set(key, JSON.stringify(cleanedValue));
+          const valueToSet = typeof cleanedValue === 'object' ? JSON.stringify(cleanedValue) : String(cleanedValue);
+          searchParams.set(key, valueToSet);
         } else {
           searchParams.delete(key);
         }
       });
+      searchParams.set($page, '1');
 
       router.replace(`${pathname}?${searchParams.toString()}`);
     },
@@ -208,7 +209,6 @@ export const useQueryState = (
 
   const setKeyword = useCallback(
     (payload: string) => {
-      console.log('payload', payload);
       updateUrl({ [$keyword]: payload, [$page]: 1 });
     },
     [updateUrl, $keyword],

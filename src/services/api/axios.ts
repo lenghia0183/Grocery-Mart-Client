@@ -5,7 +5,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import { ApiResponse } from '@/types/ApiResponse';
 import { getLocalStorageItem, setLocalStorageItem } from '@/utils/localStorage';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL + '/api/' || '';
 const BASE_URL_GHN = process.env.NEXT_PUBLIC_BASE_URL_GHN || '';
 const TOKEN_GHN = process.env.NEXT_PUBLIC_GHN_API_KEY || '';
 const SHOP_ID_GHN = process.env.NEXT_PUBLIC_GHN_SHOP_ID || '';
@@ -40,6 +40,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
         config.headers = axios.AxiosHeaders.from(config.headers || {});
         config.headers.set('Authorization', `Bearer ${token}`);
       }
+      console.log(`🟢 Requesting: ${config.baseURL}${config.url}`, config.params);
       return config;
     },
     (error: AxiosError) => Promise.reject(error),

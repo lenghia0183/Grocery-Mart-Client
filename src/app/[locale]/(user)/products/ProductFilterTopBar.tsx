@@ -20,7 +20,7 @@ const displayOptions = [
 
 const ProductFilterTopBar = ({}) => {
   const { filters, setFilters } = useQueryState();
-  console.log('filter top bar', filters);
+  // console.log('filter top bar', filters);
   return (
     <Formik
       initialValues={{ displayOption: filters.displayOption || 'createdAt:desc' }}
