@@ -8,28 +8,28 @@ interface UseQueryStateOptions {
   prefix?: string;
 }
 
-export interface QueryState {
-  page: number;
+export interface QueryState<TFilters, TQuickFilters> {
+  page?: number;
   pageSize?: number;
-  orderBy: string;
-  order: string;
-  filters: Record<string, unknown>;
-  quickFilters: Record<string, unknown>;
-  keyword: string;
-  tab: string | undefined;
+  orderBy?: string;
+  order?: string;
+  filters?: TFilters;
+  quickFilters?: TQuickFilters;
+  keyword?: string;
+  tab?: string | undefined;
 }
 
-type UpdateQueryPayload = Partial<QueryState>;
+type UpdateQueryPayload<TFilters, TQuickFilters> = Partial<QueryState<TFilters, TQuickFilters>>;
 
-export const useQueryState = (
-  initialQuery: Partial<QueryState> = { order: 'asc', pageSize: 8 },
+export const useQueryState = <TFilters, TQuickFilters = Record<string, unknown>>(
+  initialQuery: Partial<QueryState<TFilters, TQuickFilters>> = { order: 'asc', pageSize: 8 },
   { prefix = '' }: UseQueryStateOptions = {},
 ) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  const queryObjRef = useRef<Record<string, string | number | null | Record<string, unknown>>>({});
+  const queryObjRef = useRef<Partial<QueryState<TFilters, TQuickFilters>>>({});
 
   // console.log('queryObjRef', queryObjRef);
 
@@ -74,11 +74,11 @@ export const useQueryState = (
     const result = { ...initialQueryPrefix, ...params };
 
     if (!queryObjRef.current || JSON.stringify(result) !== JSON.stringify(queryObjRef.current)) {
-      queryObjRef.current = result;
+      queryObjRef.current = result as Partial<QueryState<TFilters, TQuickFilters>>;
     }
 
     return queryObjRef.current || {};
-  }, [searchParams, initialQueryPrefix, pathname]);
+  }, [searchParams, initialQueryPrefix, pathname]) as Record<string, unknown>;
 
   const page = useMemo(() => {
     const pageNumber = Number(queryObj[$page]);
@@ -91,7 +91,7 @@ export const useQueryState = (
   }, [queryObj, $pageSize]);
 
   const filters = useMemo(() => {
-    return jsonParse<Record<string, unknown>>(queryObj[$filters] as string | null, {});
+    return jsonParse<TFilters>(queryObj[$filters] as string | null, {} as TFilters);
   }, [queryObj, $filters]);
 
   const quickFilters = useMemo(
@@ -108,7 +108,7 @@ export const useQueryState = (
   const tab = useMemo(() => String(queryObj[$tab] || initialQueryPrefix?.tab), [queryObj, $tab, initialQueryPrefix]);
 
   const updateUrl = useCallback(
-    (obj: UpdateQueryPayload = {}) => {
+    (obj: UpdateQueryPayload<TFilters, TQuickFilters> = {}) => {
       const updatedQuery = {
         ...initialQueryPrefix,
         ...queryObj,
@@ -158,7 +158,7 @@ export const useQueryState = (
   };
 
   const setMultiple = useCallback(
-    (payload: Record<string, unknown>) => {
+    (payload: UpdateQueryPayload<TFilters, TQuickFilters>) => {
       const updatedQuery = {
         ...queryObj,
         ...payload,
@@ -198,12 +198,12 @@ export const useQueryState = (
   );
 
   const setFilters = useCallback(
-    (payload: Record<string, unknown>) => updateUrl({ [$filters]: payload, [$page]: 1 }),
+    (payload: Partial<TFilters>) => updateUrl({ [$filters]: payload, [$page]: 1 }),
     [updateUrl, $filters],
   );
 
   const setQuickFilters = useCallback(
-    (payload: Record<string, unknown>) => updateUrl({ [$quickFilters]: payload, [$page]: 1 }),
+    (payload: Partial<TQuickFilters>) => updateUrl({ [$quickFilters]: payload, [$page]: 1 }),
     [updateUrl, $quickFilters],
   );
 

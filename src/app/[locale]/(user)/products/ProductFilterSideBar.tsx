@@ -4,50 +4,32 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 
 import Icon from '@/components/Icon';
-import Image from '@/components/Image';
+
 import Button from '@/components/Button';
-import Accordion from '@/components/Accordion';
+
 import clsx from 'clsx';
 import TextField from '@/components/TextField';
-import CheckBox from '@/components/CheckBox';
+
 import { useQueryState } from '@/hooks/useQueryState';
-import CheckBoxGroup from '@/components/CheckBoxGroup';
+
 import Divider from '@/components/Divider';
+import ManufacturerList from './ManufacturerList';
+import CategoryList from './CategoryList';
+import { ProductFormValues } from '@/types/product';
 
-type Category = {
-  name: string;
-  image: string;
-  _id: string;
-};
-
-type Manufacturer = {
-  name: string;
-  _id: string;
+type FilterProduct = {
+  rating: number;
+  category: string;
+  minPrice: string;
+  maxPrice: string;
+  manufacturers: string[];
+  sortBy: string;
 };
 
 const ProductFilterSideBar: React.FC = () => {
-  // Fake dữ liệu danh mục sản phẩm
-  const categoryList: Category[] = [
-    { _id: '1', name: 'Cà phê', image: '' },
-    { _id: '2', name: 'Trà', image: '' },
-    { _id: '3', name: 'Cacao', image: '' },
-  ];
-
-  // Fake dữ liệu thương hiệu
-  const manufacturerList: Manufacturer[] = [
-    { _id: 'apple', name: 'Apple' },
-    { _id: 'samsung', name: 'Samsung' },
-    { _id: 'xiaomi', name: 'Xiaomi' },
-    { _id: 'dell', name: 'Dell' },
-    { _id: 'apple1', name: 'Apple' },
-    { _id: 'samsung1', name: 'Samsung' },
-    { _id: 'xiaomi1', name: 'Xiaomi' },
-    { _id: 'dell1', name: 'Dell' },
-  ];
-
   const ratings = [1, 2, 3, 4, 5];
 
-  const { keyword, filters, setMultiple } = useQueryState({
+  const { keyword, filters, setMultiple } = useQueryState<FilterProduct>({
     keyword: '',
     filters: {
       rating: 5,
@@ -64,25 +46,24 @@ const ProductFilterSideBar: React.FC = () => {
   return (
     <Formik
       initialValues={{
-        keyword: keyword,
-        ...(filters as {
-          rating: number;
-          category: string;
-          minPrice: string;
-          maxPrice: string;
-          manufacturers: boolean[];
-        }),
+        keyword,
+        rating: filters.rating ?? 5,
+        category: filters.category ?? '',
+        minPrice: filters.minPrice ?? '',
+        maxPrice: filters.maxPrice ?? '',
+        manufacturers: filters.manufacturers ?? [],
       }}
-      onSubmit={(values) => {
+      onSubmit={(values: ProductFormValues) => {
         console.log('values', values);
         setMultiple({
           keyword: values.keyword,
           filters: {
-            minRating: values.rating,
+            rating: values.rating,
             category: values.category,
             minPrice: values.minPrice,
             maxPrice: values.maxPrice,
             manufacturers: values.manufacturers,
+            sortBy: filters.sortBy ?? '',
           },
         });
       }}
@@ -109,22 +90,7 @@ const ProductFilterSideBar: React.FC = () => {
 
               <Divider marginBottom="15px" marginTop="12px" />
 
-              <Accordion minHeight="240px">
-                {categoryList.map(({ name, image, _id }) => (
-                  <div
-                    key={_id}
-                    onClick={() => setFieldValue('category', _id)}
-                    className={clsx('cursor-pointer flex items-center gap-3 py-2 transition-all dark:text-white-200', {
-                      'px-2 text-blue-500 dark:!text-blue-500': values.category === _id,
-                    })}
-                  >
-                    <div className="w-[30px] h-[30px]">
-                      <Image src={image} alt={name} />
-                    </div>
-                    <p className={clsx('text-base font-normal ')}>{name}</p>
-                  </div>
-                ))}
-              </Accordion>
+              <CategoryList setFieldValue={setFieldValue} values={values} />
             </div>
 
             {/* Bộ lọc */}
@@ -140,21 +106,7 @@ const ProductFilterSideBar: React.FC = () => {
                   <Icon name="vendor" size={1.5} /> Theo thương hiệu
                 </h3>
 
-                <Accordion minHeight="165px">
-                  <div className="mt-3">
-                    <CheckBoxGroup name="manufacturers">
-                      {manufacturerList.map(({ name, _id }) => (
-                        <CheckBox
-                          key={_id}
-                          label={name}
-                          name={_id}
-                          labelClassName="text-dark dark:text-white-200"
-                          borderColor="dark dark:white"
-                        />
-                      ))}
-                    </CheckBoxGroup>
-                  </div>
-                </Accordion>
+                <ManufacturerList />
               </div>
 
               <Divider marginBottom="15px" marginTop="12px" />
@@ -241,6 +193,7 @@ const ProductFilterSideBar: React.FC = () => {
                       minPrice: '',
                       maxPrice: '',
                       manufacturers: [],
+                      sortBy: '',
                     },
                     page: 1,
                   });

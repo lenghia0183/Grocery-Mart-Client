@@ -16,3 +16,12 @@ export interface Product {
 export interface GetProductResponse extends Pagination {
   products: Product[];
 }
+
+export interface ProductFormValues {
+  keyword: string;
+  rating: number;
+  category: string;
+  minPrice: string;
+  maxPrice: string;
+  manufacturers: string[];
+}

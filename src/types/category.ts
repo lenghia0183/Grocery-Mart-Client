@@ -7,6 +7,6 @@ export interface Category {
   slug?: string;
 }
 
-export interface CategoryResponse extends Pagination {
+export interface GetCategoryResponse extends Pagination {
   categories: Category[];
 }

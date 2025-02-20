@@ -24,6 +24,7 @@
     "react-tooltip": "^5.28.0",
     "sass": "^1.83.4",
     "slick-carousel": "^1.8.1",
+    "swr": "^2.3.2",
     "yup": "^1.4.0"
   },
   "devDependencies": {

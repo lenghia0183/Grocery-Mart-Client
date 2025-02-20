@@ -30,7 +30,7 @@ const Accordion: React.FC<AccordionProps> = ({
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
     }
-  }, [isOpen]);
+  }, [isOpen, children]);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
