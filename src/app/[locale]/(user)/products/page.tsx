@@ -1,17 +1,18 @@
 import React, { Suspense } from 'react';
-import ProductFilterSideBar from './ProductFilterSideBar';
+import ProductFilterSideBar from './SideBar/ProductFilterSideBar';
 import ProductFilterTopBar from './ProductFilterTopBar';
 import ProductList from '@/components/ProductList';
 import { getQueryState } from '@/utils/getQueryState';
 
 import ProductListSkeleton from '@/components/Skeletons/ProductListSkeleton';
+import { ProductFilter } from '@/types/product';
 
 const ProductPage = async ({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-  const { filters, page, keyword } = await getQueryState(searchParams);
+  const { filters, page, keyword } = await getQueryState<ProductFilter>(searchParams);
 
   return (
     <div className="bg-gray-600 dark:bg-dark-500 py-14">
@@ -29,7 +30,7 @@ const ProductPage = async ({
               listClassName="!grid-cols-4 !gap-3"
               page={page}
               filters={filters}
-              keyWords={keyword}
+              keyword={keyword}
             />
           </Suspense>
         </main>

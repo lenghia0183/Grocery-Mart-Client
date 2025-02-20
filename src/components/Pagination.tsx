@@ -28,7 +28,7 @@ type PaginationProps = {
 };
 
 const Pagination: FC<PaginationProps> = ({
-  pageCount,
+  pageCount = 1,
   pageRangeDisplayed = 2,
   marginPagesDisplayed = 1,
   previousLabel = 'Previous',

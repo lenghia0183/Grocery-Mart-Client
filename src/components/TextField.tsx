@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { useField } from 'formik';
-import { useId } from 'react';
+import { useEffect, useId } from 'react';
 
 interface TextFieldProps {
   name: string;
@@ -57,6 +57,11 @@ const TextField = ({
   const [field, meta, helpers] = useField(name);
   const { setValue, setTouched } = helpers;
   const error = meta.error && meta.touched ? meta.error : '';
+
+  useEffect(() => {
+    setValue(field.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [field.value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value;

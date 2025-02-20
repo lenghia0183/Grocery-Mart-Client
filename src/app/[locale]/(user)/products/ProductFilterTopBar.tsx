@@ -6,6 +6,7 @@ import { Formik, Form } from 'formik';
 import { useQueryState } from '@/hooks/useQueryState';
 import clsx from 'clsx';
 import Button from '@/components/Button';
+import { ProductFilter, ProductFilterFormValues } from '@/types/product';
 
 const priceOptions = [
   { label: 'Giá: Tăng dần', value: 'price:asc' },
@@ -19,13 +20,13 @@ const displayOptions = [
 ];
 
 const ProductFilterTopBar = ({}) => {
-  const { filters, setFilters } = useQueryState();
+  const { filters, setFilters } = useQueryState<ProductFilter>();
   // console.log('filter top bar', filters);
   return (
     <Formik
-      initialValues={{ displayOption: filters.displayOption || 'createdAt:desc' }}
+      initialValues={{ displayOption: filters?.displayOption || 'createdAt:desc' }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      onSubmit={(values) => {}}
+      onSubmit={(values: Pick<ProductFilterFormValues, 'displayOption'>) => {}}
     >
       {({ values, setFieldValue }) => (
         <Form>

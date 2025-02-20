@@ -15,30 +15,23 @@ import { useQueryState } from '@/hooks/useQueryState';
 import Divider from '@/components/Divider';
 import ManufacturerList from './ManufacturerList';
 import CategoryList from './CategoryList';
-import { ProductFormValues } from '@/types/product';
+import { ProductFilter, ProductFilterFormValues } from '@/types/product';
 
-type FilterProduct = {
-  rating: number;
-  category: string;
-  minPrice: string;
-  maxPrice: string;
-  manufacturers: string[];
-  sortBy: string;
+const DEFAULT_FILTER_VALUES: ProductFilter = {
+  minRating: 1,
+  category: '',
+  minPrice: undefined,
+  maxPrice: undefined,
+  manufacturers: [],
+  displayOption: 'createdAt:desc',
 };
 
 const ProductFilterSideBar: React.FC = () => {
   const ratings = [1, 2, 3, 4, 5];
 
-  const { keyword, filters, setMultiple } = useQueryState<FilterProduct>({
+  const { keyword, filters, setMultiple } = useQueryState<ProductFilter>({
     keyword: '',
-    filters: {
-      rating: 5,
-      category: '',
-      minPrice: '',
-      maxPrice: '',
-      manufacturers: [],
-      sortBy: '',
-    },
+    filters: DEFAULT_FILTER_VALUES,
   });
 
   console.log('filter side bar', filters);
@@ -47,23 +40,19 @@ const ProductFilterSideBar: React.FC = () => {
     <Formik
       initialValues={{
         keyword,
-        rating: filters.rating ?? 5,
-        category: filters.category ?? '',
-        minPrice: filters.minPrice ?? '',
-        maxPrice: filters.maxPrice ?? '',
-        manufacturers: filters.manufacturers ?? [],
+        ...filters,
       }}
-      onSubmit={(values: ProductFormValues) => {
-        console.log('values', values);
+      onSubmit={(values: ProductFilterFormValues) => {
+        // console.log('values', values);
         setMultiple({
           keyword: values.keyword,
           filters: {
-            rating: values.rating,
+            minRating: values.minRating,
             category: values.category,
             minPrice: values.minPrice,
             maxPrice: values.maxPrice,
             manufacturers: values.manufacturers,
-            sortBy: filters.sortBy ?? '',
+            displayOption: values?.displayOption,
           },
         });
       }}
@@ -151,15 +140,15 @@ const ProductFilterSideBar: React.FC = () => {
                   <label
                     key={rating}
                     className={clsx('flex items-center cursor-pointer transition-all', {
-                      'bg-gray-400 rounded-md px-2': rating === values.rating,
+                      'bg-gray-400 rounded-md px-2': rating === values.minRating,
                     })}
                   >
                     <input
                       type="radio"
-                      name="rating"
+                      name="minRating"
                       value={rating}
-                      checked={values.rating === rating}
-                      onChange={() => setFieldValue('rating', rating)}
+                      checked={values.minRating === rating}
+                      onChange={() => setFieldValue('minRating', rating)}
                       className="sr-only"
                     />
                     <div className="flex items-center gap-1">
@@ -187,15 +176,7 @@ const ProductFilterSideBar: React.FC = () => {
                   resetForm();
                   setMultiple({
                     keyword: '',
-                    filters: {
-                      rating: 5,
-                      category: '',
-                      minPrice: '',
-                      maxPrice: '',
-                      manufacturers: [],
-                      sortBy: '',
-                    },
-                    page: 1,
+                    filters: DEFAULT_FILTER_VALUES,
                   });
                 }}
               >

@@ -1,10 +1,10 @@
 import { QueryState } from '@/hooks/useQueryState';
 
-export const getQueryState = async (
+export const getQueryState = async <TFilters = Record<string, unknown>, TQuickFilters = Record<string, unknown>>(
   query: Record<string, string | string[] | undefined> | Promise<Record<string, string | string[] | undefined>>,
-  initialQuery: Partial<QueryState> = { order: 'asc', pageSize: 8 },
+  initialQuery: Partial<QueryState<TFilters, TQuickFilters>> = { order: 'asc', pageSize: 8 },
   prefix: string = '',
-): Promise<QueryState> => {
+): Promise<QueryState<TFilters, TQuickFilters>> => {
   const resolvedQuery = query instanceof Promise ? await query : query;
 
   const initialQueryPrefix = Object.fromEntries(
@@ -24,8 +24,8 @@ export const getQueryState = async (
     ...resolvedQuery,
   };
 
-  const filters = jsonParse<Record<string, unknown>>(queryObj[`${prefix}filters`] as string, {});
-  const quickFilters = jsonParse<Record<string, unknown>>(queryObj[`${prefix}quickFilters`] as string, {});
+  const filters = jsonParse<TFilters>(queryObj[`${prefix}filters`] as string, {} as TFilters);
+  const quickFilters = jsonParse<TQuickFilters>(queryObj[`${prefix}quickFilters`] as string, {} as TQuickFilters);
 
   return {
     page: parseInt(queryObj[`${prefix}page`] as string) || 1,

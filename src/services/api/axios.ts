@@ -125,9 +125,9 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  get: async <T>(
+  get: async <T, Params = Record<string, unknown>>(
     endpoint: string,
-    params: Record<string, unknown> = {},
+    params: Params,
     options: Record<string, string> = {},
   ): Promise<ApiResponse<T>> => {
     try {
@@ -137,7 +137,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  put: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T> | AxiosError> => {
+  put: async <T, Params>(endpoint: string, params: Params): Promise<ApiResponse<T> | AxiosError> => {
     try {
       return await instance.put(endpoint, params);
     } catch (err: unknown) {
@@ -145,7 +145,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  patch: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T> | AxiosError> => {
+  patch: async <T, Params>(endpoint: string, params: Params): Promise<ApiResponse<T> | AxiosError> => {
     try {
       return await instance.patch(endpoint, params);
     } catch (err: unknown) {
@@ -153,7 +153,7 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  delete: async <T>(endpoint: string, params: Record<string, unknown>): Promise<ApiResponse<T> | AxiosError> => {
+  delete: async <T, Params>(endpoint: string, params: Params): Promise<ApiResponse<T> | AxiosError> => {
     try {
       return await instance.delete(endpoint, { data: params });
     } catch (err: unknown) {

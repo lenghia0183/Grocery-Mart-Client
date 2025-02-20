@@ -13,15 +13,37 @@ export interface Product {
   ratings: number;
   image: string;
 }
+
+export interface ProductFilterFormValues {
+  keyword?: string;
+  minRating: number;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  manufacturers?: string[];
+  displayOption?: string;
+}
+
+export interface ProductFilter {
+  minRating: number;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  manufacturers?: string[];
+  displayOption?: string;
+}
 export interface GetProductResponse extends Pagination {
   products: Product[];
 }
 
-export interface ProductFormValues {
-  keyword: string;
-  rating: number;
-  category: string;
-  minPrice: string;
-  maxPrice: string;
-  manufacturers: string[];
+export interface GetProductParams {
+  minRating?: number;
+  categoryId?: string;
+  manufacturerId?: string[];
+  sortBy: string;
+  minPrice?: number;
+  maxPrice?: number;
+  keyword?: string;
+  page?: number;
+  limit: number;
 }

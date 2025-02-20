@@ -4,27 +4,49 @@ import { getTranslations } from 'next-intl/server';
 import clsx from 'clsx';
 import Pagination from './Pagination';
 
-import { GetProductResponse, Product } from '@/types/product';
+import { GetProductResponse, Product, ProductFilter } from '@/types/product';
 import ProductCard from './productCard';
 import { api } from '@/services/api/axios';
+import { GetProductParams } from './../types/product';
 
 interface ProductListProps {
   className?: string;
   listClassName?: string;
-  filters?: Record<string, unknown>;
-  keyWords?: string;
+  filters?: ProductFilter;
   page?: number;
+  keyword?: string;
 }
 
-const fetchProducts = async (page: number, filters: Record<string, unknown>) => {
-  const response = await api.get<GetProductResponse>('v1/product', { params: { page: page, limit: 8, filters } });
+const fetchProducts = async (page: number, filters?: ProductFilter, keyword?: string) => {
+  const params: GetProductParams = {
+    keyword: keyword,
+    page: page,
+    limit: 8,
+    minPrice: filters?.minPrice || undefined,
+    maxPrice: filters?.maxPrice,
+    minRating: filters?.minRating,
+    categoryId: filters?.category,
+    sortBy: filters?.displayOption || 'createdAt:asc',
+    manufacturerId:
+      filters?.manufacturers?.flatMap((obj) =>
+        Object.entries(obj)
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          .filter(([_, value]) => value)
+          .map(([key]) => key),
+      ) || [],
+  };
+
+  const response = await api.get<GetProductResponse>('v1/product', {
+    params,
+  });
 
   return response?.data;
 };
 
-const ProductList = async ({ className, listClassName, page = 1, filters = {} }: ProductListProps) => {
+const ProductList = async ({ className, listClassName, page = 1, filters, keyword }: ProductListProps) => {
   const t = await getTranslations('home');
-  const productResponse = await fetchProducts(page, filters);
+
+  const productResponse = await fetchProducts(page, filters, keyword);
   const productList = productResponse?.products || [];
 
   return (
