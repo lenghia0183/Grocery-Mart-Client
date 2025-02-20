@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import clsx from 'clsx';
 import Pagination from './Pagination';
 
-import { GetProductResponse, Product, ProductFilter } from '@/types/product';
+import { GetProductResponse, ProductFilter } from '@/types/product';
 import ProductCard from './productCard';
 import { api } from '@/services/api/axios';
 import { GetProductParams } from './../types/product';
@@ -21,7 +21,7 @@ const fetchProducts = async (page: number, filters?: ProductFilter, keyword?: st
   const params: GetProductParams = {
     keyword: keyword,
     page: page,
-    limit: 8,
+    limit: filters?.limit || 8,
     minPrice: filters?.minPrice || undefined,
     maxPrice: filters?.maxPrice,
     minRating: filters?.minRating,
@@ -54,7 +54,7 @@ const ProductList = async ({ className, listClassName, page = 1, filters, keywor
       <h2 className="mt-10 mb-5 text-2xl font-semibold text-dark dark:text-white-200">{t('latest')}</h2>
 
       <ul className={clsx('grid grid-cols-5 gap-7', listClassName)}>
-        {productList.map((product: Product) => (
+        {productList.map((product) => (
           <ProductCard key={product._id} data={product} />
         ))}
       </ul>

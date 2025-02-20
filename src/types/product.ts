@@ -31,6 +31,7 @@ export interface ProductFilter {
   maxPrice?: number;
   manufacturers?: string[];
   displayOption?: string;
+  limit?: number;
 }
 export interface GetProductResponse extends Pagination {
   products: Product[];
