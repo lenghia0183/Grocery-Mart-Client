@@ -18,10 +18,3 @@ export interface WardData {
   wardName: string;
   wardCode: number;
 }
-
-export interface ChangeAddressFormValues {
-  province: ProvinceData | null;
-  district: DistrictData | null;
-  ward: WardData | null;
-  street: string;
-}

@@ -6,19 +6,13 @@ import EditMeSkeleton from '@/components/Skeletons/Profile/EditMeSkeleton';
 
 import TextField from '@/components/TextField';
 import { useUser } from '@/context/userProvider';
+import { ChangeUserDataFormValues } from '@/types/user';
 import { Form, Formik } from 'formik';
-
-interface ProfileFormValues {
-  name: string | null;
-  phone: string | null;
-  displayName?: string;
-  email: string | null;
-}
 
 const Profile = (): JSX.Element => {
   const { userData, isLoading } = useUser();
 
-  const initialValues: ProfileFormValues = {
+  const initialValues: ChangeUserDataFormValues = {
     name: userData?.fullname || '',
     phone: userData?.phone || '',
     displayName: userData?.displayName || '',

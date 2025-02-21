@@ -15,3 +15,23 @@ export interface UserData {
   fullname: string;
   displayName?: string;
 }
+
+export interface ChangeUserDataFormValues {
+  name: string;
+  phone: string;
+  displayName?: string;
+  email: string;
+}
+
+export interface ChangePasswordFormValues {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface ChangeAddressFormValues {
+  province: ProvinceData | null;
+  district: DistrictData | null;
+  ward: WardData | null;
+  street: string;
+}

@@ -8,21 +8,15 @@ import TextArea from '@/components/TextArea';
 import { useUser } from '@/context/userProvider';
 
 import { getDistrictData, getProvinceData, getWardData } from '@/services/api/GHN';
-import { ChangeAddressFormValues } from '@/types/address';
+import { ChangeAddressFormValues } from '@/types/user';
+
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
-
-let initialValues: ChangeAddressFormValues = {
-  province: null,
-  district: null,
-  ward: null,
-  street: '',
-};
 
 const ChangeAddress = (): JSX.Element => {
   const { userData, isLoading } = useUser();
 
-  initialValues = {
+  const initialValues: ChangeAddressFormValues = {
     province: userData?.address?.province || null,
     district: userData?.address?.district || null,
     ward: userData?.address?.ward || null,

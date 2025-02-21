@@ -5,22 +5,17 @@ import Divider from '@/components/Divider';
 import ChangePasswordSkeleton from '@/components/Skeletons/Profile/ChangePasswordSkeleton';
 import TextField from '@/components/TextField';
 import { useUser } from '@/context/userProvider';
+import { ChangePasswordFormValues } from '@/types/user';
 import { Form, Formik } from 'formik';
-
-interface ChangePasswordFormValues {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
-
-const initialValues: ChangePasswordFormValues = {
-  currentPassword: '',
-  newPassword: '',
-  confirmPassword: '',
-};
 
 const ChangePassword = (): JSX.Element => {
   const { isLoading } = useUser();
+
+  const initialValues: ChangePasswordFormValues = {
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  };
 
   if (isLoading) return <ChangePasswordSkeleton />;
 
