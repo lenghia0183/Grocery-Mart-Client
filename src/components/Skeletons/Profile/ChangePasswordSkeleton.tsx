@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EditMeSkeleton = () => {
+const ChangePasswordSkeleton = () => {
   return (
     <div className="p-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white animate-pulse">
       <div className="h-6 w-32 bg-gray-300 dark:bg-dark-600 rounded mb-4"></div>
@@ -25,11 +25,6 @@ const EditMeSkeleton = () => {
           <div className="h-4 w-24 bg-gray-300 dark:bg-dark-600 rounded mb-2"></div>
           <div className="h-10 bg-gray-300 dark:bg-dark-500 rounded"></div>
         </div>
-
-        <div className="flex flex-col">
-          <div className="h-4 w-24 bg-gray-300 dark:bg-dark-600 rounded mb-2"></div>
-          <div className="h-10 bg-gray-300 dark:bg-dark-500 rounded"></div>
-        </div>
       </div>
 
       {/* Buttons */}
@@ -41,4 +36,4 @@ const EditMeSkeleton = () => {
   );
 };
 
-export default EditMeSkeleton;
+export default ChangePasswordSkeleton;

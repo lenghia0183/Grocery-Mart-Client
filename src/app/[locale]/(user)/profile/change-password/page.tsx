@@ -2,7 +2,9 @@
 
 import Button from '@/components/Button';
 import Divider from '@/components/Divider';
+import ChangePasswordSkeleton from '@/components/Skeletons/Profile/ChangePasswordSkeleton';
 import TextField from '@/components/TextField';
+import { useUser } from '@/context/userProvider';
 import { Form, Formik } from 'formik';
 
 interface ChangePasswordFormValues {
@@ -18,6 +20,10 @@ const initialValues: ChangePasswordFormValues = {
 };
 
 const ChangePassword = (): JSX.Element => {
+  const { isLoading } = useUser();
+
+  if (isLoading) return <ChangePasswordSkeleton />;
+
   return (
     <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
       <h2 className="text-2xl font-medium">Đổi mật khẩu</h2>
