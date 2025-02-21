@@ -5,14 +5,14 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import { useGetCategory } from '@/services/api/https/category';
 import CategoryListSkeleton from '@/components/Skeletons/CategoryListSkeleton';
-import { ProductFormValues } from '@/types/product';
+import { ProductFilterFormValues } from '@/types/product';
 
 const CategoryList = ({
   setFieldValue,
   values,
 }: {
   setFieldValue: (field: string, value: string) => void;
-  values: ProductFormValues;
+  values: ProductFilterFormValues;
 }) => {
   const { data = { categories: [] }, isLoading } = useGetCategory();
   if (isLoading) return <CategoryListSkeleton />;

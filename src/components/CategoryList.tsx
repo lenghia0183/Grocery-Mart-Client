@@ -2,11 +2,12 @@
 
 import { api } from '@/services/api/axios';
 import Image from './Image';
-import { CategoryResponse } from '@/types/category';
+
 import { getTranslations } from 'next-intl/server';
+import { GetCategoryResponse } from '@/types/category';
 
 const CategoryList = async (): Promise<JSX.Element> => {
-  const response = await api.get<CategoryResponse>('https://api.hauifood.com/v1/categories?limit=3&page=1');
+  const response = await api.get<GetCategoryResponse>('https://api.hauifood.com/v1/categories?limit=3&page=1');
   const t = await getTranslations('home');
 
   const categoryList = response.data?.categories || [];

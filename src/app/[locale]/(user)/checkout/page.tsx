@@ -11,15 +11,8 @@ import Radio from '@/components/Radio';
 import RadioGroup from '@/components/RadioGroup';
 import TextArea from '@/components/TextArea';
 import TextField from '@/components/TextField';
-import {
-  DistrictData,
-  getDistrictData,
-  getProvinceData,
-  getShipPrice,
-  getWardData,
-  ProvinceData,
-  WardData,
-} from '@/services/api/GHN';
+import { getDistrictData, getProvinceData, getShipPrice, getWardData } from '@/services/api/GHN';
+import { DistrictData, ProvinceData, WardData } from '@/types/address';
 import { ApiResponse } from '@/types/ApiResponse';
 import formatCurrency from '@/utils/formatCurrency';
 import { Form, Formik, FormikProps } from 'formik';
