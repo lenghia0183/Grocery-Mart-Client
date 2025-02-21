@@ -3,35 +3,37 @@
 import Autocomplete from '@/components/AutoComplete';
 import Button from '@/components/Button';
 import Divider from '@/components/Divider';
+import ChangeAddressSkeleton from '@/components/Skeletons/Profile/ChangeAddressSkeleton';
 import TextArea from '@/components/TextArea';
+import { useUser } from '@/context/userProvider';
 
-import {
-  DistrictData,
-  getDistrictData,
-  getProvinceData,
-  getWardData,
-  ProvinceData,
-  WardData,
-} from '@/services/api/GHN';
+import { getDistrictData, getProvinceData, getWardData } from '@/services/api/GHN';
+import { ChangeAddressFormValues } from '@/types/address';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
 
-interface ChangeAddressFormValues {
-  province: ProvinceData | null;
-  district: DistrictData | null;
-  ward: WardData | null;
-  address: string;
-}
-
-const initialValues: ChangeAddressFormValues = {
+let initialValues: ChangeAddressFormValues = {
   province: null,
   district: null,
   ward: null,
-  address: '',
+  street: '',
 };
 
 const ChangeAddress = (): JSX.Element => {
+  const { userData, isLoading } = useUser();
+
+  initialValues = {
+    province: userData?.address?.province || null,
+    district: userData?.address?.district || null,
+    ward: userData?.address?.ward || null,
+    street: userData?.address?.street || '',
+  };
+
+  // console.log('initialValues', initialValues);
+
   const t = useTranslations('changeAddress');
+  if (isLoading) return <ChangeAddressSkeleton />;
+
   return (
     <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
       <h2 className="text-2xl font-medium">Đổi địa chỉ</h2>
@@ -39,6 +41,7 @@ const ChangeAddress = (): JSX.Element => {
 
       <Formik
         initialValues={initialValues}
+        enableReinitialize={true}
         onSubmit={(values) => {
           console.log(values);
         }}
@@ -57,7 +60,7 @@ const ChangeAddress = (): JSX.Element => {
                   return response.data || [];
                 }}
                 getOptionLabel={(option) => {
-                  return option.ProvinceName;
+                  return option.ProvinceName || option.provinceName;
                 }}
                 required
               />
@@ -66,14 +69,16 @@ const ChangeAddress = (): JSX.Element => {
                 name="district"
                 label={t('district')}
                 asyncRequest={async () => {
-                  const response = await getDistrictData(values?.province?.ProvinceID || '');
+                  const response = await getDistrictData(
+                    values?.province?.ProvinceID || values?.province?.provinceId || '',
+                  );
                   return response;
                 }}
                 asyncRequestHelper={(response) => {
                   return response.data || [];
                 }}
                 getOptionLabel={(option) => {
-                  return option.DistrictName;
+                  return option.DistrictName || option.districtName;
                 }}
                 disabled={values?.province ? false : true}
                 asyncRequestDeps="province"
@@ -85,14 +90,16 @@ const ChangeAddress = (): JSX.Element => {
                 name="ward"
                 label={t('ward')}
                 asyncRequest={async () => {
-                  const response = await getWardData(values?.district?.DistrictID || '');
+                  const response = await getWardData(
+                    values?.district?.DistrictID || values?.district?.districtId || '',
+                  );
                   return response;
                 }}
                 asyncRequestHelper={(response) => {
                   return response.data || [];
                 }}
                 getOptionLabel={(option) => {
-                  return option.WardName;
+                  return option.WardName || option.wardName;
                 }}
                 disabled={values?.district ? false : true}
                 filterOptionsLocally={true}
@@ -104,7 +111,7 @@ const ChangeAddress = (): JSX.Element => {
             </div>
 
             <TextArea
-              name="address"
+              name="street"
               label={t('address')}
               rows={5}
               required

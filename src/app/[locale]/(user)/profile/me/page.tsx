@@ -2,24 +2,31 @@
 
 import Button from '@/components/Button';
 import Divider from '@/components/Divider';
+import EditMeSkeleton from '@/components/Skeletons/Profile/EditMeSkeleton';
+
 import TextField from '@/components/TextField';
+import { useUser } from '@/context/userProvider';
 import { Form, Formik } from 'formik';
 
 interface ProfileFormValues {
-  name: string;
-  phone: string;
+  name: string | null;
+  phone: string | null;
   displayName?: string;
-  email: string;
+  email: string | null;
 }
 
-const initialValues: ProfileFormValues = {
-  name: '',
-  phone: '',
-  displayName: '',
-  email: '',
-};
-
 const Profile = (): JSX.Element => {
+  const { userData, isLoading } = useUser();
+
+  const initialValues: ProfileFormValues = {
+    name: userData?.fullname || '',
+    phone: userData?.phone || '',
+    displayName: userData?.displayName || '',
+    email: userData?.email || '',
+  };
+
+  if (isLoading) return <EditMeSkeleton />;
+
   return (
     <div className="p-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white">
       <h2 className="text-2xl font-medium">Thông tin cá nhân</h2>
@@ -27,6 +34,7 @@ const Profile = (): JSX.Element => {
 
       <Formik
         initialValues={initialValues}
+        enableReinitialize={true}
         onSubmit={(values) => {
           console.log(values);
         }}

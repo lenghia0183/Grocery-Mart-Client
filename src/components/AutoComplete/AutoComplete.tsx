@@ -64,12 +64,16 @@ const Autocomplete = <Item, Response = Item[]>({
 
   const debouncedInputValue = useDebounce(inputValue, 500);
 
-  const { values } = useFormikContext<Record<string, string | number | boolean>>();
+  const { values, initialValues } = useFormikContext<Record<string, string | number | boolean>>();
+
+  console.log('initialValues: ', initialValues);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);
   const { setValue, setTouched } = helpers;
   const error = meta.error && meta.touched ? meta.error : '';
+  const value = field.value;
+  // console.log('values autoComplete', field.value);
 
   useEffect(() => {
     // if (autoFetch) {
@@ -193,6 +197,13 @@ const Autocomplete = <Item, Response = Item[]>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values[asyncRequestDeps], asyncRequestDeps]);
 
+  useEffect(() => {
+    setInputValue(getOptionLabel(value ?? ''));
+    setValue(getOptionValue(value));
+    // console.log(`value ${name}`, value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
   const fetchData = async () => {
     if (!asyncRequest) return;
 
@@ -282,7 +293,7 @@ const Autocomplete = <Item, Response = Item[]>({
             handleToggleDropdown={handleToggleDropdown}
             handleOpenDropDown={handleOpenDropdown}
             handleBlur={handleBlur}
-            inputValue={inputValue}
+            inputValue={inputValue || ''}
             handleClearInput={handleClearInput}
             error={error}
             disabled={disabled}

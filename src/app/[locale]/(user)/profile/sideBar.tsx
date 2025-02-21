@@ -8,6 +8,11 @@ import images from '@/asset/images';
 
 import Image from '@/components/Image';
 import { usePathname } from '@/i18n/routing';
+import { UserData } from '@/types/user';
+
+interface SideBarProps {
+  userData: UserData | null;
+}
 
 const accountLinks = [
   { name: 'Thông tin tài khoản', path: PATH.PROFILE_EDIT, icon: 'account' },
@@ -21,7 +26,7 @@ const transactionLinks = [
   { name: 'Danh sách yêu thích', path: PATH.FAVORITE, icon: 'heart' },
 ];
 
-function SideBar() {
+const SideBar = ({ userData }: SideBarProps): JSX.Element => {
   const pathname = usePathname();
 
   return (
@@ -35,7 +40,7 @@ function SideBar() {
             height={100}
             className="h-[100px] w-[100px] rounded-full "
           />
-          <div className="text-white-200 text-lg font-semibold mt-5">Lenghia0183</div>
+          <div className="text-white-200 text-lg font-semibold mt-5">{userData?.fullname || ''}</div>
           <div className="text-white-200 text-sm">Registered: 17th May 2022</div>
         </div>
       </div>
@@ -89,6 +94,6 @@ function SideBar() {
       </div>
     </nav>
   );
-}
+};
 
 export default SideBar;

@@ -8,6 +8,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import 'react-tooltip/dist/react-tooltip.css';
 import { LanguageProvider } from '@/context/LanguageProvider';
+import { UserProvider } from '@/context/userProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -62,7 +63,9 @@ export default async function RootLayout({
       <NextIntlClientProvider messages={messages}>
         <body className="bg-white dark:bg-slate-950">
           <LanguageProvider>
-            <ThemeProvider initialTheme={theme?.value || 'dark'}>{children}</ThemeProvider>
+            <ThemeProvider initialTheme={theme?.value || 'dark'}>
+              <UserProvider>{children}</UserProvider>
+            </ThemeProvider>
           </LanguageProvider>
         </body>
       </NextIntlClientProvider>

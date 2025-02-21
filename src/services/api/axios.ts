@@ -127,7 +127,7 @@ export const createApi = (instance: AxiosInstance) => ({
 
   get: async <T, Params = Record<string, unknown>>(
     endpoint: string,
-    params: Params,
+    params?: Params,
     options: Record<string, string> = {},
   ): Promise<ApiResponse<T>> => {
     try {
