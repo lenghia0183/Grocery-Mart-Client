@@ -9,6 +9,7 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import 'react-tooltip/dist/react-tooltip.css';
 import { LanguageProvider } from '@/context/LanguageProvider';
 import { UserProvider } from '@/context/userProvider';
+import { ToastProvider } from '@/context/toastProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -64,7 +65,9 @@ export default async function RootLayout({
         <body className="bg-white dark:bg-slate-950">
           <LanguageProvider>
             <ThemeProvider initialTheme={theme?.value || 'dark'}>
-              <UserProvider>{children}</UserProvider>
+              <ToastProvider>
+                <UserProvider>{children}</UserProvider>
+              </ToastProvider>
             </ThemeProvider>
           </LanguageProvider>
         </body>

@@ -8,41 +8,80 @@ import TextField from '@/components/TextField';
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/constants/path';
+import { LoginFormValues, LoginResponse } from '@/types/auth';
+import { useLogin } from '@/services/api/https/auth';
+import { ApiResponse } from '@/types/ApiResponse';
+import { useToast } from '@/context/toastProvider';
+import { getLoginValidationSchema } from './validation';
 
 const LoginForm: React.FC = () => {
   const t = useTranslations('login.form');
+  const tCommon = useTranslations('common');
+  const tValidation = useTranslations('validation');
+
+  const { success, error } = useToast();
+
+  const { trigger: handleLogin, isMutating } = useLogin();
+
+  const initialValues: LoginFormValues = {
+    email: '',
+    password: '',
+    showPassword: false,
+  };
 
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={initialValues}
+      validationSchema={getLoginValidationSchema(tValidation)}
       onSubmit={(values) => {
-        console.log(values);
-        // Xử lý đăng nhập ở đây
+        handleLogin(
+          { email: values.email, password: values.password },
+          {
+            onSuccess: (response: ApiResponse<LoginResponse>) => {
+              if (response.code === 200) {
+                success(t('loginSuccessful'));
+              } else {
+                error(response.message);
+              }
+            },
+            onError: () => {
+              error(tCommon('hasErrorTryAgainLater'));
+            },
+          },
+        );
       }}
     >
-      {() => (
+      {({ values }) => (
         <Form className="mt-12">
-          <TextField name="email" label="" type="email" placeholder={t('email')} rightIcon={<Icon name="email" />} />
+          <TextField
+            name="email"
+            label=""
+            type="email"
+            placeholder={t('email')}
+            rightIcon={<Icon name="email" />}
+            disabled={isMutating}
+          />
 
           <TextField
             name="password"
             label=""
-            type="password"
+            type={values.showPassword ? 'text' : 'password'}
             placeholder={t('password')}
             rightIcon={<Icon name="password" />}
             className="mt-6"
+            disabled={isMutating}
           />
 
           <div className="flex justify-between mt-6">
-            <CheckBox name="showPassword" label={t('showPassword')} />
+            <CheckBox name="showPassword" label={t('showPassword')} disabled={isMutating} />
 
             <Button variant="text" size="zeroPadding" textColor="blue-500 dark:white" bgHoverColor="none">
               {t('forgotPassword')}
             </Button>
           </div>
           <div className="mt-6 flex flex-col gap-5">
-            <Button type="submit" full>
-              {t('login')}
+            <Button type="submit" full disabled={isMutating}>
+              {isMutating ? t('loggingIn') : t('login')}
             </Button>
 
             <Button
@@ -54,8 +93,9 @@ const LoginForm: React.FC = () => {
               borderColor="blue-500 dark:white"
               bgHoverColor="none"
               startIcon={<Icon name="gmail" color="inherit" />}
+              disabled={isMutating}
             >
-              {t('loginWithGoogle')}
+              {isMutating ? t('loggingIn') : t('loginWithGoogle')}
             </Button>
 
             <div className="flex gap-2 m-auto">

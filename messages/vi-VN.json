@@ -16,6 +16,7 @@
     "themeMode": "Chế độ giao diện",
     "darkMode": "Chế độ tối",
     "lightMode": "Chế độ sáng",
+
     "language": "Ngôn ngữ",
     "english": "Tiếng Anh",
     "vietnamese": "Tiếng Việt",
@@ -23,7 +24,16 @@
     "inStock": "Còn hàng",
     "outOfStock": "Hết hàng",
     "like": "Thích",
-    "remove": "Xóa"
+    "remove": "Xóa",
+    "hasErrorTryAgainLayer": "Đã có lỗi xảy ra vui lòng thử lại sau"
+  },
+
+  "validation": {
+    "required": "Vui lòng nhập trường này",
+    "invalidEmail": "Vui lòng nhập đúng định dạng email",
+    "passwordMin": "Mật khẩu phải có ít nhất 6 ký tự",
+    "passwordRequireLetter": "Mật khẩu phải chứa ít nhất một chữ cái",
+    "passwordRequireNumber": "Mật khẩu phải chứa ít nhất một chữ số"
   },
 
   "pageTitle": {
@@ -87,9 +97,11 @@
       "forgotPassword": "Quên mật khẩu?",
       "showPassword": "Hiện mật khẩu",
       "login": "Đăng nhập",
+      "loggingIn": "Đang đăng nhập...",
       "loginWithGoogle": "Đăng nhập bằng Google",
       "noAccount": "Chưa có tài khoản?",
-      "registerNow": "Đăng ký ngay"
+      "registerNow": "Đăng ký ngay",
+      "Successful": "Đăng nhập thành công"
     }
   },
 

@@ -114,11 +114,15 @@ const TextField = ({
           style={{
             height: height,
           }}
-          className={clsx('flex items-center border p-2 rounded-md bg-transparent', inputContainerClassName, {
-            'border-red-400': error && !disabled,
-            'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
-            'bg-gray-50 border-gray-300 pointer-events-none': disabled,
-          })}
+          className={clsx(
+            'flex items-center border-gray-300 border p-2 rounded-md bg-transparent',
+            inputContainerClassName,
+            {
+              'border-red-400': error && !disabled,
+              'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
+              '!bg-gray-200 text-gray-300 border-gray-300 pointer-events-none': disabled,
+            },
+          )}
           onClick={handleDivClick}
         >
           {leftIcon && (
@@ -144,7 +148,7 @@ const TextField = ({
             </span>
           )}
         </div>
-        {error && <span className="text-red-400 text-xs">{error}</span>}
+        {error && <p className="text-red-400 text-xs mt-2 text-left">{error}</p>}
       </div>
     );
   } else {
@@ -172,12 +176,12 @@ const TextField = ({
           )}
           <div
             className={clsx(
-              'flex-grow flex items-center border p-2 rounded-md bg-transparent',
+              'flex-grow flex items-center border-gray-300 border p-2 rounded-md bg-transparent',
               inputContainerClassName,
               {
                 'border-red-400': error && !disabled,
                 'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
-                '!bg-gray-50 border-gray-300 pointer-events-none': disabled,
+                '!bg-gray-200 text-gray-300 border-gray-300 pointer-events-none': disabled,
               },
             )}
           >

@@ -22,7 +22,15 @@
     "inStock": "In Stock",
     "outOfStock": "Out of Stock",
     "like": "Like",
-    "remove": "Remove"
+    "remove": "Remove",
+    "hasErrorTryAgainLayer": "An error occurred, please try again later"
+  },
+  "validation": {
+    "required": "Please enter this field",
+    "invalidEmail": "Please enter a valid email address",
+    "passwordMin": "Password must be at least 6 characters long",
+    "passwordRequireLetter": "Password must contain at least one letter",
+    "passwordRequireNumber": "Password must contain at least one number"
   },
 
   "pageTitle": {
@@ -86,9 +94,11 @@
       "forgotPassword": "Forgot password?",
       "showPassword": "Show password",
       "login": "Login",
+      "loggingIn": "Logging in...",
       "loginWithGoogle": "Login with Google",
       "noAccount": "Don't have an account?",
-      "registerNow": "Register now"
+      "registerNow": "Register now",
+      "Successful": "Login successful"
     }
   },
 

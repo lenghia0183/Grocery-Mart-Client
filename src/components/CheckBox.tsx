@@ -47,7 +47,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
       <label
         htmlFor={id}
         className={clsx('flex items-center gap-2 text-gray-500', labelClassName, {
-          'cursor-not-allowed opacity-30': disabled,
+          'cursor-not-allowed opacity-30 user-': disabled,
         })}
       >
         <input
@@ -62,7 +62,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
         />
         <div
           className={clsx('border flex items-center justify-center relative rounded-md', borderColorClass, {
-            '!border-gray-500 !bg-gray-300': disabled,
+            '!border-gray-300 !bg-gray-300': disabled,
           })}
           style={{ width: `${size}px`, height: `${size}px` }}
         >

@@ -57,7 +57,7 @@ const colors: Colors = {
     // Đã có trước
     DEFAULT: '#d2d1d6',
     100: '#f9f9f9', // Màu mới
-    200: '#c9cbcd', // Màu mới
+    200: '#f5f5f5', // Màu mới
     300: '#d2d1d6', // Đã có trước
     400: 'rgb(210, 202, 202, 0.65)', // Đã có trước
     500: '#9e9da8', // Đã có trước

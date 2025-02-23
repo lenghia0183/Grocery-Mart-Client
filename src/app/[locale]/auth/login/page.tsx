@@ -22,7 +22,7 @@ const LoginPage: React.FC = async () => {
         <div className="col-span-6 h-full p-24 pt-0 text-center flex flex-col  justify-center">
           <Logo className="mx-auto" />
 
-          <h2 className="text-[30px] mt-10 dark:text-white-200 text-gray">{t('helloAgain')}</h2>
+          <h2 className="text-[30px] mt-10 dark:text-white-200 text-gray-300">{t('helloAgain')}</h2>
           <p className="text-gray-500 mt-7">{t('desc02')}</p>
 
           <LoginForm />
