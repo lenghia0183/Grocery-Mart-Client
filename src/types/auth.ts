@@ -16,3 +16,21 @@ export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface SignUpFormValues {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  showPassword: boolean;
+  fullName: string;
+}
+
+export interface SignUpBody {
+  email: string;
+  password: string;
+  fullname: string;
+}
+
+export interface SignUpResponse {
+  user: UserData;
+}

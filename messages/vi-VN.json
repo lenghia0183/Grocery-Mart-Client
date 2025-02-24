@@ -33,7 +33,8 @@
     "invalidEmail": "Vui lòng nhập đúng định dạng email",
     "passwordMin": "Mật khẩu phải có ít nhất 6 ký tự",
     "passwordRequireLetter": "Mật khẩu phải chứa ít nhất một chữ cái",
-    "passwordRequireNumber": "Mật khẩu phải chứa ít nhất một chữ số"
+    "passwordRequireNumber": "Mật khẩu phải chứa ít nhất một chữ số",
+    "passwordMismatch": "Mật khẩu xác nhận không khớp"
   },
 
   "pageTitle": {
@@ -101,7 +102,7 @@
       "loginWithGoogle": "Đăng nhập bằng Google",
       "noAccount": "Chưa có tài khoản?",
       "registerNow": "Đăng ký ngay",
-      "Successful": "Đăng nhập thành công"
+      "successful": "Đăng nhập thành công"
     }
   },
 
@@ -117,9 +118,12 @@
       "forgotPassword": "Quên mật khẩu?",
       "showPassword": "Hiện mật khẩu",
       "signUp": "Đăng ký",
+      "fullName": "Họ và tên",
+      "successful": "Đăng ký thành công",
       "loginWithGoogle": "Đăng ký bằng Google",
       "haveAccount": "Bạn đã có tài khoản?",
-      "loginNow": "Đăng nhập ngay"
+      "loginNow": "Đăng nhập ngay",
+      "signingUp": "Đang đăng ký..."
     }
   },
 

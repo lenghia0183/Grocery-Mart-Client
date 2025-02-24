@@ -13,11 +13,14 @@ import { useLogin } from '@/services/api/https/auth';
 import { ApiResponse } from '@/types/ApiResponse';
 import { useToast } from '@/context/toastProvider';
 import { getLoginValidationSchema } from './validation';
+import { useRouter } from 'next/navigation';
 
 const LoginForm: React.FC = () => {
   const t = useTranslations('login.form');
   const tCommon = useTranslations('common');
   const tValidation = useTranslations('validation');
+
+  const router = useRouter();
 
   const { success, error } = useToast();
 
@@ -40,6 +43,7 @@ const LoginForm: React.FC = () => {
             onSuccess: (response: ApiResponse<LoginResponse>) => {
               if (response.code === 200) {
                 success(t('loginSuccessful'));
+                router.push(PATH.HOME);
               } else {
                 error(response.message);
               }
