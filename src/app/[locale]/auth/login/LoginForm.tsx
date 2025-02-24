@@ -14,6 +14,7 @@ import { ApiResponse } from '@/types/ApiResponse';
 import { useToast } from '@/context/toastProvider';
 import { getLoginValidationSchema } from './validation';
 import { useRouter } from 'next/navigation';
+import { nextApi } from '@/services/api/axios';
 
 const LoginForm: React.FC = () => {
   const t = useTranslations('login.form');
@@ -40,10 +41,19 @@ const LoginForm: React.FC = () => {
         handleLogin(
           { email: values.email, password: values.password },
           {
-            onSuccess: (response: ApiResponse<LoginResponse>) => {
+            onSuccess: async (response: ApiResponse<LoginResponse>) => {
               if (response.code === 200) {
-                success(t('loginSuccessful'));
-                router.push(PATH.HOME);
+                const res = await nextApi.post('/auth/set-cookie', {
+                  accessToken: response.data?.accessToken,
+                  refreshToken: response.data?.refreshToken,
+                });
+
+                if (res.code === 200) {
+                  router.push(PATH.HOME);
+                  success(t('successful'));
+                } else {
+                  error(res.message);
+                }
               } else {
                 error(response.message);
               }

@@ -16,6 +16,15 @@ const HEADERS_MULTIPLE_PART = {
   'Content-Type': 'multipart/form-data; boundary=something',
 };
 
+const isServer = typeof window === 'undefined';
+
+const getServerCookies = async (name: string) => {
+  if (!isServer) return undefined;
+  const { cookies } = await import('next/headers');
+  const cookieStore = await cookies();
+  return cookieStore.get(name)?.value;
+};
+
 export const createInstance = (baseURL: string, customHeaders: Record<string, string> = {}): AxiosInstance => {
   const instance = axios.create({
     baseURL,
@@ -28,10 +37,10 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
   });
 
   instance.interceptors.request.use(
-    (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
       let token: string | undefined;
-      if (typeof window === 'undefined') {
-        token = getCookie('accessToken') as string | undefined;
+      if (isServer) {
+        token = await getServerCookies('accessToken');
       } else {
         token = getLocalStorageItem('accessToken') || (getCookie('accessToken') as string | undefined);
       }
@@ -40,7 +49,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
         config.headers = axios.AxiosHeaders.from(config.headers || {});
         config.headers.set('Authorization', `Bearer ${token}`);
       }
-      console.log(`🟢 Requesting: ${config.baseURL}${config.url}`, config.params);
+      console.log(`🟢 Requesting: ${config.baseURL}${config.url}`, config.params, config.headers);
       return config;
     },
     (error: AxiosError) => Promise.reject(error),
@@ -108,7 +117,6 @@ export const createApi = (instance: AxiosInstance) => ({
   instance,
 
   post: async <T, Body = Record<string, unknown>>(endpoint: string, body: Body): Promise<ApiResponse<T>> => {
-    console.log('prams', body);
     try {
       return await instance.post(endpoint, body);
     } catch (err: unknown) {
@@ -175,8 +183,10 @@ const instanceGhn = createInstance(BASE_URL_GHN, {
   Token: TOKEN_GHN,
   ShopId: SHOP_ID_GHN,
 });
+const nextApiInstance = createInstance('http://localhost:8001/api');
 
 const api = createApi(instance);
+export const nextApi = createApi(nextApiInstance);
 const ghnApi = createApi(instanceGhn);
 
 export { api, ghnApi };

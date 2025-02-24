@@ -12,8 +12,6 @@ export function getPreferredLocale(request: Request): string {
   return match(languages, LocalesArray, defaultLocale);
 }
 export function hasLocaleInPath(pathname: string): boolean {
-  console.log('pathname: ', pathname);
-  console.log('localesArray', LocalesArray);
   return LocalesArray.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`);
 }
 
@@ -30,5 +28,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|static|favicon.*).*)'],
+  matcher: ['/((?!_next|static|favicon.*|api/.*).*)'],
 };

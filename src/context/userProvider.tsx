@@ -17,8 +17,6 @@ const UserContext = createContext<UserContextType>({
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const { data, isLoading } = useGetMe();
 
-  console.log('loading', isLoading);
-
   return <UserContext.Provider value={{ userData: data ?? null, isLoading }}>{children}</UserContext.Provider>;
 }
 
