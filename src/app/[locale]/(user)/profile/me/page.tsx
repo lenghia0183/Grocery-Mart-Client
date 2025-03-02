@@ -5,6 +5,7 @@ import Divider from '@/components/Divider';
 import EditMeSkeleton from '@/components/Skeletons/Profile/EditMeSkeleton';
 
 import TextField from '@/components/TextField';
+import { useLoading } from '@/context/LoadingProvider';
 import { useUser } from '@/context/userProvider';
 import { ChangeUserDataFormValues } from '@/types/user';
 import { Form, Formik } from 'formik';
@@ -12,6 +13,8 @@ import { Form, Formik } from 'formik';
 const Profile = (): JSX.Element => {
   const { userData, isLoading } = useUser();
 
+  const { isLoading: loading } = useLoading();
+  console.log('loading', loading);
   const initialValues: ChangeUserDataFormValues = {
     name: userData?.fullname || '',
     phone: userData?.phone || '',

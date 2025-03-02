@@ -49,7 +49,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
         config.headers = axios.AxiosHeaders.from(config.headers || {});
         config.headers.set('Authorization', `Bearer ${token}`);
       }
-      console.log(`🟢 Requesting: ${config.baseURL}${config.url}`, config.params, config.headers);
+      // console.log(`🟢 Requesting: ${config.baseURL}${config.url}`, config.params, config.headers);
       return config;
     },
     (error: AxiosError) => Promise.reject(error),
