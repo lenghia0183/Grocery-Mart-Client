@@ -11,8 +11,9 @@ import { LanguageProvider } from '@/context/LanguageProvider';
 import { UserProvider } from '@/context/userProvider';
 import { ToastProvider } from '@/context/toastProvider';
 import { SWRConfig } from 'swr';
-import swrMiddleware from '@/middlewares/swr/loading';
+
 import { LoadingProvider } from '@/context/LoadingProvider';
+import Backdrop from '@/components/BackDrop';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -72,13 +73,15 @@ export default async function RootLayout({
                 refreshInterval: 0,
                 revalidateOnFocus: false,
                 shouldRetryOnError: false,
-                use: [swrMiddleware],
               }}
             >
               <LanguageProvider>
                 <ThemeProvider initialTheme={theme?.value || 'dark'}>
                   <ToastProvider>
-                    <UserProvider>{children}</UserProvider>
+                    <UserProvider>
+                      {children}
+                      <Backdrop />
+                    </UserProvider>
                   </ToastProvider>
                 </ThemeProvider>
               </LanguageProvider>

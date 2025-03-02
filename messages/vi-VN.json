@@ -192,7 +192,9 @@
     "announcement": "Thông báo",
     "comingSoon": "Chức năng này sẽ sớm được ra mắt",
     "quantity": "Số lượng",
-    "addToCart": "Thêm vào giỏ hàng"
+    "addToCart": "Thêm vào giỏ hàng",
+
+    "addProductToCartSuccessful": "Thêm sản phẩm vào giỏ hàng thành công"
   },
 
   "changeAddress": {

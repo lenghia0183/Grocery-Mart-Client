@@ -115,13 +115,7 @@ const Header: React.FC = () => {
             className="!p-0 !bg-white !rounded-2xl shadow-avatar-menu-light"
           >
             <div className="w-[50px] h-[50px] rounded-md bg-dark">
-              <Image
-                src={userData?.avatar || ''}
-                alt={userData?.fullname || ''}
-                width={50}
-                height={50}
-                className="w-[50px] h-[50px]"
-              />
+              <Image src={''} alt={userData?.fullname || ''} width={50} height={50} className="w-[50px] h-[50px]" />
             </div>
           </ToolTip>
         </div>
