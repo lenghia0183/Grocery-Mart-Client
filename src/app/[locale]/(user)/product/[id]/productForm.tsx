@@ -21,7 +21,7 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
-  const { refreshUserFavorites } = useUser();
+  const { refreshUserFavorites, refreshUserCart } = useUser();
 
   const initialValues: AddProductToCartFormValues = {
     quantity: 1,
@@ -77,6 +77,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                               } else {
                                 error(response.message);
                               }
+                              refreshUserCart();
                               resetForm();
                             },
                             onError: () => {

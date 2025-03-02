@@ -10,11 +10,12 @@ import { useTranslations } from 'next-intl';
 import { PATH } from '@/constants/path';
 import { useUser } from '@/context/userProvider';
 import Image from './Image';
+import formatCurrency from '@/utils/formatCurrency';
 
 const Header: React.FC = () => {
   const t = useTranslations();
 
-  const { userData, userFavoritesCount } = useUser();
+  const { userData, userFavoritesCount, userCartTotalMoney } = useUser();
 
   const navItems = [
     {
@@ -103,7 +104,7 @@ const Header: React.FC = () => {
                 iconStrokeWidth={1.8}
               />
               <p className="min-w-[70px] max-w-[130px] truncate overflow-ellipsis transition-colors duration-300">
-                0 VND
+                {formatCurrency(userCartTotalMoney)}
               </p>
             </div>
           </div>
