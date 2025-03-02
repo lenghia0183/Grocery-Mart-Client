@@ -7,17 +7,10 @@ import IconButton from '@/components/IconButton';
 import formatCurrency from '@/utils/formatCurrency';
 import LabelValue from '@/components/LabelValue';
 import { useTranslations } from 'next-intl';
+import { ProductDetail } from '@/types/product';
 
 interface ProductFormProps {
-  product: {
-    id: string;
-    name: string;
-    price: number;
-    inStock: boolean;
-    branch: string;
-    rating: number;
-    description: string;
-  };
+  product: ProductDetail | null;
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
@@ -38,13 +31,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
             <LabelValue
               labelClassName="!font-normal "
               value={<p className="bg-green-100 px-1 rounded-sm ">0%</p>}
-              label={formatCurrency(product.price)}
+              label={formatCurrency(product?.price)}
             />
 
             <LabelValue
               className="mt-5"
               labelClassName="text-[30px] font-medium"
-              label={formatCurrency(product.price)}
+              label={formatCurrency(product?.price)}
             />
 
             <div className="flex gap-5 mt-5">

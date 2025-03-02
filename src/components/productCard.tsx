@@ -6,6 +6,8 @@ import Image from './Image';
 import clsx from 'clsx';
 import formatCurrency from '@/utils/formatCurrency';
 import { Product } from '@/types/product';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants/path';
 
 interface ProductCardProps {
   className?: string;
@@ -13,12 +15,17 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
+  const route = useRouter();
+
   return (
     <div
       className={clsx(
         'h-full p-4 rounded-2xl bg-white dark:bg-dark-400 shadow-product-card-light dark:shadow-product-card-dark text-dark dark:text-white-200 hover:bg-gray-400 transition-all',
         className,
       )}
+      onClick={() => {
+        route.push(PATH.PRODUCT_DETAIL.replace(':productId', data?._id));
+      }}
     >
       <div className="mx-auto w-[220px] h-[220px] bg-white dark:bg-dark-500 rounded-lg">
         <Image

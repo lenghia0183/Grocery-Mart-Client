@@ -48,3 +48,16 @@ export interface GetProductParams {
   page?: number;
   limit: number;
 }
+
+export interface ProductDetail {
+  _id: string;
+  name: string;
+  price: number;
+  manufacturerId: Manufacturer;
+  categoryId: Category;
+  description: string;
+  inStock: boolean;
+  ratings: number;
+  images: string[];
+  code: string;
+}

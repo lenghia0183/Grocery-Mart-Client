@@ -46,7 +46,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
   return (
     <div>
       <div className="relative">
-        <Slider {...mainSliderSettings} className="main-slider bg-black rounded-md overflow-hidden">
+        <Slider {...mainSliderSettings} className="main-slider bg-transparent rounded-md overflow-hidden">
           {images.map((image, index) => (
             <Image key={index} src={image} alt="Grocery mart" width={200} height={200} className="aspect-square" />
           ))}
