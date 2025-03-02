@@ -276,7 +276,7 @@ const Autocomplete = <Item, Response = Item[]>({
 
   if (vertical) {
     return (
-      <div className={clsx({ 'pointer-events-none cursor-not-allowed': disabled })}>
+      <div className={clsx({ 'pointer-events-none cursor-not-allowed select-none': disabled })}>
         {label && (
           <label className={clsx('text-md mb-2', { 'text-gray-500': disabled })}>
             {' '}
@@ -327,7 +327,7 @@ const Autocomplete = <Item, Response = Item[]>({
       <div className={clsx(className)}>
         <div
           className={clsx('flex items-center gap-2', {
-            'pointer-events-none': disabled,
+            'pointer-events-none select-none': disabled,
           })}
         >
           {label && (

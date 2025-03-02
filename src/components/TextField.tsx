@@ -99,7 +99,7 @@ const TextField = ({
         style={{
           width: width,
         }}
-        className={clsx('group', className)}
+        className={clsx('group', { 'select-none pointer-events-none': disabled }, className)}
       >
         {label && (
           <label
@@ -115,12 +115,12 @@ const TextField = ({
             height: height,
           }}
           className={clsx(
-            'flex items-center border-gray-300 border p-2 rounded-md bg-transparent',
+            'flex items-center border-gray-300 border p-2 rounded-md bg-transparent text-dark dark:text-white-200',
             inputContainerClassName,
             {
               'border-red-400': error && !disabled,
-              'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
-              '!bg-gray-200 text-gray-300 border-gray-300 pointer-events-none': disabled,
+              'hover:border-blue-400 group-focus-within:border-blue-400 ': !error && !disabled,
+              '!bg-gray-200 dark:!bg-gray-600 text-gray-300 dark:!text-gray-500 border-gray-300': disabled,
             },
           )}
           onClick={handleDivClick}
@@ -160,7 +160,7 @@ const TextField = ({
             height: height,
           }}
           className={clsx('group', 'flex items-center space-x-2', {
-            'pointer-events-none': disabled,
+            'pointer-events-none select-none': disabled,
           })}
           onClick={handleDivClick}
         >
@@ -176,12 +176,12 @@ const TextField = ({
           )}
           <div
             className={clsx(
-              'flex-grow flex items-center border-gray-300 border p-2 rounded-md bg-transparent',
+              'flex-grow flex items-center border-gray-300 border p-2 rounded-md bg-transparent text-dark dark:text-white-200',
               inputContainerClassName,
               {
                 'border-red-400': error && !disabled,
                 'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
-                '!bg-gray-200 text-gray-300 border-gray-300 pointer-events-none': disabled,
+                '!bg-gray-200 dark:!bg-gray-600 text-gray-300 dark:!text-gray-500 border-gray-300': disabled,
               },
             )}
           >
@@ -191,7 +191,11 @@ const TextField = ({
               </span>
             )}
             <input
-              className={clsx('outline-none placeholder-gray-500 w-full bg-transparent', inputClassName)}
+              className={clsx(
+                'outline-none placeholder-gray-500 w-full bg-transparent',
+
+                inputClassName,
+              )}
               value={field.value}
               id={inputId}
               name={name}

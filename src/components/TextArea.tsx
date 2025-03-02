@@ -26,6 +26,7 @@ interface TextAreaProps {
   rows?: number;
   cols?: number;
   required?: boolean;
+  disabled?: boolean;
 }
 
 const TextArea = ({
@@ -50,6 +51,7 @@ const TextArea = ({
   rows = 15,
   cols,
   required,
+  disabled = true,
 }: TextAreaProps) => {
   const inputId = useId();
   const [field, meta, helpers] = useField(name);
@@ -93,18 +95,22 @@ const TextArea = ({
           width: width,
           height: height,
         }}
-        className={clsx('group', className)}
+        className={clsx('group', { 'select-none pointer-events-none': disabled }, className)}
       >
         {label && (
-          <label htmlFor={name} className={clsx('block mb-1', labelClassName)}>
+          <label htmlFor={name} className={clsx('block mb-1', { 'text-gray-500': disabled }, labelClassName)}>
             {required && <span className="text-red-400 mr-1">*</span>} {label}
           </label>
         )}
         <div
-          className={clsx('flex items-center border p-2 rounded-md bg-transparent', {
-            'border-red-400': error,
-            'hover:border-blue-300 group-focus-within:border-blue-300': !error,
-          })}
+          className={clsx(
+            'flex items-center border-gray-300 border p-2 rounded-md bg-transparent text-dark dark:text-white-200',
+            {
+              'border-red-400': error && !disabled,
+              'hover:border-blue-400 group-focus-within:border-blue-400 ': !error && !disabled,
+              '!bg-gray-200 dark:!bg-gray-600 text-gray-300 dark:!text-gray-500 border-gray-300': disabled,
+            },
+          )}
           onClick={handleDivClick}
         >
           {leftIcon && (
@@ -141,7 +147,14 @@ const TextArea = ({
           width: width,
           height: height,
         }}
-        className={clsx('group', 'flex items-center space-x-2', className)}
+        className={clsx(
+          'group',
+          'flex items-center space-x-2',
+          {
+            'pointer-events-none select-none': disabled,
+          },
+          className,
+        )}
         onClick={handleDivClick}
       >
         {label && (
@@ -150,10 +163,14 @@ const TextArea = ({
           </label>
         )}
         <div
-          className={clsx('flex-grow flex items-center border p-2 rounded-md bg-transparent', {
-            'border-red-400': error,
-            'hover:border-blue-300 group-focus-within:border-blue-300': !error,
-          })}
+          className={clsx(
+            'flex-grow flex items-center border-gray-300 border p-2 rounded-md bg-transparent text-dark dark:text-white-200',
+            {
+              'border-red-400': error && !disabled,
+              'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
+              '!bg-gray-200 dark:!bg-gray-600 text-gray-300 dark:!text-gray-500 border-gray-300': disabled,
+            },
+          )}
         >
           {leftIcon && (
             <span className="mr-2" onClick={iconOnClick}>

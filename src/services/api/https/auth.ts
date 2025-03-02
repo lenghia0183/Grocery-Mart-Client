@@ -14,7 +14,7 @@ export const useLogin = () => {
 
 export const useRegister = () => {
   const url = 'v1/auth/register';
-  const fetcher = (url: string, { arg }: { arg: SignUpBody }) => {
+  const fetcher = async (url: string, { arg }: { arg: SignUpBody }) => {
     return api.post<SignUpResponse, SignUpBody>(url, arg);
   };
 
