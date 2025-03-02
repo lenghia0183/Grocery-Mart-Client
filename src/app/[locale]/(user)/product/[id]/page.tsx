@@ -13,7 +13,15 @@ import { getTranslations } from 'next-intl/server';
 import { api } from '@/services/api/axios';
 import { ProductDetail as ProductDetailType } from '@/types/product';
 
+const fetchProductDetails = async (id: string) => {
+  const response = await api.get<ProductDetailType>(`v1/product/${id}`);
+
+  return response?.data;
+};
+
 const ProductDetail = async ({ params }: { params: { id: string } }) => {
+  const { id } = await params;
+
   const t = await getTranslations('productDetail');
 
   const tabList = [
@@ -21,13 +29,7 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
     { label: t('productComments'), value: 'product-comments' },
   ];
 
-  const fetchProductDetails = async () => {
-    const response = await api.get<ProductDetailType>(`v1/product/${params.id}`);
-
-    return response.data;
-  };
-
-  const fakeProduct = await fetchProductDetails();
+  const fakeProduct = await fetchProductDetails(id);
 
   return (
     <div className="dark:bg-dark-500 py-14">

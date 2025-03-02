@@ -8,9 +8,13 @@ import ToolTip from './ToolTip';
 import AvatarMenu from './AvatarMenu';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/constants/path';
+import { useUser } from '@/context/userProvider';
+import Image from './Image';
 
 const Header: React.FC = () => {
   const t = useTranslations();
+
+  const { userData } = useUser();
 
   const navItems = [
     {
@@ -110,7 +114,15 @@ const Header: React.FC = () => {
             opacity={1}
             className="!p-0 !bg-white !rounded-2xl shadow-avatar-menu-light"
           >
-            <div className="w-[50px] h-[50px] rounded-md bg-dark"></div>
+            <div className="w-[50px] h-[50px] rounded-md bg-dark">
+              <Image
+                src={userData?.avatar || ''}
+                alt={userData?.fullname || ''}
+                width={50}
+                height={50}
+                className="w-[50px] h-[50px]"
+              />
+            </div>
           </ToolTip>
         </div>
       </div>
