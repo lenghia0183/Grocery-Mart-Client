@@ -15,11 +15,13 @@ import { useToast } from '@/context/toastProvider';
 import { getLoginValidationSchema } from './validation';
 import { useRouter } from 'next/navigation';
 import { nextApi } from '@/services/api/axios';
+import { useUser } from '@/context/userProvider';
 
 const LoginForm: React.FC = () => {
   const t = useTranslations('login.form');
   const tCommon = useTranslations('common');
   const tValidation = useTranslations('validation');
+  const { loginUser } = useUser();
 
   const router = useRouter();
 
@@ -50,6 +52,7 @@ const LoginForm: React.FC = () => {
 
                 if (res.code === 200) {
                   router.push(PATH.HOME);
+                  loginUser(response?.data);
                   success(t('successful'));
                 } else {
                   error(res.message);

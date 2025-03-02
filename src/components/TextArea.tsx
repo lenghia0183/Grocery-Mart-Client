@@ -51,7 +51,7 @@ const TextArea = ({
   rows = 15,
   cols,
   required,
-  disabled = true,
+  disabled = false,
 }: TextAreaProps) => {
   const inputId = useId();
   const [field, meta, helpers] = useField(name);

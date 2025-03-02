@@ -10,6 +10,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { LanguageProvider } from '@/context/LanguageProvider';
 import { UserProvider } from '@/context/userProvider';
 import { ToastProvider } from '@/context/toastProvider';
+import { SWRConfig } from 'swr';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -63,13 +64,21 @@ export default async function RootLayout({
     >
       <NextIntlClientProvider messages={messages}>
         <body className="bg-white dark:bg-slate-950">
-          <LanguageProvider>
-            <ThemeProvider initialTheme={theme?.value || 'dark'}>
-              <ToastProvider>
-                <UserProvider>{children}</UserProvider>
-              </ToastProvider>
-            </ThemeProvider>
-          </LanguageProvider>
+          <SWRConfig
+            value={{
+              refreshInterval: 0,
+              revalidateOnFocus: false,
+              shouldRetryOnError: false,
+            }}
+          >
+            <LanguageProvider>
+              <ThemeProvider initialTheme={theme?.value || 'dark'}>
+                <ToastProvider>
+                  <UserProvider>{children}</UserProvider>
+                </ToastProvider>
+              </ThemeProvider>
+            </LanguageProvider>
+          </SWRConfig>
         </body>
       </NextIntlClientProvider>
     </html>
