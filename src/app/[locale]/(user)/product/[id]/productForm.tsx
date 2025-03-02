@@ -11,15 +11,18 @@ import { ProductDetail } from '@/types/product';
 import { useAddProductToCart } from '@/services/api/https/cart';
 import { AddProductToCartFormValues } from '@/types/cart';
 
-import { WithLoading } from '@/hoc/withLoading';
+import { WithLoading } from '@/hocs/withLoading';
 import { useToast } from '@/context/toastProvider';
 import { useAddProductToFavoriteList } from '@/services/api/https/favorite';
+import { useUser } from '@/context/userProvider';
 
 interface ProductFormProps {
   product: ProductDetail | null;
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
+  const { refreshUserFavorites } = useUser();
+
   const initialValues: AddProductToCartFormValues = {
     quantity: 1,
     isFavorite: product?.isFavorite || false,
@@ -101,13 +104,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                           {
                             onSuccess: (response) => {
                               if (response.code === 200) {
-                                console.log('response', response);
                                 if (values?.isFavorite) {
                                   success(t('deleteProductToFavoriteSuccessful'));
                                 } else {
                                   success(t('addProductToFavoriteSuccessful'));
                                 }
                                 setFieldValue('isFavorite', !values?.isFavorite);
+                                refreshUserFavorites();
                               } else {
                                 error(response.message);
                                 setFieldValue('isFavorite', values?.isFavorite);

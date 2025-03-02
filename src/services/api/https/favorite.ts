@@ -1,6 +1,8 @@
 import useSWRMutation from 'swr/mutation';
 import { api } from '../axios';
-import { AddProductToFavoriteListBody } from '@/types/favorite';
+import { AddProductToFavoriteListBody, GetFavoriteListResponse } from '@/types/favorite';
+import useSWR from 'swr';
+import { QueryState } from '@/types/common';
 
 export const useAddProductToFavoriteList = (productId: string) => {
   const url = `v1/favorite/${productId}/toggle`;
@@ -9,4 +11,15 @@ export const useAddProductToFavoriteList = (productId: string) => {
   };
 
   return useSWRMutation(url, fetcher);
+};
+
+export const useGetMyFavorite = (filters: QueryState) => {
+  const url = `v1/favorite/me`;
+  const fetcher = async (url: string) => {
+    const response = await api.get<GetFavoriteListResponse, QueryState>(url, filters);
+
+    return response;
+  };
+
+  return useSWR(url, fetcher);
 };

@@ -14,7 +14,7 @@ import Image from './Image';
 const Header: React.FC = () => {
   const t = useTranslations();
 
-  const { userData } = useUser();
+  const { userData, userFavoritesCount } = useUser();
 
   const navItems = [
     {
@@ -83,7 +83,9 @@ const Header: React.FC = () => {
                 iconHeight="21px"
                 iconStrokeWidth={1.8}
               />
-              <p className="min-w-[20px] max-w-[30px] truncate overflow-ellipsis transition-colors duration-300">333</p>
+              <p className="min-w-[20px] max-w-[30px] truncate overflow-ellipsis transition-colors duration-300">
+                {userFavoritesCount}
+              </p>
             </div>
 
             <div className="w-[1px] h-[60%] bg-gray-400"></div>
