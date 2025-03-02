@@ -193,8 +193,9 @@
     "comingSoon": "Chức năng này sẽ sớm được ra mắt",
     "quantity": "Số lượng",
     "addToCart": "Thêm vào giỏ hàng",
-
-    "addProductToCartSuccessful": "Thêm sản phẩm vào giỏ hàng thành công"
+    "addProductToCartSuccessful": "Thêm sản phẩm vào giỏ hàng thành công",
+    "addProductToFavoriteSuccessful": "Thêm sản phẩm vào danh sách yêu thích thành công",
+    "deleteProductToFavoriteSuccessful": "Xóa sản phẩm vào danh sách yêu thích thành công"
   },
 
   "changeAddress": {

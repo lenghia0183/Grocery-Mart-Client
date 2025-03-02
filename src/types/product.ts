@@ -60,4 +60,5 @@ export interface ProductDetail {
   ratings: number;
   images: string[];
   code: string;
+  isFavorite: boolean;
 }

@@ -13,6 +13,7 @@ import { AddProductToCartFormValues } from '@/types/cart';
 
 import { WithLoading } from '@/hoc/withLoading';
 import { useToast } from '@/context/toastProvider';
+import { useAddProductToFavoriteList } from '@/services/api/https/favorite';
 
 interface ProductFormProps {
   product: ProductDetail | null;
@@ -21,18 +22,21 @@ interface ProductFormProps {
 const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
   const initialValues: AddProductToCartFormValues = {
     quantity: 1,
+    isFavorite: product?.isFavorite || false,
   };
 
   const t = useTranslations('productDetail');
   const tCommon = useTranslations('common');
   const { success, error } = useToast();
 
-  const { trigger: addProductToCart, isMutating } = useAddProductToCart();
+  const { trigger: addProductToCart, isMutating: isMutatingAddProductToCart } = useAddProductToCart();
+  const { trigger: addProductToFavoriteList, isMutating: isMutatingAddProductToFavoriteList } =
+    useAddProductToFavoriteList(product?._id || '');
 
   return (
-    <WithLoading isLoading={isMutating}>
+    <WithLoading isLoading={isMutatingAddProductToCart || isMutatingAddProductToFavoriteList}>
       <Formik initialValues={initialValues} onSubmit={(values) => console.log('Submit', values)}>
-        {({ values }) => {
+        {({ values, resetForm, setFieldValue }) => {
           return (
             <Form>
               <p className="text-2xl font-medium mt-3 dark:text-white-200">{t('quantity')}</p>
@@ -70,9 +74,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                               } else {
                                 error(response.message);
                               }
+                              resetForm();
                             },
                             onError: () => {
                               error(tCommon('hasErrorTryAgainLater'));
+                              resetForm();
                             },
                           },
                         );
@@ -84,11 +90,36 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                       iconName="heart"
                       variant="outlined"
                       size="medium"
-                      borderColor="gray-500"
+                      borderColor={values?.isFavorite ? 'red-500' : 'gray-500'}
                       borderHoverColor="blue-500"
                       iconHoverColor="blue-500"
-                      iconColor="gray-500 "
+                      iconColor={values?.isFavorite ? 'red-500' : 'gray-500'}
                       bgHoverColor="none"
+                      onClick={() => {
+                        addProductToFavoriteList(
+                          {},
+                          {
+                            onSuccess: (response) => {
+                              if (response.code === 200) {
+                                console.log('response', response);
+                                if (values?.isFavorite) {
+                                  success(t('deleteProductToFavoriteSuccessful'));
+                                } else {
+                                  success(t('addProductToFavoriteSuccessful'));
+                                }
+                                setFieldValue('isFavorite', !values?.isFavorite);
+                              } else {
+                                error(response.message);
+                                setFieldValue('isFavorite', values?.isFavorite);
+                              }
+                            },
+                            onError: () => {
+                              error(tCommon('hasErrorTryAgainLater'));
+                              setFieldValue('isFavorite', values?.isFavorite);
+                            },
+                          },
+                        );
+                      }}
                     />
                   </div>
                 </div>

@@ -5,4 +5,5 @@ export interface AddProductToCartBody {
 
 export interface AddProductToCartFormValues {
   quantity: number;
+  isFavorite: boolean;
 }
