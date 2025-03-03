@@ -23,6 +23,11 @@ export interface ChangeUserDataFormValues {
   email: string;
 }
 
+export interface ChangeUserDataBody {
+  fullname: string;
+  phone?: string;
+}
+
 export interface ChangePasswordFormValues {
   currentPassword: string;
   newPassword: string;

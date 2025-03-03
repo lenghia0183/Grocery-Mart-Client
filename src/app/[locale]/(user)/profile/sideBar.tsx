@@ -9,6 +9,7 @@ import images from '@/asset/images';
 import Image from '@/components/Image';
 import { usePathname } from '@/i18n/routing';
 import { UserData } from '@/types/user';
+import { formatRegisteredDate } from '@/utils/formatRegisteredDate';
 
 interface SideBarProps {
   userData: UserData | null;
@@ -41,7 +42,7 @@ const SideBar = ({ userData }: SideBarProps): JSX.Element => {
             className="h-[100px] w-[100px] rounded-full "
           />
           <div className="text-white-200 text-lg font-semibold mt-5">{userData?.fullname || ''}</div>
-          <div className="text-white-200 text-sm">Registered: 17th May 2022</div>
+          <div className="text-white-200 text-sm">{formatRegisteredDate(userData?.createdAt || '')}</div>
         </div>
       </div>
 

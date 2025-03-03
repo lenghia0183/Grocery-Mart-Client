@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { api } from '../axios';
-import { UserData } from '@/types/user';
+import { ChangeUserDataBody, UserData } from '@/types/user';
+import useSWRMutation from 'swr/mutation';
 
 export const useGetMe = () => {
   const url = `v1/auth/me`;
@@ -10,4 +11,27 @@ export const useGetMe = () => {
   };
 
   return useSWR(url, fetcher);
+};
+
+export const useUpdateMe = () => {
+  const url = `v1/auth/me`;
+
+  const fetcher = (
+    url: string,
+    {
+      arg,
+    }: {
+      arg: ChangeUserDataBody;
+    },
+  ) => {
+    const formData = new FormData();
+
+    Object.entries(arg).forEach(([key, value]) =>
+      formData.append(key, value instanceof File ? value : JSON.stringify(value)),
+    );
+
+    return api.putMultiplePart(url, formData);
+  };
+
+  return useSWRMutation(url, fetcher);
 };

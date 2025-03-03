@@ -134,6 +134,16 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
+  putMultiplePart: async <T>(endpoint: string, params: Record<string, unknown> | FormData): Promise<ApiResponse<T>> => {
+    try {
+      return await instance.put(endpoint, params, {
+        headers: HEADERS_MULTIPLE_PART,
+      });
+    } catch (err: unknown) {
+      return handleAxiosError(err);
+    }
+  },
+
   get: async <T, Params = Record<string, unknown>>(
     endpoint: string,
     params?: Params,

@@ -16,7 +16,6 @@
     "themeMode": "Chế độ giao diện",
     "darkMode": "Chế độ tối",
     "lightMode": "Chế độ sáng",
-
     "language": "Ngôn ngữ",
     "english": "Tiếng Anh",
     "vietnamese": "Tiếng Việt",
@@ -25,6 +24,8 @@
     "outOfStock": "Hết hàng",
     "like": "Thích",
     "remove": "Xóa",
+    "cancel": "Hủy",
+    "saveChange": "Lưu thay đổi",
     "hasErrorTryAgainLayer": "Đã có lỗi xảy ra vui lòng thử lại sau",
     "logoutSuccessful": "Đăng xuất thành công"
   },
@@ -35,7 +36,8 @@
     "passwordMin": "Mật khẩu phải có ít nhất 6 ký tự",
     "passwordRequireLetter": "Mật khẩu phải chứa ít nhất một chữ cái",
     "passwordRequireNumber": "Mật khẩu phải chứa ít nhất một chữ số",
-    "passwordMismatch": "Mật khẩu xác nhận không khớp"
+    "passwordMismatch": "Mật khẩu xác nhận không khớp",
+    "invalidPhone": "Số điện thoại không hợp lệ"
   },
 
   "pageTitle": {
@@ -209,5 +211,13 @@
     "ward": "Phường/Xã",
     "address": "Địa chỉ",
     "addressPlaceholder": "Nhập địa chỉ chi tiết"
+  },
+
+  "editUser": {
+    "updateSuccessful": "Cập nhật thông tin thành công",
+    "name": "Họ và tên",
+    "displayName": "Tên hiển thị",
+    "email": "Email",
+    "phone": "Số điện thoại"
   }
 }
