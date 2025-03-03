@@ -1,6 +1,6 @@
 import useSWRMutation from 'swr/mutation';
 import { api } from '../axios';
-import { AddProductToCartBody, GetMyCartResponse, UpdateCartDetailBody } from '@/types/cart';
+import { AddProductToCartBody, DeleteCartDetailBody, GetMyCartResponse, UpdateCartDetailBody } from '@/types/cart';
 import sleep from '@/utils/sleep';
 import useSWR from 'swr';
 
@@ -33,5 +33,24 @@ export const useUpdateCartDetail = () => {
     return api.put(url, { cartId: arg?.cartId, quantity: arg?.quantity });
   };
 
+  return useSWRMutation(url, fetcher);
+};
+
+export const useDeleteCartDetail = () => {
+  const url = 'v1/cart/me';
+  const fetcher = (url: string, { arg }: { arg: DeleteCartDetailBody }) => {
+    url += `/${arg?.cartDetailId}`;
+
+    return api.delete(url, { cartId: arg?.cartId });
+  };
+
+  return useSWRMutation(url, fetcher);
+};
+
+export const useClearMyCart = () => {
+  const url = 'v1/cart/me';
+  const fetcher = async (url: string) => {
+    return api.delete(url);
+  };
   return useSWRMutation(url, fetcher);
 };

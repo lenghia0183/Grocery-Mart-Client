@@ -31,3 +31,8 @@ export interface UpdateCartDetailBody {
   cartId: string;
   cartDetailId: string;
 }
+
+export interface DeleteCartDetailBody {
+  cartId: string;
+  cartDetailId: string;
+}

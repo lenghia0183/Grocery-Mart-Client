@@ -7,35 +7,34 @@ import QuantityInput from '@/components/QuantityInput';
 import Image from '@/components/Image';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
-import { ProductDetail } from '@/types/product';
-import { useUpdateCartDetail } from '@/services/api/https/cart';
+import { useDeleteCartDetail, useUpdateCartDetail } from '@/services/api/https/cart';
 import { WithLoading } from '@/hocs/withLoading';
+import { useToast } from '@/context/toastProvider';
+import { CartDetail } from '@/types/cart';
 
 interface CartItemProps {
-  product: ProductDetail;
   cartId: string;
-  cartDetailId: string;
+  cartDetail: CartDetail;
 }
 
-const CartItem = ({ product, cartId, cartDetailId }: CartItemProps): JSX.Element => {
-  const t = useTranslations('common');
+const CartItem = ({ cartId, cartDetail }: CartItemProps): JSX.Element => {
+  const tCommon = useTranslations('common');
+  const t = useTranslations('cart');
+
+  const { success, error } = useToast();
 
   const { trigger: updateCartDetail, isMutating: isMutatingUpdateCartDetail } = useUpdateCartDetail();
+  const { trigger: deleteCartDetail, isMutating: isMutatingDeleteCartDetail } = useDeleteCartDetail();
 
   return (
-    <WithLoading isLoading={isMutatingUpdateCartDetail}>
-      <Formik
-        initialValues={{ quantity: 1 }}
-        onSubmit={(values) => {
-          console.log('Form submitted:', values);
-        }}
-      >
+    <WithLoading isLoading={isMutatingUpdateCartDetail || isMutatingDeleteCartDetail}>
+      <Formik initialValues={{ quantity: cartDetail?.quantity }} onSubmit={() => {}}>
         {({ values }) => (
           <Form>
             <div className="flex gap-5">
               <Image
-                src={product.images[0]}
-                alt={product.name}
+                src={cartDetail?.productId.images[0]}
+                alt={cartDetail?.productId.name}
                 width={100}
                 height={100}
                 className="w-[150px] h-[150px] bg-transparent rounded-md"
@@ -43,38 +42,58 @@ const CartItem = ({ product, cartId, cartDetailId }: CartItemProps): JSX.Element
 
               <div className="flex justify-between flex-1">
                 <div className="flex flex-col justify-between">
-                  <h2 className="text-xl font-semibold w-[80%] line-clamp-2 dark:text-white-200">{product.name}</h2>
+                  <h2 className="text-xl font-semibold w-[80%] line-clamp-2 dark:text-white-200">
+                    {cartDetail?.productId.name}
+                  </h2>
                   <div className="flex items-center gap-2">
-                    <p className="text-gray-500 text-lg">{formatCurrency(product.price)}</p>
+                    <p className="text-gray-500 text-lg">{formatCurrency(cartDetail?.productId.price)}</p>
                     <Divider vertical={true} length="20px" thickness="2px" color="gray-500" />
                     <p
                       className={clsx('text-lg', {
-                        'text-green-400 dark:text-green-300': product.inStock,
-                        'text-red-400 dark:text-red-300': !product.inStock,
+                        'text-green-400 dark:text-green-300': cartDetail?.productId.inStock,
+                        'text-red-400 dark:text-red-300': !cartDetail?.productId.inStock,
                       })}
                     >
-                      {product.inStock ? t('inStock') : t('outOfStock')}
+                      {cartDetail?.productId.inStock ? tCommon('inStock') : tCommon('outOfStock')}
                     </p>
                   </div>
 
                   <div className="flex gap-3">
-                    <p className="p-3 border border-gray-500 rounded-md">{product?.manufacturerId?.name}</p>
+                    <p className="p-3 border border-gray-500 rounded-md">
+                      {cartDetail?.productId?.manufacturerId?.name}
+                    </p>
                     <QuantityInput
                       name="quantity"
                       onChange={(val) => {
-                        updateCartDetail({
-                          productId: product?._id,
-                          quantity: val,
-                          cartId: cartId,
-                          cartDetailId: cartDetailId,
-                        });
+                        updateCartDetail(
+                          {
+                            productId: cartDetail?.productId?._id,
+                            quantity: val,
+                            cartId: cartId,
+                            cartDetailId: cartDetail?._id,
+                          },
+                          {
+                            onSuccess: (response) => {
+                              if (response.code === 200) {
+                                success(t('updateSuccessful'));
+                              } else {
+                                error(response.message);
+                              }
+                            },
+                            onError: () => {
+                              error(tCommon('hasErrorTryAgainLater'));
+                            },
+                          },
+                        );
                       }}
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col justify-between ">
-                  <p className="text-right text-xl font-semibold">{formatCurrency(product.price * values.quantity)}</p>
+                  <p className="text-right text-xl font-semibold">
+                    {formatCurrency(cartDetail?.productId.price * values.quantity)}
+                  </p>
                   <div className="flex gap-5">
                     {/* <Button
                     variant="text"
@@ -83,7 +102,7 @@ const CartItem = ({ product, cartId, cartDetailId }: CartItemProps): JSX.Element
                     textColor={product?.isFavorite ? 'red-500' : 'gray'}
                     startIcon={<Icon name="heart" color={product?.isFavorite ? 'red-500' : 'gray'} />}
                   >
-                    {t('like')}
+                    {tCommon('like')}
                   </Button> */}
 
                     <Button
@@ -92,8 +111,28 @@ const CartItem = ({ product, cartId, cartDetailId }: CartItemProps): JSX.Element
                       bgHoverColor="none"
                       textColor="gray"
                       startIcon={<Icon name="delete" color="inherit" />}
+                      onClick={() => {
+                        deleteCartDetail(
+                          {
+                            cartId: cartId,
+                            cartDetailId: cartDetail?._id,
+                          },
+                          {
+                            onSuccess: (response) => {
+                              if (response.code === 200) {
+                                success(t('deleteSuccessful'));
+                              } else {
+                                error(response.message);
+                              }
+                            },
+                            onError: () => {
+                              error(tCommon('hasErrorTryAgainLater'));
+                            },
+                          },
+                        );
+                      }}
                     >
-                      {t('remove')}
+                      {tCommon('remove')}
                     </Button>
                   </div>
                 </div>

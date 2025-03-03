@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import LabelValue from '@/components/LabelValue';
@@ -11,15 +12,21 @@ import images from '@/asset/images';
 
 import { PATH } from '@/constants/path';
 import { useTranslations } from 'next-intl';
-import { useGetMyCart } from '@/services/api/https/cart';
+import { useClearMyCart, useGetMyCart } from '@/services/api/https/cart';
+import { useToast } from '@/context/toastProvider';
+import CartSkeleton from '@/components/Skeletons/CartSkeleton';
 
 const Cart = (): JSX.Element => {
   const t = useTranslations('cart');
-
+  const tCommon = useTranslations('common');
+  const { error, success } = useToast();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data: cartData, isLoading: isLoadingCartData } = useGetMyCart();
+  const { data: cartData, isLoading: isLoadingCartData, isValidating: isValidatingCartData } = useGetMyCart();
+  const { trigger: clearMyCart, isMutating: isMutatingClearMyCart } = useClearMyCart();
 
   const cartItems = cartData?.data?.cartDetails || [];
+
+  if (isLoadingCartData || isValidatingCartData) return <CartSkeleton />;
 
   return (
     <>
@@ -28,13 +35,8 @@ const Cart = (): JSX.Element => {
           <div className="grid grid-cols-12 gap-x-10">
             {/* Danh sách sản phẩm trong giỏ hàng */}
             <div className="col-span-8 p-10 flex flex-col gap-5 bg-white dark:bg-dark-400 shadow-md rounded-md">
-              {cartItems.map((product) => (
-                <CartItem
-                  key={product?.productId?._id}
-                  product={product?.productId}
-                  cartId={cartData?.data?.id || ''}
-                  cartDetailId={product?._id}
-                />
+              {cartItems.map((cartItem) => (
+                <CartItem key={cartItem?.productId?._id} cartId={cartData?.data?.id || ''} cartDetail={cartItem} />
               ))}
               <div className="flex justify-between">
                 <Button
@@ -62,6 +64,31 @@ const Cart = (): JSX.Element => {
                     labelClassName="text-[25px]"
                     className="justify-between"
                   />
+
+                  {/* <Button
+                    full
+                    rounded
+                    className="mt-7"
+                    onClick={() => {
+                      clearMyCart(
+                        {},
+                        {
+                          onSuccess: (response) => {
+                            if (response.code === 200) {
+                              success(t('clearCartSuccessful'));
+                            } else {
+                              error(response.message);
+                            }
+                          },
+                          onError: () => {
+                            error(tCommon('hasErrorTryAgainLater'));
+                          },
+                        },
+                      );
+                    }}
+                  >
+                    Xóa toàn bộ
+                  </Button> */}
                 </div>
               </div>
             </div>
@@ -71,7 +98,7 @@ const Cart = (): JSX.Element => {
               <div className="flex flex-col gap-3 bg-white dark:bg-dark-400 p-10 shadow-md rounded-md">
                 <LabelValue
                   label={t('totalItems')}
-                  value={cartData?.data?.cartDetails.length}
+                  value={cartData?.data?.cartDetails?.length}
                   className="justify-between"
                 />
                 <LabelValue

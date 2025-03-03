@@ -140,7 +140,10 @@
     "inStock": "Còn hàng",
     "outOfStock": "Hết hàng",
     "like": "Thích",
-    "remove": "Xóa"
+    "remove": "Xóa",
+    "updateSuccessful": "Cập nhật số lượng thành công",
+    "deleteSuccessful": "Xóa sản phẩm khỏi giỏ hàng thành công",
+    "clearSuccessful": "Xóa toàn bộ giỏ hàng thành công"
   },
 
   "checkout": {

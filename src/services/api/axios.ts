@@ -162,7 +162,10 @@ export const createApi = (instance: AxiosInstance) => ({
     }
   },
 
-  delete: async <T, Params>(endpoint: string, params: Params): Promise<ApiResponse<T> | AxiosError> => {
+  delete: async <T, Params = Record<string, unknown>>(
+    endpoint: string,
+    params?: Params,
+  ): Promise<ApiResponse<T> | AxiosError> => {
     try {
       return await instance.delete(endpoint, { data: params });
     } catch (err: unknown) {
