@@ -26,6 +26,12 @@ export interface ChangeUserDataFormValues {
 export interface ChangeUserDataBody {
   fullname?: string;
   phone?: string;
+  address?: {
+    district: DistrictData | null;
+    province: ProvinceData | null;
+    ward: WardData | null;
+    street: string;
+  };
 }
 
 export interface ChangeAddressFormValues {

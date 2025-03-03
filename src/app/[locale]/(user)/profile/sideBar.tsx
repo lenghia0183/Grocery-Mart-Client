@@ -33,12 +33,13 @@ const SideBar = ({ userData }: SideBarProps): JSX.Element => {
   return (
     <nav className="sm:pb-[200px] pb-[100px] bg-white dark:bg-dark-400 shadow-md rounded-xl overflow-hidden dark:text-white">
       <div className="mb-4   relative">
-        <Image src={images.avatarCover} alt="grocery-mart" height={250} className="h-[250px] w-full" />
+        <Image src={images.avatarCover} alt="grocery-mart" height={250} width={250} className="h-[250px] w-full" />
         <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center justify-center w-full">
           <Image
-            src={images.avatarTest}
+            src={userData?.avatar || ''}
             alt="grocery-mart"
             height={100}
+            width={100}
             className="h-[100px] w-[100px] rounded-full "
           />
           <div className="text-white-200 text-lg font-semibold mt-5">{userData?.fullname || ''}</div>

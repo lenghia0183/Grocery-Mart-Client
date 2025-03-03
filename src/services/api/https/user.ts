@@ -24,11 +24,14 @@ export const useUpdateMe = () => {
       arg: ChangeUserDataBody;
     },
   ) => {
+    console.log('arg', arg);
     const formData = new FormData();
 
     Object.entries(arg).forEach(([key, value]) =>
       formData.append(key, value instanceof File ? value : JSON.stringify(value)),
     );
+
+    console.log('formData', formData);
 
     return api.putMultiplePart(url, formData);
   };

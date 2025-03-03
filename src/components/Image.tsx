@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageNext, { ImageProps, StaticImageData } from 'next/image';
 import images from '@/asset/images';
 
@@ -20,6 +20,10 @@ const Image = ({
   ...props
 }: ImagePropsExtended) => {
   const [imgSrc, setImgSrc] = useState(src || fallback);
+
+  useEffect(() => {
+    setImgSrc(src || fallback);
+  }, [src, fallback]);
 
   const handleError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
     setImgSrc(fallback);

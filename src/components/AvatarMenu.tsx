@@ -7,6 +7,7 @@ import { Locale, Locales } from '@/config/locales';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/constants/path';
 import { useUser } from '@/context/userProvider';
+import Image from './Image';
 
 interface MenuItem {
   label: string;
@@ -15,14 +16,14 @@ interface MenuItem {
   divide?: boolean;
   value?: string;
   action?: () => void;
-  to?: string; // Sử dụng thuộc tính `to` để truyền link
+  to?: string;
 }
 
 const AvatarMenu = () => {
   const { setTheme } = useTheme();
   const { changeLanguage } = useLanguage();
   const t = useTranslations('common');
-  const { logoutUser } = useUser();
+  const { logoutUser, userData } = useUser();
 
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
@@ -91,7 +92,6 @@ const AvatarMenu = () => {
     },
   ];
 
-  // Sử dụng menuStack để hỗ trợ menu lồng nhau
   const [menuStack, setMenuStack] = useState<MenuItem[]>([{ label: 'main', subMenu: menuItems }]);
   const currentMenu = menuStack[menuStack.length - 1];
 
@@ -102,14 +102,19 @@ const AvatarMenu = () => {
   };
 
   return (
-    <ul className="max-w-[240px] rounded-2xl overflow-hidden text-dark font-semibold text-base">
+    <ul className="max-w-[240px] rounded-2xl overflow-hidden text-dark bg-white dark:bg-dark-500 dark:text-white-200 font-semibold text-base">
       <li className="p-5 flex gap-5 items-center">
-        <div className="h-[50px] w-[50px] rounded-md bg-dark"></div>
+        <Image
+          src={userData?.avatar || ''}
+          alt={userData?.fullname || ''}
+          width={50}
+          height={50}
+          className="h-[50px] w-[50px] rounded-md bg-dark"
+        />
+
         <div>
-          <p>Lenghia0183</p>
-          <p className="mt-1 text-sm font-normal text-gray-500 truncate w-[120px]" title="Lenghia0183@gmail.com">
-            Lenghia0183@gmail.com
-          </p>
+          <p>{userData?.fullname}</p>
+          <p className="mt-1 text-sm font-normal text-gray-500 truncate w-[120px]">{userData?.email}</p>
         </div>
       </li>
 

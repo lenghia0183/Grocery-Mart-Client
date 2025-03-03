@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       'd1sag4ddilekf6.cloudfront.net',
       'www.crispoconfetti.com',
       'img.freepik.com',
+      'hitly.vn',
     ],
   },
   webpack(config) {

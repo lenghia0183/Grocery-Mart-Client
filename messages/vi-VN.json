@@ -218,11 +218,13 @@
   },
 
   "changeAddress": {
+    "title": "Thay đổi địa chỉ",
     "province": "Tỉnh/Thành phố",
     "district": "Quận/Huyện",
     "ward": "Phường/Xã",
     "address": "Địa chỉ",
-    "addressPlaceholder": "Nhập địa chỉ chi tiết"
+    "addressPlaceholder": "Nhập địa chỉ chi tiết",
+    "updateSuccessful": "Cập nhật thông tin thành công"
   },
 
   "editUser": {

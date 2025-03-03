@@ -83,6 +83,7 @@ const Header: React.FC = () => {
                 iconWidth="21px"
                 iconHeight="21px"
                 iconStrokeWidth={1.8}
+                href={PATH.FAVORITE}
               />
               <p className="min-w-[20px] max-w-[30px] truncate overflow-ellipsis transition-colors duration-300">
                 {userFavoritesCount}
@@ -102,6 +103,7 @@ const Header: React.FC = () => {
                 iconWidth="21px"
                 iconHeight="21px"
                 iconStrokeWidth={1.8}
+                href={PATH.CART}
               />
               <p className="min-w-[70px] max-w-[130px] truncate overflow-ellipsis transition-colors duration-300">
                 {formatCurrency(userCartTotalMoney)}
@@ -115,10 +117,16 @@ const Header: React.FC = () => {
             openOnClick
             clickable
             opacity={1}
-            className="!p-0 !bg-white !rounded-2xl shadow-avatar-menu-light"
+            className="!p-0 !rounded-2xl dark:bg-dark-500 dark:text-dark-500 shadow-avatar-menu-light dark:shadow-avatar-menu-dark"
           >
             <div className="w-[50px] h-[50px] rounded-md bg-dark">
-              <Image src={''} alt={userData?.fullname || ''} width={50} height={50} className="w-[50px] h-[50px]" />
+              <Image
+                src={userData?.avatar || ''}
+                alt={userData?.fullname || ''}
+                width={50}
+                height={50}
+                className="w-[50px] h-[50px] rounded-md"
+              />
             </div>
           </ToolTip>
         </div>
