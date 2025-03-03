@@ -11,95 +11,50 @@ import Radio from '@/components/Radio';
 import RadioGroup from '@/components/RadioGroup';
 import TextArea from '@/components/TextArea';
 import TextField from '@/components/TextField';
+import { PATH } from '@/constants/path';
+import { useToast } from '@/context/toastProvider';
+import { useUser } from '@/context/userProvider';
+import { WithLoading } from '@/hocs/withLoading';
+import { useRouter } from '@/i18n/routing';
 import { getDistrictData, getProvinceData, getShipPrice, getWardData } from '@/services/api/GHN';
-import { DistrictData, ProvinceData, WardData } from '@/types/address';
+import { useGetMyCart } from '@/services/api/https/cart';
+import { useAddOrder } from '@/services/api/https/checkout';
+import { DistrictData, ProvinceData } from '@/types/address';
 import { ApiResponse } from '@/types/ApiResponse';
+import { CheckoutBody, CheckoutFormValues } from '@/types/checkout';
 import formatCurrency from '@/utils/formatCurrency';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
-const initialValues: CheckoutFormValues = {
-  buyerName: '',
-  buyerEmail: '',
-  buyerPhone: '',
-  receiverName: '',
-  receiverPhone: '',
-  province: null,
-  district: null,
-  ward: null,
-  method: 'ghn',
-  paymentMethod: '',
-  shippingFee: 0,
-};
-
-interface CheckoutFormValues {
-  buyerName: string;
-  buyerEmail: string;
-  buyerPhone: string;
-  receiverName: string;
-  receiverPhone: string;
-  province: ProvinceData | null;
-  district: DistrictData | null;
-  ward: WardData | null;
-  method: string;
-  paymentMethod: string;
-  shippingFee: number;
-}
-
-const items = [
-  {
-    id: 'PROD123456',
-    name: 'Organic Matcha Green Tea Powder - Premium Grade',
-    price: 150000.0,
-    images: ['https://img.freepik.com/free-photo/matcha-green-tea-powder-wooden-bowl_1150-11201.jpg'],
-    inStock: true,
-    branch: 'Japanese Organic Tea Co.',
-    quantity: 2,
-  },
-  {
-    id: 'PROD789012',
-    name: 'Arabica Coffee Beans - 500g',
-    price: 120000.0,
-    images: ['https://img.freepik.com/free-photo/coffee-beans-sack_1339-6433.jpg'],
-    inStock: false,
-    branch: 'Vietnam Premium Coffee',
-    quantity: 1,
-  },
-  {
-    id: 'PROD345678',
-    name: 'Dark Chocolate 85% Cocoa - Sugar Free',
-    price: 95000.0,
-    images: ['https://img.freepik.com/free-photo/dark-chocolate-bars_114579-1330.jpg'],
-    inStock: true,
-    branch: 'Belgian Chocolate Factory',
-    quantity: 3,
-  },
-  {
-    id: 'PROD7890121',
-    name: 'Arabica Coffee Beans - 500g',
-    price: 120000.0,
-    images: ['https://img.freepik.com/free-photo/coffee-beans-sack_1339-6433.jpg'],
-    inStock: false,
-    branch: 'Vietnam Premium Coffee',
-    quantity: 1,
-  },
-  {
-    id: 'PROD3456781',
-    name: 'Dark Chocolate 85% Cocoa - Sugar Free',
-    price: 95000.0,
-    images: ['https://img.freepik.com/free-photo/dark-chocolate-bars_114579-1330.jpg'],
-    inStock: true,
-    branch: 'Belgian Chocolate Factory',
-    quantity: 3,
-  },
-];
 
 const Checkout = (): JSX.Element => {
+  const router = useRouter();
+
+  const { data: cartData } = useGetMyCart();
+  const { userData } = useUser();
+  const t = useTranslations('checkout');
+  const tCommon = useTranslations('common');
+  const { success, error } = useToast();
+
+  const initialValues: CheckoutFormValues = {
+    buyerName: userData?.fullname || '',
+    buyerEmail: userData?.email || '',
+    buyerPhone: userData?.phone || '',
+    recipientName: '',
+    recipientPhone: '',
+    province: null,
+    district: null,
+    ward: null,
+    method: 'ghn',
+    paymentMethod: '',
+    shippingFee: 0,
+    street: '',
+    note: '',
+  };
+
   const formRef = useRef<FormikProps<CheckoutFormValues> | null>(null);
   const [values, setValues] = useState<CheckoutFormValues>(initialValues);
-  const totalPrice = items.reduce((total, item) => total + item.quantity * item.price, 0);
-
-  const t = useTranslations('checkout');
+  const { trigger: addOrder, isMutating: isMutatingAddOrder } = useAddOrder();
 
   useEffect(() => {
     const { province = '', district = '', ward = '' } = values;
@@ -112,23 +67,26 @@ const Checkout = (): JSX.Element => {
           const servicePrice = await getShipPrice({
             service_type_id: 2,
             to_district_id: district?.DistrictID,
-            to_ward_code: ward?.WardCode,
-            insurance_value: items?.reduce((total, item) => {
-              return total + item.quantity * item.price;
-            }, 0),
-            weight: items?.reduce((total, item) => {
-              return total + item.quantity * 700;
-            }, 0),
-            items: items?.map((i) => {
-              return {
-                name: i?.name,
-                quantity: i?.quantity,
-                height: 30,
-                weight: 700,
-                width: 30,
-                length: 30,
-              };
-            }),
+            to_ward_code: ward?.WardCode || 0,
+            insurance_value:
+              cartData?.data?.cartDetails?.reduce((total, item) => {
+                return total + (item?.quantity || 0) * (item?.productId?.price || 0);
+              }, 0) ?? 0,
+            weight:
+              cartData?.data?.cartDetails?.reduce((total, item) => {
+                return total + item.quantity * 700;
+              }, 0) ?? 0,
+            items:
+              cartData?.data?.cartDetails?.map((i) => {
+                return {
+                  name: i?.productId?.name,
+                  quantity: i?.quantity,
+                  height: 30,
+                  weight: 700,
+                  width: 30,
+                  length: 30,
+                };
+              }) || [],
           });
 
           if (servicePrice && servicePrice.data) {
@@ -143,7 +101,7 @@ const Checkout = (): JSX.Element => {
   }, [values?.province, values?.district, values?.ward]);
 
   return (
-    <>
+    <WithLoading isLoading={isMutatingAddOrder}>
       <Formik<CheckoutFormValues>
         innerRef={(f) => {
           formRef.current = f;
@@ -152,10 +110,57 @@ const Checkout = (): JSX.Element => {
           }
         }}
         initialValues={initialValues}
-        onSubmit={(values) => console.log(values)}
+        enableReinitialize={true}
+        onSubmit={(values) => {
+          console.log('values', values);
+
+          const convertValue: CheckoutBody = {
+            cartId: cartData?.data?.id || '',
+            buyerName: values?.buyerName,
+            buyerEmail: values?.buyerEmail,
+            buyerPhone: values?.buyerPhone,
+            recipientName: values?.recipientName,
+            recipientPhone: values?.recipientPhone,
+            shippingFee: values?.shippingFee,
+            paymentMethod: values?.paymentMethod === 'COD' ? 'COD' : 'Bank',
+            paymentGateway: values?.paymentMethod !== 'COD' ? values?.paymentMethod : '',
+            address: {
+              province: {
+                provinceId: values?.province?.ProvinceID || 0,
+                provinceName: values?.province?.ProvinceName || '',
+              },
+              district: {
+                districtId: values?.district?.DistrictID || 0,
+                districtName: values?.district?.DistrictName || '',
+              },
+              ward: {
+                wardCode: values?.ward?.WardCode || 0,
+                wardName: values?.ward?.WardName || '',
+              },
+              street: values?.street,
+            },
+            note: values?.note,
+          };
+
+          addOrder(convertValue, {
+            onSuccess: (response) => {
+              console.log('response', response);
+              if (response.code == 201) {
+                success(t('addOrderSuccess'));
+                window.open(response?.data?.payUrl, '_blank');
+                router.replace(PATH.HOME);
+              } else {
+                error(response.message);
+              }
+            },
+            onError: () => {
+              error(tCommon('toast.hasErrorTryAgainLater'));
+            },
+          });
+        }}
       >
-        {({ values, resetForm }) => {
-          // console.log('values', values);
+        {({ values, resetForm, setFieldValue, errors }) => {
+          console.log('errors', errors);
           return (
             <Form>
               <main className="p-14 bg-gray-100 dark:bg-dark-500">
@@ -192,17 +197,17 @@ const Checkout = (): JSX.Element => {
 
                     {/* Người nhận hàng */}
                     <div className="mt-10">
-                      <h3 className="text-xl font-medium">{t('receiver')}</h3>
+                      <h3 className="text-xl font-medium">{t('recipient')}</h3>
                       <div className="grid grid-cols-12 gap-x-7 gap-y-7 px-2 mt-5">
                         <TextField
-                          name="receiverName"
-                          label={t('receiverName')}
+                          name="recipientName"
+                          label={t('recipientName')}
                           className="col-span-full sm:col-span-6"
                           required
                         />
                         <TextField
-                          name="receiverPhone"
-                          label={t('receiverPhone')}
+                          name="recipientPhone"
+                          label={t('recipientPhone')}
                           className="col-span-full sm:col-span-6"
                           required
                         />
@@ -213,6 +218,10 @@ const Checkout = (): JSX.Element => {
                           startIcon={<Icon name="copy" color="inherit" />}
                           bgHoverColor="none"
                           size="zeroPadding"
+                          onClick={() => {
+                            setFieldValue('recipientName', userData?.fullname);
+                            setFieldValue('recipientPhone', userData?.phone);
+                          }}
                         >
                           {t('useBuyerInfo')}
                         </Button>
@@ -238,7 +247,7 @@ const Checkout = (): JSX.Element => {
                               return response.data || [];
                             }}
                             getOptionLabel={(option) => {
-                              return option.ProvinceName;
+                              return option.ProvinceName || '';
                             }}
                             required
                           />
@@ -254,7 +263,7 @@ const Checkout = (): JSX.Element => {
                               return response.data || [];
                             }}
                             getOptionLabel={(option) => {
-                              return option.DistrictName;
+                              return option.DistrictName || '';
                             }}
                             disabled={values?.province ? false : true}
                             asyncRequestDeps="province"
@@ -273,7 +282,7 @@ const Checkout = (): JSX.Element => {
                               return response.data || [];
                             }}
                             getOptionLabel={(option) => {
-                              return option.WardName;
+                              return option.WardName || '';
                             }}
                             disabled={values?.district ? false : true}
                             filterOptionsLocally={true}
@@ -361,21 +370,21 @@ const Checkout = (): JSX.Element => {
                       <Divider />
 
                       <div className="h-[350px] overflow-y-auto border  border-gray p-3 mt-5">
-                        {items.map((item) => {
+                        {cartData?.data?.cartDetails?.map((item) => {
                           return (
-                            <div key={item.id}>
+                            <div key={item._id}>
                               <div className="flex gap-5 items-center mt-3">
                                 <Image
-                                  src={item.images[0]}
+                                  src={item?.productId?.images[0]}
                                   width={60}
                                   height={60}
                                   alt=""
                                   className="w-[60px] h-[60px] flex-shrink-0"
                                 />
                                 <div>
-                                  <p className="line-clamp-2">{item.name}</p>
+                                  <p className="line-clamp-2">{item?.productId?.name}</p>
                                   <p className="text-gray-500">
-                                    {item.quantity} x {formatCurrency(item.price)}
+                                    {item.quantity} x {formatCurrency(item?.productId?.price)}
                                   </p>
                                 </div>
                               </div>
@@ -390,10 +399,14 @@ const Checkout = (): JSX.Element => {
                       <h2 className="text-2xl font-medium">{t('listFee')}</h2>
                       <Divider />
 
-                      <LabelValue label={t('totalItems')} value={items.length} className="justify-between" />
+                      <LabelValue
+                        label={t('totalItems')}
+                        value={cartData?.data?.cartDetails?.length}
+                        className="justify-between"
+                      />
                       <LabelValue
                         label={t('totalPrice')}
-                        value={formatCurrency(totalPrice)}
+                        value={formatCurrency(cartData?.data?.cartTotalMoney)}
                         className="justify-between"
                       />
                       <LabelValue
@@ -406,13 +419,13 @@ const Checkout = (): JSX.Element => {
 
                       <LabelValue
                         label={t('totalPayment')}
-                        value={formatCurrency(totalPrice + values.shippingFee)}
+                        value={formatCurrency((cartData?.data?.cartTotalMoney || 0) + values.shippingFee)}
                         className="justify-between"
                       />
 
                       <TextArea name="note" label={t('note')} rows={5} className="mt-10" />
 
-                      <Button full rounded className="mt-5 py-3">
+                      <Button type="submit" full rounded className="mt-5 py-3">
                         {t('checkout')}
                       </Button>
 
@@ -436,7 +449,7 @@ const Checkout = (): JSX.Element => {
           );
         }}
       </Formik>
-    </>
+    </WithLoading>
   );
 };
 

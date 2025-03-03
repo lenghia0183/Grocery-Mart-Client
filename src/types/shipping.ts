@@ -17,7 +17,7 @@ export interface ShipPriceResponseData {
 export interface ShipPriceData {
   service_type_id: number;
   to_district_id?: number;
-  to_ward_code: string;
+  to_ward_code: number;
   insurance_value: number;
   weight: number;
   items: {

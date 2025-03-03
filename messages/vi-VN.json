@@ -152,9 +152,9 @@
     "buyerName": "Họ và tên người mua",
     "buyerEmail": "Email người mua",
     "buyerPhone": "Số điện thoại người mua",
-    "receiver": "Người nhận hàng",
-    "receiverName": "Họ và tên người nhận",
-    "receiverPhone": "Số điện thoại người nhận",
+    "recipient": "Người nhận hàng",
+    "recipientName": "Họ và tên người nhận",
+    "recipientPhone": "Số điện thoại người nhận",
     "useBuyerInfo": "Sử dụng thông tin người mua",
     "shippingInfo": "Thông tin giao hàng",
     "shippingAddress": "Địa chỉ giao hàng",
@@ -179,7 +179,8 @@
     "totalPayment": "Tổng tiền thanh toán:",
     "totalItems": "Tổng số lượng sản phẩm",
     "checkout": "Tiến hành thanh toán",
-    "reset": "Làm mới"
+    "reset": "Làm mới",
+    "addOrderSuccess": "Thêm đơn hàng thành công"
   },
   "productDetail": {
     "productInfo": "Thông tin sản phẩm",

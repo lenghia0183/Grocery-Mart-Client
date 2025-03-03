@@ -1,20 +1,20 @@
 export interface ProvinceData {
-  ProvinceID: number;
-  ProvinceName: string;
+  ProvinceID?: number;
+  ProvinceName?: string;
   provinceName: string;
   provinceId: number;
 }
 
 export interface DistrictData {
-  DistrictID: number;
-  DistrictName: string;
+  DistrictID?: number;
+  DistrictName?: string;
   districtName: string;
   districtId: number;
 }
 
 export interface WardData {
-  WardCode: string;
-  WardName: string;
+  WardCode?: number;
+  WardName?: string;
   wardName: string;
   wardCode: number;
 }

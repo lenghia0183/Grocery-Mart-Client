@@ -64,9 +64,7 @@ const Autocomplete = <Item, Response = Item[]>({
 
   const debouncedInputValue = useDebounce(inputValue, 500);
 
-  const { values, initialValues } = useFormikContext<Record<string, string | number | boolean>>();
-
-  console.log('initialValues: ', initialValues);
+  const { values } = useFormikContext<Record<string, string | number | boolean>>();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);

@@ -115,7 +115,7 @@ const Cart = (): JSX.Element => {
                   className="justify-between"
                 />
 
-                <Button full rounded className="mt-5 py-3">
+                <Button full rounded className="mt-5 py-3" to={PATH.CHECKOUT}>
                   {t('checkout')}
                 </Button>
               </div>
