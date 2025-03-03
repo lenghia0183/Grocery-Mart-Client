@@ -24,14 +24,8 @@ export interface ChangeUserDataFormValues {
 }
 
 export interface ChangeUserDataBody {
-  fullname: string;
+  fullname?: string;
   phone?: string;
-}
-
-export interface ChangePasswordFormValues {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
 }
 
 export interface ChangeAddressFormValues {

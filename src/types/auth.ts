@@ -34,3 +34,14 @@ export interface SignUpBody {
 export interface SignUpResponse {
   user: UserData;
 }
+
+export interface ChangePasswordFormValues {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface ChangePasswordBody {
+  newPassword: string;
+  currentPassword: string;
+}

@@ -205,6 +205,18 @@
     "deleteProductToFavoriteSuccessful": "Xóa sản phẩm vào danh sách yêu thích thành công"
   },
 
+  "changePassword": {
+    "title": "Thay đổi mật khẩu",
+    "currentPassword": "Mật khẩu hiện tại",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "resetPasswordSuccessful": "Reset mật khẩu thành công. Vui lòng đăng nhập với mật khẩu mới.",
+    "placeholderCurrentPassword": "Nhập mật khẩu hiện tại",
+    "placeholderNewPassword": "Nhập mật khẩu mới",
+    "placeholderConfirmPassword": "Nhập xác nhận mật khẩu",
+    "changePasswordSuccessful": "Thay đổi mật khẩu thành công"
+  },
+
   "changeAddress": {
     "province": "Tỉnh/Thành phố",
     "district": "Quận/Huyện",
