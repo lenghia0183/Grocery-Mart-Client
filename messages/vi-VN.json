@@ -25,7 +25,8 @@
     "outOfStock": "Hết hàng",
     "like": "Thích",
     "remove": "Xóa",
-    "hasErrorTryAgainLayer": "Đã có lỗi xảy ra vui lòng thử lại sau"
+    "hasErrorTryAgainLayer": "Đã có lỗi xảy ra vui lòng thử lại sau",
+    "logoutSuccessful": "Đăng xuất thành công"
   },
 
   "validation": {
