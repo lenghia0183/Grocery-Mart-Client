@@ -1,12 +1,12 @@
 import { Pagination } from './ApiResponse';
-import { Product } from './product';
+import { ProductDetail } from './product';
 
-export interface CartDetails {
+export interface CartDetail {
   commentStatus: string;
-
   quantity: number;
   totalMoney: number;
-  productId: Product;
+  productId: ProductDetail;
+  _id: string;
 }
 
 export interface AddProductToCartBody {
@@ -21,6 +21,13 @@ export interface AddProductToCartFormValues {
 
 export interface GetMyCartResponse extends Pagination {
   id: string;
-  cartDetails: CartDetails[];
+  cartDetails: CartDetail[];
   cartTotalMoney: number;
+}
+
+export interface UpdateCartDetailBody {
+  productId: string;
+  quantity: number;
+  cartId: string;
+  cartDetailId: string;
 }

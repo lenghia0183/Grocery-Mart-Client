@@ -1,6 +1,6 @@
 import useSWRMutation from 'swr/mutation';
 import { api } from '../axios';
-import { AddProductToCartBody, GetMyCartResponse } from '@/types/cart';
+import { AddProductToCartBody, GetMyCartResponse, UpdateCartDetailBody } from '@/types/cart';
 import sleep from '@/utils/sleep';
 import useSWR from 'swr';
 
@@ -24,4 +24,14 @@ export const useGetMyCart = () => {
   };
 
   return useSWR(url, fetcher);
+};
+
+export const useUpdateCartDetail = () => {
+  const url = 'v1/cart/me';
+  const fetcher = (url: string, { arg }: { arg: UpdateCartDetailBody }) => {
+    url += `/${arg?.cartDetailId}`;
+    return api.put(url, { cartId: arg?.cartId, quantity: arg?.quantity });
+  };
+
+  return useSWRMutation(url, fetcher);
 };

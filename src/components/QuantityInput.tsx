@@ -18,6 +18,7 @@ type QuantityInputProps = {
   height?: string;
   width?: string;
   borderColor?: string;
+  onChange?: (value: number) => void;
 };
 
 const QuantityInput: React.FC<QuantityInputProps> = ({
@@ -32,6 +33,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
   height = '40px',
   width = '120px',
   borderColor = 'gray-500',
+  onChange,
 }) => {
   const [field, meta, helpers] = useField(name);
   const { value } = field;
@@ -42,19 +44,24 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
   useEffect(() => {
     if (value == undefined) {
       setValue(min);
+      onChange?.(min);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDecrease = () => {
     if (typeof value === 'number' && value > min) {
-      setValue(Math.max(min, value - step));
+      const newValue = Math.max(min, value - step);
+      setValue(newValue);
+      onChange?.(newValue);
     }
   };
 
   const handleIncrease = () => {
     if (typeof value === 'number' && value < max) {
-      setValue(Math.min(max, value + step));
+      const newValue = Math.min(max, value + step);
+      setValue(newValue);
+      onChange?.(newValue);
     }
   };
 
@@ -63,6 +70,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
 
     if (newValue === '') {
       setValue('');
+      onChange?.(NaN);
       return;
     }
 
@@ -73,12 +81,14 @@ const QuantityInput: React.FC<QuantityInputProps> = ({
 
       const clampedValue = Math.max(min, Math.min(max, parsedValue));
       setValue(clampedValue);
+      onChange?.(clampedValue);
     }
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (value === '') {
       setValue(min);
+      onChange?.(min);
     }
     field.onBlur(e);
   };

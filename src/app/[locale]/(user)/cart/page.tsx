@@ -11,47 +11,15 @@ import images from '@/asset/images';
 
 import { PATH } from '@/constants/path';
 import { useTranslations } from 'next-intl';
+import { useGetMyCart } from '@/services/api/https/cart';
 
 const Cart = (): JSX.Element => {
   const t = useTranslations('cart');
 
-  const fakeCartItems = [
-    {
-      id: 'PROD123456',
-      name: 'Organic Matcha Green Tea Powder - Premium Grade',
-      price: 150000.0,
-      images: ['https://img.freepik.com/free-photo/matcha-green-tea-powder-wooden-bowl_1150-11201.jpg'],
-      inStock: true,
-      branch: 'Japanese Organic Tea Co.',
-      quantity: 2,
-    },
-    {
-      id: 'PROD789012',
-      name: 'Arabica Coffee Beans - 500g',
-      price: 120000.0,
-      images: ['https://img.freepik.com/free-photo/coffee-beans-sack_1339-6433.jpg'],
-      inStock: false,
-      branch: 'Vietnam Premium Coffee',
-      quantity: 1,
-    },
-    {
-      id: 'PROD345678',
-      name: 'Dark Chocolate 85% Cocoa - Sugar Free',
-      price: 95000.0,
-      images: ['https://img.freepik.com/free-photo/dark-chocolate-bars_114579-1330.jpg'],
-      inStock: true,
-      branch: 'Belgian Chocolate Factory',
-      quantity: 3,
-    },
-  ];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data: cartData, isLoading: isLoadingCartData } = useGetMyCart();
 
-  // Tính tổng số lượng sản phẩm
-  const totalItems = fakeCartItems.reduce((acc, item) => acc + item.quantity, 0);
-
-  // Tính tổng giá trị đơn hàng (chỉ tính sản phẩm còn hàng)
-  const totalPrice = fakeCartItems
-    .filter((item) => item.inStock)
-    .reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const cartItems = cartData?.data?.cartDetails || [];
 
   return (
     <>
@@ -60,8 +28,13 @@ const Cart = (): JSX.Element => {
           <div className="grid grid-cols-12 gap-x-10">
             {/* Danh sách sản phẩm trong giỏ hàng */}
             <div className="col-span-8 p-10 flex flex-col gap-5 bg-white dark:bg-dark-400 shadow-md rounded-md">
-              {fakeCartItems.map((product) => (
-                <CartItem key={product.id} product={product} />
+              {cartItems.map((product) => (
+                <CartItem
+                  key={product?.productId?._id}
+                  product={product?.productId}
+                  cartId={cartData?.data?.id || ''}
+                  cartDetailId={product?._id}
+                />
               ))}
               <div className="flex justify-between">
                 <Button
@@ -75,13 +48,17 @@ const Cart = (): JSX.Element => {
                   {t('continueShopping')}
                 </Button>
                 <div className="flex flex-col w-1/2 gap-3">
-                  <LabelValue label={t('totalPrice')} value={formatCurrency(totalPrice)} className="justify-between" />
+                  <LabelValue
+                    label={t('totalPrice')}
+                    value={formatCurrency(cartData?.data?.cartTotalMoney)}
+                    className="justify-between"
+                  />
                   <LabelValue label={t('extraFee')} value={formatCurrency(0)} className="justify-between" />
                   <Divider />
 
                   <LabelValue
                     label={t('totalPayment')}
-                    value={formatCurrency(totalPrice)}
+                    value={formatCurrency(cartData?.data?.cartTotalMoney)}
                     labelClassName="text-[25px]"
                     className="justify-between"
                   />
@@ -92,12 +69,24 @@ const Cart = (): JSX.Element => {
             {/* Phần thanh toán */}
             <div className="col-span-4 ">
               <div className="flex flex-col gap-3 bg-white dark:bg-dark-400 p-10 shadow-md rounded-md">
-                <LabelValue label={t('totalItems')} value={totalItems} className="justify-between" />
-                <LabelValue label={t('totalPrice')} value={formatCurrency(totalPrice)} className="justify-between" />
+                <LabelValue
+                  label={t('totalItems')}
+                  value={cartData?.data?.cartDetails.length}
+                  className="justify-between"
+                />
+                <LabelValue
+                  label={t('totalPrice')}
+                  value={formatCurrency(cartData?.data?.cartTotalMoney)}
+                  className="justify-between"
+                />
                 <LabelValue label={t('extraFee')} value={formatCurrency(0)} className="justify-between" />
                 <Divider />
 
-                <LabelValue label={t('totalPayment')} value={formatCurrency(totalPrice)} className="justify-between" />
+                <LabelValue
+                  label={t('totalPayment')}
+                  value={formatCurrency(cartData?.data?.cartTotalMoney)}
+                  className="justify-between"
+                />
 
                 <Button full rounded className="mt-5 py-3">
                   {t('checkout')}
