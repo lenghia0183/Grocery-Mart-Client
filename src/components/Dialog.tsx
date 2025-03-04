@@ -5,7 +5,7 @@ import Button, { ButtonProps } from './Button';
 import IconButton, { IconButtonProps } from './IconButton';
 
 interface DialogProps<MyFormValues extends FormikValues> {
-  title?: string;
+  title: string;
   maxWidth?: string;
   fullWidth?: boolean;
   isOpen: boolean;

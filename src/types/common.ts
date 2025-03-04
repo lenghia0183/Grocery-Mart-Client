@@ -8,4 +8,5 @@ export interface QueryState {
   tab?: string;
   quickFilters?: Record<string, string>;
   limit?: number;
+  status?: string;
 }
