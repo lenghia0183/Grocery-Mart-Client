@@ -60,8 +60,9 @@ function Order() {
   };
 
   return (
-    <div className="xl:p-4">
-      <h2 className="text-2xl font-semibold text-dark shadow-md p-4">{t('title')}</h2>
+    <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-medium">{t('title')}</h2>
+      <Divider />
       <div className="sm:mt-5 mt-3 w-full">
         <Tabs
           className="w-full"
@@ -79,9 +80,9 @@ function Order() {
             // <OrderListSkeleton />
             <></>
           ) : (
-            <div className="text-dark-400 text-lg flex flex-col gap-3">
+            <div className="text-dark-400 dark:text-white-200 text-lg flex flex-col gap-3">
               {data?.data?.orders?.map((item) => (
-                <div className="p-5 shadow-md bg-gray-100" key={item._id}>
+                <div className="p-5 shadow-md bg-gray-100 dark:bg-dark-500" key={item._id}>
                   <div className="flex flex-col gap-2">
                     <LabelValue
                       className="!text-base"
@@ -108,7 +109,7 @@ function Order() {
                     {item.cartDetails.map((cartItem) => (
                       <div key={cartItem._id}>
                         <div className="flex justify-between items-start py-3">
-                          <div className="flex gap-3 xl:w-1/2 w-3/4 text-lg font-medium text-left text-dark">
+                          <div className="flex gap-3 xl:w-1/2 w-3/4 text-lg font-medium text-left ">
                             <Image
                               src={cartItem.productId.images[0]}
                               alt={''}
@@ -119,18 +120,18 @@ function Order() {
                             <p>{cartItem.productId.name}</p>
                           </div>
                           <div className="xl:flex gap-4">
-                            <p className="text-lg text-crimson text-center">{cartItem.quantity}</p>
-                            <p className="text-lg text-crimson text-center">x</p>
-                            <p className="text-lg text-crimson">{formatCurrency(cartItem.productId.price)}</p>
+                            <p className="text-lg text-center">{cartItem.quantity}</p>
+                            <p className="text-lg text-center">x</p>
+                            <p className="text-lg ">{formatCurrency(cartItem.productId.price)}</p>
                           </div>
                         </div>
                         <div className="flex justify-between items-center">
                           <Button
                             variant="outlined"
-                            textColor="blue-500"
-                            borderColor="blue-500"
-                            textHoverColor="blue-400"
-                            borderHoverColor="blue-400"
+                            textColor="blue-500 dark:blue-400"
+                            borderColor="blue-500 dark:blue-400"
+                            textHoverColor="blue-400 dark:blue-500"
+                            borderHoverColor="blue-400 dark:blue-500"
                             to={PATH.PRODUCT_DETAIL.replace(':productId', cartItem?.productId?._id)}
                           >
                             {tCommon('showItemDetail')}
@@ -139,8 +140,11 @@ function Order() {
                           {cartItem?.commentStatus === COMMENT_STATUS.ALLOWED && (
                             <Button
                               variant="outlined"
-                              textHoverColor="blue"
-                              borderHoverColor="blue"
+                              textColor="blue-500 dark:blue-400"
+                              borderColor="blue-500 dark:blue-400"
+                              textHoverColor="blue-400 dark:blue-500"
+                              borderHoverColor="blue-400 dark:blue-500"
+                              bgHoverColor="none"
                               onClick={() => {
                                 setIsOpenDialogReview(true);
                                 setSelectedCartDetail(cartItem);
@@ -161,21 +165,21 @@ function Order() {
                       labelWidth="200px"
                       label={t('totalItemsPrice')}
                       labelClassName="!text-base"
-                      valueClassName="text-blue-500"
+                      valueClassName="text-blue-500 dark:text-blue-400"
                       value={formatCurrency(item.totalAmount - item?.shippingFee)}
                     />
                     <LabelValue
                       labelWidth="200px"
                       label={t('shippingFee')}
                       labelClassName="!text-base"
-                      valueClassName="text-blue-500"
+                      valueClassName="text-blue-500 dark:text-blue-400"
                       value={formatCurrency(item?.shippingFee)}
                     />
                     <LabelValue
                       labelWidth="200px"
                       label={t('totalPayment')}
                       labelClassName="!text-base"
-                      valueClassName="text-blue-500"
+                      valueClassName="text-blue-500 dark:text-blue-400"
                       value={formatCurrency(item.totalAmount)}
                     />
                   </div>
@@ -196,7 +200,14 @@ function Order() {
                       {item?.paymentMethod === PAYMENT_METHOD.BANK &&
                         !item?.isPaid &&
                         item?.status === ORDER_STATUS.PENDING && (
-                          <Button variant="outlined" textHoverColor="blue" borderHoverColor="blue" href={item.payUrl}>
+                          <Button
+                            variant="outlined"
+                            textColor="blue-500 dark:blue-400"
+                            borderColor="blue-500 dark:blue-400"
+                            textHoverColor="blue-400 dark:blue-500"
+                            borderHoverColor="blue-400 dark:blue-500"
+                            href={item.payUrl}
+                          >
                             {tCommon('continueCheckout')}
                           </Button>
                         )}
@@ -208,7 +219,6 @@ function Order() {
           )}
         </Tabs>
       </div>
-      <Pagination pageCount={data?.data?.totalPage || 0} className="ml-auto mt-10" />
 
       <ReviewDialog
         isOpen={isOpenDialogReview}
@@ -218,6 +228,7 @@ function Order() {
         }}
         selectedCartDetail={selectedCartDetail}
       />
+      <Pagination pageCount={data?.data?.totalPage || 0} className="ml-auto mt-10" />
     </div>
   );
 }

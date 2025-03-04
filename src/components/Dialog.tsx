@@ -71,8 +71,8 @@ const Dialog = <MyFormValues extends FormikValues>({
     <>
       <div
         className={clsx('p-6', contentClassName, {
-          'border-b-2 border-gray-200': !noBorderBottom,
-          'border-t-2 border-gray-200': !noBorderTop,
+          'border-b-2 border-gray-200 dark:border-gray-500': !noBorderBottom,
+          'border-t-2 border-gray-200 dark:border-gray-500': !noBorderTop,
         })}
       >
         {children}
@@ -125,7 +125,7 @@ const Dialog = <MyFormValues extends FormikValues>({
         >
           <div
             className={clsx(
-              'bg-white rounded-lg shadow-lg transition-all duration-300',
+              'bg-white dark:bg-dark-500 rounded-lg shadow-lg transition-all duration-300',
               {
                 '-translate-y-1/2': !isOpen,
                 'translate-y-0': isOpen,

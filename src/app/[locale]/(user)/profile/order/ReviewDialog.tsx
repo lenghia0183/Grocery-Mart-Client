@@ -8,6 +8,7 @@ import { useAddReview } from '@/services/api/https/review';
 import { CartDetail } from '@/types/cart';
 import { ReviewFormValues } from '@/types/review';
 import { useTranslations } from 'next-intl';
+import { validationSchema } from './schema';
 
 interface ReviewDialogProp {
   isOpen: boolean;
@@ -21,6 +22,7 @@ const ReviewDialog = ({ isOpen, onCancel, selectedCartDetail }: ReviewDialogProp
   const { success, error } = useToast();
   const tCommon = useTranslations('common');
   const t = useTranslations('order.dialog');
+  const tValidation = useTranslations('validation');
 
   const initialValues: ReviewFormValues = {
     rating: RATING_LIST[0],
@@ -37,6 +39,7 @@ const ReviewDialog = ({ isOpen, onCancel, selectedCartDetail }: ReviewDialogProp
         submitLabel={tCommon('confirm')}
         formikProps={{
           initialValues,
+          validationSchema: validationSchema(tValidation),
           onSubmit: (values) => {
             addReview(
               {
@@ -68,13 +71,13 @@ const ReviewDialog = ({ isOpen, onCancel, selectedCartDetail }: ReviewDialogProp
           <Autocomplete
             options={RATING_LIST}
             getOptionLabel={(val) => {
-              return tCommon(val.label);
+              return val?.label ? tCommon(val.label) : '';
             }}
             name="rating"
-            label={t("yourRating")}
+            label={t('yourRating')}
             required
           />
-          <TextArea name="content" label={t("content")} rows={5} required />
+          <TextArea name="content" label={t('content')} rows={5} required />
         </div>
       </Dialog>
     </WithLoading>

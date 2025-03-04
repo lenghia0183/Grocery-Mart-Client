@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import Icon from './Icon';
 import Button from './Button';
+import { useTranslations } from 'next-intl';
 
 type AccordionProps = {
   children: React.ReactNode;
@@ -25,6 +26,8 @@ const Accordion: React.FC<AccordionProps> = ({
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   const newMinHeightStyleValue = parseFloat(minHeight);
+
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     if (contentRef.current) {
@@ -56,11 +59,12 @@ const Accordion: React.FC<AccordionProps> = ({
           variant="text"
           bgHoverColor="transparent"
           borderHoverColor="transparent"
+          textColor="blue-500 dark:blue-400"
           className={clsx('mx-auto transition-all', buttonClassName)}
           startIcon={
             <Icon
               name="arrowDown"
-              color="blue-500"
+              color="inherit"
               size={1}
               className={clsx(
                 'transition-transform ease-in-out duration-500',
@@ -73,7 +77,7 @@ const Accordion: React.FC<AccordionProps> = ({
             />
           }
         >
-          {isOpen ? 'Thu gọn' : 'Xem thêm'}
+          {isOpen ? tCommon('hidden') : tCommon('showMore')}
         </Button>
       )}
     </div>
