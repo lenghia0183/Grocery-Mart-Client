@@ -13,6 +13,7 @@ interface TabsProps {
   list: TabItem[];
   children: ReactNode | ReactNode[];
   onChange?: (value?: string) => void;
+  getOptionLabel?: (item: TabItem) => string;
   value?: number | string;
   divider?: boolean;
   className?: string;
@@ -27,6 +28,7 @@ const Tabs: React.FC<TabsProps> = ({
   divider = true,
   className,
   tabClassName,
+  getOptionLabel = (item: TabItem) => item?.label,
 }) => {
   const [value, setValue] = useState(0);
   const [underlineStyle, setUnderlineStyle] = useState<React.CSSProperties>({});
@@ -74,7 +76,7 @@ const Tabs: React.FC<TabsProps> = ({
             } transition-all`}
             type="button"
           >
-            {item.label}
+            {getOptionLabel(item)}
             {item.required && <span className="text-red-500 ml-1">*</span>}
           </button>
         ))}

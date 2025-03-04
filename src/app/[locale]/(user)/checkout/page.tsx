@@ -11,6 +11,7 @@ import Radio from '@/components/Radio';
 import RadioGroup from '@/components/RadioGroup';
 import TextArea from '@/components/TextArea';
 import TextField from '@/components/TextField';
+import { PAYMENT_GATEWAY, PAYMENT_METHOD } from '@/constants/common';
 import { PATH } from '@/constants/path';
 import { useToast } from '@/context/toastProvider';
 import { useUser } from '@/context/userProvider';
@@ -122,8 +123,8 @@ const Checkout = (): JSX.Element => {
             recipientName: values?.recipientName,
             recipientPhone: values?.recipientPhone,
             shippingFee: values?.shippingFee,
-            paymentMethod: values?.paymentMethod === 'COD' ? 'COD' : 'Bank',
-            paymentGateway: values?.paymentMethod !== 'COD' ? values?.paymentMethod : '',
+            paymentMethod: values?.paymentMethod === PAYMENT_METHOD.COD ? PAYMENT_METHOD.COD : PAYMENT_METHOD.BANK,
+            paymentGateway: values?.paymentMethod !== PAYMENT_METHOD.COD ? values?.paymentMethod : '',
             address: {
               province: {
                 provinceId: values?.province?.ProvinceID || 0,
@@ -341,7 +342,7 @@ const Checkout = (): JSX.Element => {
                         </div>
 
                         <Radio
-                          value="MoMo"
+                          value={PAYMENT_GATEWAY.MOMO}
                           label={
                             <div className="flex items-center justify-between py-4 text-base  gap-3">
                               <Image src={images.logoMomo} width={90} height={90} alt="" />
@@ -351,7 +352,7 @@ const Checkout = (): JSX.Element => {
                         />
 
                         <Radio
-                          value="ZaloPay"
+                          value={PAYMENT_GATEWAY.ZALO_PAY}
                           label={
                             <div className="flex items-center justify-between py-4 text-base  gap-3">
                               <Image src={images.logoZaloPay} width={90} height={90} alt="" />

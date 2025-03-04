@@ -1,6 +1,7 @@
 import { DistrictData, ProvinceData, WardData } from './address';
 import { Pagination } from './ApiResponse';
 import { CartDetail } from './cart';
+import { OrderStatus, PaymentGateway, PaymentMethod } from './common';
 
 export interface UpdateStatusOrderBody {
   status: string;
@@ -21,12 +22,12 @@ export interface Order {
   isPaid: boolean;
   note: string;
   payUrl: string;
-  paymentMethod: string;
-  paymentGateway: string;
+  paymentMethod: PaymentMethod;
+  paymentGateway: PaymentGateway;
   recipientName: string;
   recipientPhone: string;
   shippingFee: number;
-  status: string;
+  status: OrderStatus;
   totalAmount: number;
   userId: string;
   _id: string;

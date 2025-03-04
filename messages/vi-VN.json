@@ -28,7 +28,22 @@
     "confirm": "Xác nhận",
     "saveChange": "Lưu thay đổi",
     "hasErrorTryAgainLayer": "Đã có lỗi xảy ra vui lòng thử lại sau",
-    "logoutSuccessful": "Đăng xuất thành công"
+    "continueCheckout": "Tiếp tục thanh toán",
+    "logoutSuccessful": "Đăng xuất thành công",
+    "showItemDetail": "Xem chỉ tiết sản phẩm",
+    "review": "Đánh giá",
+
+    "pending": "Chờ xác nhận",
+    "confirmed": "Đã xác nhận",
+    "rejected": "Bị từ chối",
+    "shipping": "Đang giao",
+    "success": "Thành công",
+    "canceled": "Đã hủy",
+    "1star": "1 sao",
+    "2star": "2 sao",
+    "3star": "3 sao",
+    "4star": "4 sao",
+    "5star": "5 sao"
   },
 
   "validation": {
@@ -234,5 +249,30 @@
     "displayName": "Tên hiển thị",
     "email": "Email",
     "phone": "Số điện thoại"
+  },
+
+  "order": {
+    "title": "Thông tin đơn hàng",
+    "paymentMethod": "Phương thức thanh toán:",
+    "onlinePayment": "Thanh toán trực tuyến",
+    "cod": "Thanh toán khi nhận hàng",
+    "paymentStatus": "Trạng thái thanh toán",
+    "paid": "Đã thanh toán",
+    "unPaid": "Chưa thanh toán",
+    "recipientName": "Họ và tên người nhận",
+    "buyerName": "Họ và tên người mua",
+    "address": "Địa chỉ:",
+    "productList": "Danh sách sản phẩm",
+    "totalItemsPrice": "Tổng tiềm sản phẩm:",
+    "shippingFee": "Phí ship",
+    "totalPayment": "Tổnng tiền đơn hàng:",
+    "updateSuccessful": "Cập nhật đơn hàng thành công",
+
+    "dialog": {
+      "title": "Thêm đánh giá",
+      "successful": "Thêm đánh giá thành công",
+      "yourRating": "Đánh gía của bạn",
+      "content": "Nội dung đánh giá"
+    }
   }
 }

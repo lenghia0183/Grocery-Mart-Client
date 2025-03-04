@@ -1,6 +1,7 @@
 import Autocomplete from '@/components/AutoComplete';
 import Dialog from '@/components/Dialog';
 import TextArea from '@/components/TextArea';
+import { RATING_LIST } from '@/constants/common';
 import { useToast } from '@/context/toastProvider';
 import { WithLoading } from '@/hocs/withLoading';
 import { useAddReview } from '@/services/api/https/review';
@@ -19,24 +20,17 @@ const ReviewDialog = ({ isOpen, onCancel, selectedCartDetail }: ReviewDialogProp
 
   const { success, error } = useToast();
   const tCommon = useTranslations('common');
+  const t = useTranslations('order.dialog');
 
   const initialValues: ReviewFormValues = {
-    rating: { label: '5 sao', value: 5 },
+    rating: RATING_LIST[0],
     content: '',
   };
-
-  const ratingList = [
-    { label: '5 sao', value: 5 },
-    { label: '4 sao', value: 4 },
-    { label: '3 sao', value: 3 },
-    { label: '2 sao', value: 2 },
-    { label: '1 sao', value: 1 },
-  ];
 
   return (
     <WithLoading isLoading={isMutatingAddReview}>
       <Dialog
-        title="Thêm đánh giá"
+        title={t('title')}
         isOpen={isOpen}
         onCancel={onCancel}
         cancelLabel={tCommon('cancel')}
@@ -54,7 +48,7 @@ const ReviewDialog = ({ isOpen, onCancel, selectedCartDetail }: ReviewDialogProp
               {
                 onSuccess: (response) => {
                   if (response.code === 201) {
-                    success('Thêm đánh giá thành công');
+                    success(t('successful'));
                     onCancel();
                   } else {
                     error(response.message);
@@ -72,15 +66,15 @@ const ReviewDialog = ({ isOpen, onCancel, selectedCartDetail }: ReviewDialogProp
       >
         <div className="flex flex-col gap-7">
           <Autocomplete
-            options={ratingList}
+            options={RATING_LIST}
             getOptionLabel={(val) => {
-              return val.label;
+              return tCommon(val.label);
             }}
             name="rating"
-            label="Đánh giá của bạn"
+            label={t("yourRating")}
             required
           />
-          <TextArea name="content" label="Nội dung đánh giá" rows={5} required />
+          <TextArea name="content" label={t("content")} rows={5} required />
         </div>
       </Dialog>
     </WithLoading>

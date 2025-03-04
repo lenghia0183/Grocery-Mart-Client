@@ -16,11 +16,16 @@ import { useEffect, useState } from 'react';
 import { CartDetail } from '@/types/cart';
 import ReviewDialog from './ReviewDialog';
 import { useToast } from '@/context/toastProvider';
+import { useTranslations } from 'next-intl';
+import { COMMENT_STATUS, ORDER_STATUS, ORDER_STATUS_LIST, PAYMENT_METHOD } from '@/constants/common';
 
 function Order() {
   const { page } = useQueryState();
 
-  const { tab, setTab } = useQueryState({ tab: 'pending' });
+  const tCommon = useTranslations('common');
+  const t = useTranslations('order');
+
+  const { tab, setTab } = useQueryState({ tab: ORDER_STATUS.PENDING });
 
   const { data, mutate: refreshOrder, isLoading, isValidating } = useGetOrder({ status: tab, limit: 3, page });
 
@@ -32,15 +37,6 @@ function Order() {
 
   const isFetching = isLoading || isValidating;
 
-  const tabList = [
-    { label: 'Pending', value: 'pending' },
-    { label: 'Confirmed', value: 'confirmed' },
-    { label: 'Rejected', value: 'reject' },
-    { label: 'Shipping', value: 'shipping' },
-    { label: 'Success', value: 'success' },
-    { label: 'Canceled', value: 'canceled' },
-  ];
-
   useEffect(() => {
     refreshOrder();
   }, [tab, refreshOrder, page]);
@@ -51,23 +47,28 @@ function Order() {
       {
         onSuccess: (response) => {
           if (response.code === 200) {
-            success('Cập nhật đơn hàng thành công');
+            success(t('updateSuccessful'));
           } else {
             error(response.message);
           }
         },
-        onError: () => {},
+        onError: () => {
+          error(tCommon('hasErrorTryAgainLater'));
+        },
       },
     );
   };
 
   return (
     <div className="xl:p-4">
-      <h2 className="text-2xl font-semibold text-dark shadow-md p-4">Order List</h2>
+      <h2 className="text-2xl font-semibold text-dark shadow-md p-4">{t('title')}</h2>
       <div className="sm:mt-5 mt-3 w-full">
         <Tabs
           className="w-full"
-          list={tabList}
+          list={ORDER_STATUS_LIST}
+          getOptionLabel={(val) => {
+            return tCommon(val.label);
+          }}
           divider={true}
           value={tab}
           onChange={(val) => {
@@ -84,24 +85,24 @@ function Order() {
                   <div className="flex flex-col gap-2">
                     <LabelValue
                       className="!text-base"
-                      label="Phương thức thanh toán:"
-                      value={item.paymentMethod === 'Bank' ? 'Thanh toán trực tuyến' : 'Thanh toán khi nhận hàng'}
+                      label={t('paymentMethod')}
+                      value={item.paymentMethod === PAYMENT_METHOD.BANK ? t('onlinePayment') : t('cod')}
                     />
                     <LabelValue
                       className="!text-base"
-                      label="Trạng thái thanh toán:"
-                      value={item?.paymentMethod === 'bank' && item?.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'}
+                      label={t('paymentStatus')}
+                      value={item?.paymentMethod === PAYMENT_METHOD.BANK && item?.isPaid ? t('paid') : t('unPaid')}
                     />
-                    <LabelValue className="!text-base" label="Tên ngượi mua:" value={item.buyerName} />
-                    <LabelValue className="!text-base" label="Tên người nhận:" value={item.recipientName} />
+                    <LabelValue className="!text-base" label={t('buyerName')} value={item.buyerName} />
+                    <LabelValue className="!text-base" label={t('recipientName')} value={item.recipientName} />
                     <LabelValue
                       className="!text-base"
-                      label="Địa chỉ:"
+                      label={t('address')}
                       value={`${item.address.street}, ${item.address.ward.wardName}, ${item.address.district.districtName}, ${item.address.province.provinceName}`}
                     />
                   </div>
 
-                  <h2 className="text-2xl text-center mt-5 text-yellow">Danh sách sản phẩm</h2>
+                  <h2 className="text-2xl text-center mt-5 text-yellow">{t('productList')}</h2>
                   <Divider length="80%" className="mx-auto" />
                   <Accordion key={item._id} minHeight="180px">
                     {item.cartDetails.map((cartItem) => (
@@ -132,10 +133,10 @@ function Order() {
                             borderHoverColor="blue-400"
                             to={PATH.PRODUCT_DETAIL.replace(':productId', cartItem?.productId?._id)}
                           >
-                            Xem chi tiết sản phẩm
+                            {tCommon('showItemDetail')}
                           </Button>
 
-                          {cartItem?.commentStatus === 'allowed' && (
+                          {cartItem?.commentStatus === COMMENT_STATUS.ALLOWED && (
                             <Button
                               variant="outlined"
                               textHoverColor="blue"
@@ -145,7 +146,7 @@ function Order() {
                                 setSelectedCartDetail(cartItem);
                               }}
                             >
-                              Đánh giá
+                              {tCommon('review')}
                             </Button>
                           )}
                         </div>
@@ -158,21 +159,21 @@ function Order() {
                   <div className="flex flex-col gap-2">
                     <LabelValue
                       labelWidth="200px"
-                      label="Tổng tiền sản phẩm:"
+                      label={t('totalItemsPrice')}
                       labelClassName="!text-base"
                       valueClassName="text-blue-500"
                       value={formatCurrency(item.totalAmount - item?.shippingFee)}
                     />
                     <LabelValue
                       labelWidth="200px"
-                      label="Phí giao hàng:"
+                      label={t('shippingFee')}
                       labelClassName="!text-base"
                       valueClassName="text-blue-500"
                       value={formatCurrency(item?.shippingFee)}
                     />
                     <LabelValue
                       labelWidth="200px"
-                      label="Tổng tiền đơn hàng:"
+                      label={t('totalPayment')}
                       labelClassName="!text-base"
                       valueClassName="text-blue-500"
                       value={formatCurrency(item.totalAmount)}
@@ -181,28 +182,24 @@ function Order() {
 
                   <div className="mt-7 ml-auto flex">
                     <div className="flex gap-3 ml-auto">
-                      {item.status === 'pending' && (
+                      {item.status === ORDER_STATUS.PENDING && (
                         <Button
                           variant="outlined"
                           textColor="red-400"
                           borderColor="red-400"
                           bgHoverColor="red-300"
-                          onClick={() => handleUpdateOrderStatus(item._id, 'canceled')}
+                          onClick={() => handleUpdateOrderStatus(item._id, ORDER_STATUS.CANCELED)}
                         >
-                          Hủy
+                          {tCommon('cancel')}
                         </Button>
                       )}
-                      {item?.paymentMethod === 'Bank' && !item?.isPaid && item?.status === 'pending' && (
-                        <Button
-                          variant="outlined"
-                          textHoverColor="blue"
-                          borderHoverColor="blue"
-                          onClick={() => handleUpdateOrderStatus(item._id, 'confirmed')}
-                          href={item.payUrl}
-                        >
-                          Tiến hành thanh thanh toán
-                        </Button>
-                      )}
+                      {item?.paymentMethod === PAYMENT_METHOD.BANK &&
+                        !item?.isPaid &&
+                        item?.status === ORDER_STATUS.PENDING && (
+                          <Button variant="outlined" textHoverColor="blue" borderHoverColor="blue" href={item.payUrl}>
+                            {tCommon('continueCheckout')}
+                          </Button>
+                        )}
                     </div>
                   </div>
                 </div>

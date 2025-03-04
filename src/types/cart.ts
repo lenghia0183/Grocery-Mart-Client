@@ -1,8 +1,9 @@
 import { Pagination } from './ApiResponse';
+import { CommentStatus } from './common';
 import { ProductDetail } from './product';
 
 export interface CartDetail {
-  commentStatus: string;
+  commentStatus: CommentStatus;
   quantity: number;
   totalMoney: number;
   productId: ProductDetail;
