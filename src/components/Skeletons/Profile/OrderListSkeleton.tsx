@@ -12,6 +12,8 @@ const OrderListSkeleton: React.FC<OrderListSkeletonProps> = ({ count = 3, classN
       <div className="h-6 w-60 bg-gray-300 dark:bg-dark-600 rounded mb-4"></div>
       <div className="h-[1px] w-full bg-gray-300 dark:bg-dark-500 rounded mb-4"></div>
 
+      <div className="h-[50px] w-full bg-gray-300 dark:bg-dark-500 rounded mb-4"></div>
+
       <div className={clsx('flex flex-col gap-y-7', className)}>
         {Array.from({ length: count }).map((_, index) => (
           <div key={index} className="p-5 shadow-md bg-gray-100 dark:bg-dark-500 animate-pulse">

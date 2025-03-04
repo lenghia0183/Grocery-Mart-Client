@@ -150,6 +150,8 @@ const Pagination: FC<PaginationProps> = ({
     return pages;
   };
 
+  if (pageCount <= 0) return null;
+
   return (
     <ul
       ref={ulRef}
