@@ -4,6 +4,7 @@ const EditMeSkeleton = () => {
   return (
     <div className="p-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white animate-pulse">
       <div className="h-6 w-32 bg-gray-300 dark:bg-dark-600 rounded mb-4"></div>
+      <div className="h-[1px] w-full bg-gray-300 dark:bg-dark-500 rounded mb-4"></div>
 
       <div className="grid grid-cols-2 gap-4">
         {/* Mật khẩu hiện tại */}

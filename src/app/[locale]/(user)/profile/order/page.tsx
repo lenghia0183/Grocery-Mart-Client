@@ -18,6 +18,8 @@ import ReviewDialog from './ReviewDialog';
 import { useToast } from '@/context/toastProvider';
 import { useTranslations } from 'next-intl';
 import { COMMENT_STATUS, ORDER_STATUS, ORDER_STATUS_LIST, PAYMENT_METHOD } from '@/constants/common';
+import OrderListSkeleton from '@/components/Skeletons/Profile/OrderListSkeleton';
+import { WithLoading } from '@/hocs/withLoading';
 
 function Order() {
   const { page } = useQueryState();
@@ -27,15 +29,18 @@ function Order() {
 
   const { tab, setTab } = useQueryState({ tab: ORDER_STATUS.PENDING });
 
-  const { data, mutate: refreshOrder, isLoading, isValidating } = useGetOrder({ status: tab, limit: 3, page });
+  const {
+    data: orderData,
+    mutate: refreshOrder,
+    isLoading: isLoadingGetOrderData,
+    isValidating: isValidatingGetOrderData,
+  } = useGetOrder({ status: tab, limit: 3, page });
 
   const { success, error } = useToast();
 
-  const { trigger: updateOrderStatus } = useUpdateOrderStatus();
+  const { trigger: updateOrderStatus, isMutating: isMutatingUpdateOrderStatus } = useUpdateOrderStatus();
   const [isOpenDialogReview, setIsOpenDialogReview] = useState(false);
   const [selectedCartDetail, setSelectedCartDetail] = useState<CartDetail | null>(null);
-
-  const isFetching = isLoading || isValidating;
 
   useEffect(() => {
     refreshOrder();
@@ -59,29 +64,28 @@ function Order() {
     );
   };
 
+  if (isLoadingGetOrderData || isValidatingGetOrderData) return <OrderListSkeleton />;
+
   return (
-    <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-medium">{t('title')}</h2>
-      <Divider />
-      <div className="sm:mt-5 mt-3 w-full">
-        <Tabs
-          className="w-full"
-          list={ORDER_STATUS_LIST}
-          getOptionLabel={(val) => {
-            return tCommon(val.label);
-          }}
-          divider={true}
-          value={tab}
-          onChange={(val) => {
-            setTab(val || '');
-          }}
-        >
-          {isFetching ? (
-            // <OrderListSkeleton />
-            <></>
-          ) : (
+    <WithLoading isLoading={isMutatingUpdateOrderStatus}>
+      <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
+        <h2 className="text-2xl font-medium">{t('title')}</h2>
+        <Divider />
+        <div className="sm:mt-5 mt-3 w-full">
+          <Tabs
+            className="w-full"
+            list={ORDER_STATUS_LIST}
+            getOptionLabel={(val) => {
+              return tCommon(val.label);
+            }}
+            divider={true}
+            value={tab}
+            onChange={(val) => {
+              setTab(val || '');
+            }}
+          >
             <div className="text-dark-400 dark:text-white-200 text-lg flex flex-col gap-3">
-              {data?.data?.orders?.map((item) => (
+              {orderData?.data?.orders?.map((item) => (
                 <div className="p-5 shadow-md bg-gray-100 dark:bg-dark-500" key={item._id}>
                   <div className="flex flex-col gap-2">
                     <LabelValue
@@ -216,20 +220,20 @@ function Order() {
                 </div>
               ))}
             </div>
-          )}
-        </Tabs>
-      </div>
+          </Tabs>
+        </div>
 
-      <ReviewDialog
-        isOpen={isOpenDialogReview}
-        onCancel={() => {
-          setIsOpenDialogReview(false);
-          setSelectedCartDetail(null);
-        }}
-        selectedCartDetail={selectedCartDetail}
-      />
-      <Pagination pageCount={data?.data?.totalPage || 0} className="ml-auto mt-10" />
-    </div>
+        <ReviewDialog
+          isOpen={isOpenDialogReview}
+          onCancel={() => {
+            setIsOpenDialogReview(false);
+            setSelectedCartDetail(null);
+          }}
+          selectedCartDetail={selectedCartDetail}
+        />
+        <Pagination pageCount={orderData?.data?.totalPage || 0} className="ml-auto mt-10" />
+      </div>
+    </WithLoading>
   );
 }
 
