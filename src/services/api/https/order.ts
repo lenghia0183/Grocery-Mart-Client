@@ -7,7 +7,8 @@ import { GetOrderResponse, UpdateStatusOrderBody } from '@/types/order';
 export const useGetOrder = (filters: QueryState) => {
   const url = 'v1/order/me';
   const fetcher = async (url: string) => {
-    return api.get<GetOrderResponse, QueryState>(url, filters);
+    console.log('filters', filters);
+    return api.get<GetOrderResponse>(url, { params: filters });
   };
 
   return useSWR(url, fetcher);

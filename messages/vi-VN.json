@@ -276,5 +276,9 @@
       "yourRating": "Đánh gía của bạn",
       "content": "Nội dung đánh giá"
     }
+  },
+
+  "favorite": {
+    "title": "Danh sách sản phẩm yêu thích"
   }
 }

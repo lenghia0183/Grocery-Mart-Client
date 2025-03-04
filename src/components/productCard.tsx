@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Icon from './Icon';
 import Image from './Image';
 import clsx from 'clsx';
@@ -16,7 +16,11 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
   const route = useRouter();
+  const [productData, setProductData] = useState<Product | null>(null);
 
+  useEffect(() => {
+    setProductData(data);
+  }, [data]);
   return (
     <div
       className={clsx(
@@ -24,31 +28,31 @@ const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
         className,
       )}
       onClick={() => {
-        route.push(PATH.PRODUCT_DETAIL.replace(':productId', data?._id));
+        route.push(PATH.PRODUCT_DETAIL.replace(':productId', productData?._id || ''));
       }}
     >
-      <div className="mx-auto w-[220px] h-[220px] bg-white dark:bg-dark-500 rounded-lg">
+      <div className="mx-auto w-full aspect-square bg-white dark:bg-dark-500 rounded-lg">
         <Image
           width={220}
           height={220}
-          src={data.image}
-          className="w-[220px] h-[220px] rounded-md bg-white dark:bg-dark-500"
-          alt={data.name}
+          src={productData?.image || ''}
+          className="w-full aspect-square rounded-md bg-white dark:bg-dark-500"
+          alt={productData?.name || ''}
         />
       </div>
 
       <div className="mt-4">
         <h2 className="text-lg font-semibold h-[60px] transition-transform duration-300 overflow-hidden line-clamp-2">
-          {data.name}
+          {productData?.name || ''}
         </h2>
 
-        <h3 className="text-sm text-gray-500 mt-4">{data.manufacturerId.name}</h3>
+        <h3 className="text-sm text-gray-500 mt-4">{productData?.manufacturerId?.name || ''}</h3>
 
         <div className="flex justify-between my-3">
-          <span className="text-base font-semibold">{formatCurrency(data.price)}</span>
+          <span className="text-base font-semibold">{formatCurrency(productData?.price)}</span>
           <div className="flex items-center gap-1">
             <Icon name="star" color="yellow-500" width="18px" height="18px" />
-            <span className="text-base font-medium">{data.ratings}</span>
+            <span className="text-base font-medium">{productData?.ratings}</span>
           </div>
         </div>
       </div>

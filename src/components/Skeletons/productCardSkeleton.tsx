@@ -12,10 +12,11 @@ const ProductCardSkeleton = ({ className }: ProductCardSkeletonProps): JSX.Eleme
         className,
       )}
     >
-      <div className="mx-auto w-[220px] h-[220px] bg-gray-200 dark:bg-gray-500 rounded-lg"></div>
+      <div className="mx-auto w-full aspect-square bg-gray-200 dark:bg-gray-500 rounded-lg"></div>
 
       <div className="mt-4">
-        <div className="h-6 bg-gray-200 dark:bg-gray-500 rounded w-3/4"></div>
+        <div className="h-[25px] bg-gray-200 dark:bg-gray-500 rounded w-full"></div>
+        <div className="h-[25px] bg-gray-200 dark:bg-gray-500 rounded w-1/3 mt-2"></div>
 
         <div className="h-4 bg-gray-200 dark:bg-gray-500 rounded w-1/2 mt-4"></div>
 

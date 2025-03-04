@@ -39,7 +39,7 @@ const fetchProducts = async (page: number, filters?: ProductFilter, keyword?: st
   const response = await api.get<GetProductResponse>('v1/product', {
     params,
   });
-  console.log('response', response);
+
   return response?.data;
 };
 

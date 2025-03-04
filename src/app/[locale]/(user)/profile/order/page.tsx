@@ -22,12 +22,10 @@ import OrderListSkeleton from '@/components/Skeletons/Profile/OrderListSkeleton'
 import { WithLoading } from '@/hocs/withLoading';
 
 function Order() {
-  const { page } = useQueryState();
-
   const tCommon = useTranslations('common');
   const t = useTranslations('order');
 
-  const { tab, setTab } = useQueryState({ tab: ORDER_STATUS.PENDING });
+  const { tab, setTab, page } = useQueryState({ tab: ORDER_STATUS.PENDING });
 
   const {
     data: orderData,
