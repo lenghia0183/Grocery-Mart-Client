@@ -21,7 +21,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta] = useField(name);
 
-  const error = meta.error ? meta.error : '';
+  const error = meta.error && meta.touched ? meta.error : '';
 
   const renderChildren = (children: ReactNode): ReactNode => {
     return React.Children.map(children, (child) => {
@@ -51,7 +51,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
       >
         {renderChildren(children)}
       </div>
-      {error && <span className="text-red-400 text-xs">{error}</span>}
+      {error && <span className="text-red-400 dark:text-red-300 text-xs">{error}</span>}
     </div>
   );
 };

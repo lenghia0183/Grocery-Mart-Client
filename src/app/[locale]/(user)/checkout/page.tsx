@@ -27,6 +27,7 @@ import formatCurrency from '@/utils/formatCurrency';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
+import { validationSchema } from './schema';
 
 const Checkout = (): JSX.Element => {
   const router = useRouter();
@@ -35,6 +36,8 @@ const Checkout = (): JSX.Element => {
   const { userData } = useUser();
   const t = useTranslations('checkout');
   const tCommon = useTranslations('common');
+  const tValidation = useTranslations('validation');
+
   const { success, error } = useToast();
 
   const initialValues: CheckoutFormValues = {
@@ -111,6 +114,7 @@ const Checkout = (): JSX.Element => {
           }
         }}
         initialValues={initialValues}
+        validationSchema={validationSchema(tValidation)}
         enableReinitialize={true}
         onSubmit={(values) => {
           console.log('values', values);
