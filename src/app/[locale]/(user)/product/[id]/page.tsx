@@ -93,7 +93,7 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
           <ReviewList productId={fakeProduct?._id || ''} />
         </Tabs>
       </div>
-      <RelatedProducts />
+      <RelatedProducts product={fakeProduct || null} />
     </div>
   );
 };

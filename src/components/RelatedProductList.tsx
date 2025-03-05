@@ -7,83 +7,25 @@ import IconButton from '@/components/IconButton';
 import clsx from 'clsx';
 import ProductCard from './productCard';
 import Divider from './Divider';
-import { Product } from '@/types/product';
-
-const fakeProducts: Product[] = [
-  {
-    _id: 'P001',
-    name: 'Matcha Latte Premium',
-    price: 15000,
-    image: 'https://img.freepik.com/free-photo/matcha-green-tea-powder-wooden-bowl_1150-11201.jpg',
-    ratings: 4.8,
-    manufacturerId: { name: 'test', _id: 'test' },
-    categoryId: { name: 'test', _id: 'test' },
-    description: 'Product',
-    inStock: true,
-  },
-  {
-    _id: 'P002',
-    name: 'Jasmine Green Tea',
-    price: 12000,
-    image: 'https://img.freepik.com/free-photo/matcha-green-tea-powder-wooden-bowl_1150-11201.jpg',
-    ratings: 4.5,
-    manufacturerId: { name: 'test', _id: 'test' },
-    categoryId: { name: 'test', _id: 'test' },
-    description: 'Product',
-    inStock: false,
-  },
-  {
-    _id: 'P003',
-    name: 'Earl Grey Classic Peppermint Tea  ',
-    price: 14000,
-
-    image: 'https://img.freepik.com/free-photo/matcha-green-tea-powder-wooden-bowl_1150-11201.jpg',
-    ratings: 4.7,
-    manufacturerId: { name: 'test', _id: 'test' },
-    categoryId: { name: 'test', _id: 'test' },
-    description: 'Product',
-    inStock: true,
-  },
-  {
-    _id: 'P004',
-    name: 'Oolong Milk Tea Peppermint Tea Peppermint Tea',
-    price: 16000,
-    image: 'https://img.freepik.com/free-photo/matcha-green-tea-powder-wooden-bowl_1150-11201.jpg',
-    ratings: 4.6,
-    manufacturerId: { name: 'test', _id: 'test' },
-    categoryId: { name: 'test', _id: 'test' },
-    description: 'Product',
-    inStock: true,
-  },
-  {
-    _id: 'P005',
-    name: 'Chamomile Herbal Tea Peppermint TeaPeppermint Tea',
-    price: 11000,
-    image: 'https://img.freepik.com/free-photo/chamomile-tea_3456-789.jpg',
-    ratings: 4.4,
-    manufacturerId: { name: 'test', _id: 'test' },
-    categoryId: { name: 'test', _id: 'test' },
-    description: 'Product',
-    inStock: false,
-  },
-  {
-    _id: 'P006',
-    name: 'Peppermint Tea Peppermint Tea Peppermint Tea',
-    price: 13000,
-    image: 'https://img.freepik.com/free-photo/peppermint-tea_1234-567.jpg',
-    ratings: 4.9,
-    manufacturerId: { name: 'test', _id: 'test' },
-    categoryId: { name: 'test', _id: 'test' },
-    description: 'Product',
-    inStock: true,
-  },
-];
+import { ProductDetail } from '@/types/product';
+import { useGetProduct } from '@/services/api/https/product';
+import ProductListSkeleton from './Skeletons/ProductListSkeleton';
+import { useTranslations } from 'next-intl';
 
 interface RelatedProductsProps {
   className?: string;
+  product: ProductDetail | null;
 }
 
-const RelatedProducts: React.FC<RelatedProductsProps> = ({ className }) => {
+const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product }) => {
+  const { data: productData, isLoading: isLoadingProductData } = useGetProduct({
+    page: 1,
+    limit: 8,
+    categoryId: product?.categoryId?._id || '',
+  });
+
+  const t = useTranslations('productDetail');
+
   const slider = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const settings = {
@@ -125,56 +67,60 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className }) => {
   return (
     <div className="dark:bg-dark-500 bg-gray-100 p-10">
       <div className="container">
-        <h3 className="text-2xl font-semibold text-blue">Sản phẩm liên quan</h3>
+        <h3 className="text-2xl font-semibold text-blue">{t('relatedProduct')}</h3>
         <Divider marginBottom="30px" />
 
-        <section className={clsx('', className)}>
-          {fakeProducts.length > 2 ? (
-            <div className="relative">
-              <IconButton
-                type="button"
-                className="absolute top-1/2 -translate-y-1/2 left-[-50px] hidden sm:flex"
-                iconName="arrowSlider"
-                variant="contained"
-                size="small"
-                bgColor="emerald"
-                iconColor="white"
-                bgHoverColor="yellow"
-                iconSize={1.5}
-                onClick={() => slider.current?.slickPrev()}
-              />
+        {isLoadingProductData ? (
+          <ProductListSkeleton count={5} className="grid-cols-5 mt-3" />
+        ) : (
+          <section className={clsx('', className)}>
+            {(productData?.data?.products?.length || 0) > 4 ? (
+              <div className="relative">
+                <IconButton
+                  type="button"
+                  className="absolute top-1/2 -translate-y-1/2 left-[-50px] hidden sm:flex"
+                  iconName="arrowSlider"
+                  variant="contained"
+                  size="small"
+                  bgColor="emerald"
+                  iconColor="white"
+                  bgHoverColor="yellow"
+                  iconSize={1.5}
+                  onClick={() => slider.current?.slickPrev()}
+                />
 
-              <IconButton
-                type="button"
-                className="rotate-180 absolute top-1/2 -translate-y-1/2 right-[-50px] hidden sm:flex"
-                iconName="arrowSlider"
-                variant="contained"
-                size="small"
-                bgColor="emerald"
-                iconColor="white"
-                bgHoverColor="yellow"
-                iconSize={1.5}
-                onClick={() => slider.current?.slickNext()}
-              />
+                <IconButton
+                  type="button"
+                  className="rotate-180 absolute top-1/2 -translate-y-1/2 right-[-50px] hidden sm:flex"
+                  iconName="arrowSlider"
+                  variant="contained"
+                  size="small"
+                  bgColor="emerald"
+                  iconColor="white"
+                  bgHoverColor="yellow"
+                  iconSize={1.5}
+                  onClick={() => slider.current?.slickNext()}
+                />
 
-              <Slider ref={slider} {...settings}>
-                {fakeProducts.map((item) => (
-                  <div key={item._id} className="p-2">
+                <Slider ref={slider} {...settings}>
+                  {productData?.data?.products.map((item) => (
+                    <div key={item._id} className="p-2">
+                      <ProductCard data={item} className="dark!shadow-none !shadow-md" />
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            ) : (
+              <div className="flex justify-center items-center gap-4">
+                {productData?.data?.products.map((item) => (
+                  <div className="w-[18%]" key={item._id}>
                     <ProductCard data={item} className="dark!shadow-none !shadow-md" />
                   </div>
                 ))}
-              </Slider>
-            </div>
-          ) : (
-            <div className="flex justify-center gap-4">
-              {fakeProducts.map((item) => (
-                <div className="w-[25%]" key={item._id}>
-                  <ProductCard data={item} className="dark:shadow-none text-red" />
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+              </div>
+            )}
+          </section>
+        )}
       </div>
     </div>
   );

@@ -237,7 +237,9 @@
     "deleteProductToFavoriteSuccessful": "Xóa sản phẩm vào danh sách yêu thích thành công",
 
     "noReview": "Chưa có đánh giá nào.",
-    "buyToReview": "Hãy mua hàng và chia sẻ trải nghiệm của bạn để đánh giá sản phẩm này!"
+    "buyToReview": "Hãy mua hàng và chia sẻ trải nghiệm của bạn để đánh giá sản phẩm này!",
+
+    "relatedProduct": "Sản phẩm liên quan"
   },
 
   "changePassword": {

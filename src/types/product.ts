@@ -41,7 +41,7 @@ export interface GetProductParams {
   minRating?: number;
   categoryId?: string;
   manufacturerId?: string[];
-  sortBy: string;
+  sortBy?: string;
   minPrice?: number;
   maxPrice?: number;
   keyword?: string;
