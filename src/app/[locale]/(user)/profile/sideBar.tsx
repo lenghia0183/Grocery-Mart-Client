@@ -10,25 +10,27 @@ import Image from '@/components/Image';
 import { usePathname } from '@/i18n/routing';
 import { UserData } from '@/types/user';
 import { formatRegisteredDate } from '@/utils/formatRegisteredDate';
+import { useTranslations } from 'next-intl';
 
 interface SideBarProps {
   userData: UserData | null;
 }
 
-const accountLinks = [
-  { name: 'Thông tin tài khoản', path: PATH.PROFILE_EDIT, icon: 'account' },
-  { name: 'Đổi mật khẩu', path: PATH.CHANGE_PASSWORD, icon: 'password' },
-  { name: 'Địa chỉ', path: PATH.CHANGE_ADDRESS, icon: 'address' },
-];
-
-const transactionLinks = [
-  { name: 'Đơn hàng của bạn', path: PATH.ORDER, icon: 'account' },
-  { name: 'Sản phẩm đã xem', path: PATH.VIEWED_PRODUCTS, icon: 'account' },
-  { name: 'Danh sách yêu thích', path: PATH.FAVORITE, icon: 'heart' },
-];
-
 const SideBar = ({ userData }: SideBarProps): JSX.Element => {
   const pathname = usePathname();
+
+  const t = useTranslations('profileSideBar');
+
+  const accountLinks = [
+    { name: t('userInfo'), path: PATH.PROFILE_EDIT, icon: 'account' },
+    { name: t('changePassword'), path: PATH.CHANGE_PASSWORD, icon: 'password' },
+    { name: t('address'), path: PATH.CHANGE_ADDRESS, icon: 'address' },
+  ];
+
+  const transactionLinks = [
+    { name: t('yourOrder'), path: PATH.ORDER, icon: 'account' },
+    { name: t('favoriteList'), path: PATH.FAVORITE, icon: 'heart' },
+  ];
 
   return (
     <nav className="sm:pb-[200px] pb-[100px] bg-white dark:bg-dark-400 shadow-md rounded-xl overflow-hidden dark:text-white">
@@ -51,7 +53,7 @@ const SideBar = ({ userData }: SideBarProps): JSX.Element => {
         <div className="flex h-fit items-stretch">
           <div className="w-[3px] bg-blue-400"></div>
           <h2 className="flex-1 font-semibold dark:text-white text-base bg-gray-100 dark:bg-dark-500 h-full flex items-center p-2 mb-0">
-            QUẢN LÝ TÀI KHOẢN
+            {t('accountManage')}
           </h2>
         </div>
         <ul className="space-y-1 px-3">
@@ -75,7 +77,7 @@ const SideBar = ({ userData }: SideBarProps): JSX.Element => {
         <div className="flex h-fit items-stretch">
           <div className="w-[3px] bg-blue-400"></div>
           <h2 className="flex-1 font-semibold  text-base bg-gray-100 dark:bg-dark-500 h-full flex items-center p-2 mb-0">
-            QUẢN LÝ GIAO DỊCH
+            {t('transactionManage')}
           </h2>
         </div>
         <ul className="space-y-2 px-3">

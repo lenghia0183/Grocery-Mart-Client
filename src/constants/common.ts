@@ -41,3 +41,8 @@ export const RATING_LIST = [
   { label: '2star', value: 2 },
   { label: '1star', value: 1 },
 ];
+
+export const ERROR = {
+  UNAUTHENTICATED: 'unauthenticated',
+  UNAUTHORIZED: 'unauthorized',
+};

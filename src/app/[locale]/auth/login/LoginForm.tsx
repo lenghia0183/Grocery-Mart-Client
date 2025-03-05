@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import CheckBox from '@/components/CheckBox';
 import Icon from '@/components/Icon';
 import TextField from '@/components/TextField';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/constants/path';
 import { LoginFormValues, LoginResponse } from '@/types/auth';
@@ -13,9 +13,11 @@ import { useLogin } from '@/services/api/https/auth';
 import { ApiResponse } from '@/types/ApiResponse';
 import { useToast } from '@/context/toastProvider';
 import { getLoginValidationSchema } from './validation';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { nextApi } from '@/services/api/axios';
 import { useUser } from '@/context/userProvider';
+import { ERROR } from '@/constants/common';
+import { usePathname, useRouter } from '@/i18n/routing';
 
 const LoginForm: React.FC = () => {
   const t = useTranslations('login.form');
@@ -23,10 +25,28 @@ const LoginForm: React.FC = () => {
   const tValidation = useTranslations('validation');
   const { loginUser } = useUser();
 
+  const { info } = useToast();
+
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const errorParams = searchParams.get('error');
+
+  const toastShownRef = useRef(false);
+
+  useEffect(() => {
+    if (errorParams === ERROR.UNAUTHENTICATED && !toastShownRef.current) {
+      toastShownRef.current = true;
+      info(tCommon('unAuthenticationError'));
+
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete('error');
+
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [errorParams, info, router, searchParams, tCommon, pathname]);
 
   const { success, error } = useToast();
-
   const { trigger: handleLogin, isMutating } = useLogin();
 
   const initialValues: LoginFormValues = {

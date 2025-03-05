@@ -45,7 +45,19 @@
     "2star": "2 sao",
     "3star": "3 sao",
     "4star": "4 sao",
-    "5star": "5 sao"
+    "5star": "5 sao",
+
+    "unAuthenticationError": "Bạn cần đăng nhập để sử dụng tính năng này!"
+  },
+
+  "profileSideBar": {
+    "userInfo": "Thông tin tài khoản",
+    "changePassword": "Đổi mật khẩu",
+    "address": "Địa chỉ",
+    "yourOrder": "Đơn hàng của bạn",
+    "favoriteList": "Danh sách yêu thích",
+    "accountManage": " QUẢN LÝ TÀI KHOẢN",
+    "transactionManage": "QUẢN LÝ GIAO DỊCH"
   },
 
   "validation": {
