@@ -17,6 +17,8 @@ interface MenuItem {
   value?: string;
   action?: () => void;
   to?: string;
+  // Nếu true: hiển thị khi có userData, false: hiển thị khi không có userData
+  requiresUser?: boolean;
 }
 
 const AvatarMenu = () => {
@@ -38,17 +40,20 @@ const AvatarMenu = () => {
       label: t('account'),
       icon: <Icon name="account" color="inherit" strokeWidth={1.75} />,
       to: PATH.PROFILE_EDIT,
+      requiresUser: true, // Hiển thị nếu có userData
     },
     {
       label: t('cart'),
       icon: <Icon name="cart" color="inherit" strokeWidth={1.8} />,
       to: PATH.CART,
+      requiresUser: true, // Hiển thị nếu có userData
     },
     {
       label: t('favorites'),
       icon: <Icon name="heart" color="inherit" strokeWidth={1.8} />,
       divide: true,
       to: PATH.FAVORITE,
+      requiresUser: true, // Hiển thị nếu có userData
     },
     {
       label: t('settings'),
@@ -89,6 +94,19 @@ const AvatarMenu = () => {
       action: () => {
         logoutUser();
       },
+      requiresUser: true, // Hiển thị nếu có userData
+    },
+    {
+      label: t('login'),
+      icon: <Icon name="logout" color="inherit" size={1.3} strokeWidth={15} />,
+      to: PATH.LOGIN,
+      requiresUser: false, // Chỉ hiển thị khi chưa đăng nhập (không có userData)
+    },
+    {
+      label: t('signUp'),
+      icon: <Icon name="logout" color="inherit" size={1.3} strokeWidth={15} />,
+      to: PATH.SIGN_UP,
+      requiresUser: false, // Chỉ hiển thị khi chưa đăng nhập
     },
   ];
 
@@ -102,21 +120,23 @@ const AvatarMenu = () => {
   };
 
   return (
-    <ul className="max-w-[240px] rounded-2xl overflow-hidden text-dark bg-white dark:bg-dark-500 dark:text-white-200 font-semibold text-base">
-      <li className="p-5 flex gap-5 items-center">
-        <Image
-          src={userData?.avatar || ''}
-          alt={userData?.fullname || ''}
-          width={50}
-          height={50}
-          className="h-[50px] w-[50px] rounded-md bg-dark"
-        />
+    <ul className="max-w-[240px] min-w-[210px] rounded-2xl overflow-hidden text-dark bg-white dark:bg-dark-500 dark:text-white-200 font-semibold text-base">
+      {userData && (
+        <li className="p-5 flex gap-5 items-center">
+          <Image
+            src={userData?.avatar || ''}
+            alt={userData?.fullname || ''}
+            width={50}
+            height={50}
+            className="h-[50px] w-[50px] rounded-md bg-dark"
+          />
 
-        <div>
-          <p>{userData?.fullname}</p>
-          <p className="mt-1 text-sm font-normal text-gray-500 truncate w-[120px]">{userData?.email}</p>
-        </div>
-      </li>
+          <div>
+            <p>{userData?.fullname}</p>
+            <p className="mt-1 text-sm font-normal text-gray-500 truncate w-[120px]">{userData?.email}</p>
+          </div>
+        </li>
+      )}
 
       {menuStack.length > 1 && (
         <li onClick={goBack} className="hover:bg-gray-400 hover:text-blue-500 cursor-pointer font-semibold">
@@ -128,45 +148,58 @@ const AvatarMenu = () => {
         </li>
       )}
 
-      {currentMenu.subMenu?.map((item, index) => {
-        if (item.to) {
-          return (
-            <li key={index} className="relative hover:text-blue-500 cursor-pointer">
-              <Link href={item.to} rel="noopener noreferrer">
+      {/*
+        Lọc các mục menu:
+        - Nếu item.requiresUser là true, chỉ hiển thị khi có userData.
+        - Nếu item.requiresUser là false, chỉ hiển thị khi không có userData.
+        - Nếu không định nghĩa, hiển thị luôn.
+      */}
+      {currentMenu.subMenu
+        ?.filter((item) => {
+          if (typeof item.requiresUser === 'boolean') {
+            return item.requiresUser ? !!userData : !userData;
+          }
+          return true;
+        })
+        .map((item, index) => {
+          if (item.to) {
+            return (
+              <li key={index} className="relative hover:text-blue-500 cursor-pointer">
+                <Link href={item.to} rel="noopener noreferrer">
+                  <div className="py-3 px-5 hover:bg-gray-400 flex justify-between items-center">
+                    <div className="flex items-center justify-between text-inherit w-full">
+                      <div>{item.label}</div>
+                      {item.icon && item.icon}
+                    </div>
+                  </div>
+                </Link>
+                {item.divide && <div className="h-[1px] my-1 mx-5 bg-gray-400"></div>}
+              </li>
+            );
+          } else {
+            return (
+              <li
+                key={index}
+                className="relative hover:text-blue-500 cursor-pointer"
+                onClick={() => {
+                  if (item.subMenu) {
+                    setMenuStack((prev) => [...prev, item]);
+                  } else if (item.action) {
+                    item.action();
+                  }
+                }}
+              >
                 <div className="py-3 px-5 hover:bg-gray-400 flex justify-between items-center">
                   <div className="flex items-center justify-between text-inherit w-full">
                     <div>{item.label}</div>
                     {item.icon && item.icon}
                   </div>
                 </div>
-              </Link>
-              {item.divide && <div className="h-[1px] my-1 mx-5 bg-gray-400"></div>}
-            </li>
-          );
-        } else {
-          return (
-            <li
-              key={index}
-              className="relative hover:text-blue-500 cursor-pointer"
-              onClick={() => {
-                if (item.subMenu) {
-                  setMenuStack((prev) => [...prev, item]);
-                } else if (item.action) {
-                  item.action();
-                }
-              }}
-            >
-              <div className="py-3 px-5 hover:bg-gray-400 flex justify-between items-center">
-                <div className="flex items-center justify-between text-inherit w-full">
-                  <div>{item.label}</div>
-                  {item.icon && item.icon}
-                </div>
-              </div>
-              {item.divide && <div className="h-[1px] my-1 mx-5 bg-gray-400"></div>}
-            </li>
-          );
-        }
-      })}
+                {item.divide && <div className="h-[1px] my-1 mx-5 bg-gray-400"></div>}
+              </li>
+            );
+          }
+        })}
     </ul>
   );
 };

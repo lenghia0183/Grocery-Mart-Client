@@ -10,6 +10,8 @@
   "common": {
     "account": "Tài khoản",
     "logout": "Đăng xuất",
+    "login": "Đăng nhập",
+    "signUp": "Đăng ký",
     "cart": "Giỏ hàng",
     "favorites": "Mục yêu thích",
     "settings": "Cài đặt",

@@ -39,6 +39,7 @@ import Category from '@/asset/icons/category.svg';
 import Filter from '@/asset/icons/filter.svg';
 import Delete from '@/asset/icons/delete.svg';
 import Copy from '@/asset/icons/copy.svg';
+import Menu from '@/asset/icons/menu.svg';
 
 import { createTailwindClass } from '@/utils';
 
@@ -93,6 +94,7 @@ export const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElem
   filter: Filter,
   delete: Delete,
   copy: Copy,
+  menu: Menu,
 };
 
 const Icon: React.FC<IconProps> = ({

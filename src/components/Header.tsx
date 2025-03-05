@@ -11,6 +11,7 @@ import { PATH } from '@/constants/path';
 import { useUser } from '@/context/userProvider';
 import Image from './Image';
 import formatCurrency from '@/utils/formatCurrency';
+import Icon from './Icon';
 
 const Header: React.FC = () => {
   const t = useTranslations();
@@ -58,58 +59,62 @@ const Header: React.FC = () => {
 
         {/* Action Buttons */}
         <div className="flex gap-3 text-dark dark:text-white-200">
-          <IconButton
-            iconName="search"
-            variant="contained"
-            className="shadow-button-light dark:shadow-button-dark dark:bg-dark-500"
-            iconColor="inherit"
-            width="50px"
-            height="50px"
-            iconWidth="21px"
-            iconHeight="21px"
-            iconStrokeWidth={1.8}
-          />
+          {userData && (
+            <IconButton
+              iconName="search"
+              variant="contained"
+              className="shadow-button-light dark:shadow-button-dark dark:bg-dark-500"
+              iconColor="inherit"
+              width="50px"
+              height="50px"
+              iconWidth="21px"
+              iconHeight="21px"
+              iconStrokeWidth={1.8}
+            />
+          )}
 
           {/* Wishlist & Cart */}
-          <div className="flex items-center gap-3 bg-white dark:bg-dark-500 rounded-md shadow-button-light dark:shadow-button-dark">
-            {/* Wishlist */}
-            <div className="flex items-center gap-2 py-3 pl-5 hover:text-blue-300 dark:text-white-200">
-              <IconButton
-                iconName="heart"
-                variant="text"
-                className="shadow-none"
-                iconColor="inherit"
-                iconHoverColor="inherit"
-                iconWidth="21px"
-                iconHeight="21px"
-                iconStrokeWidth={1.8}
-                href={PATH.FAVORITE}
-              />
-              <p className="min-w-[20px] max-w-[30px] truncate overflow-ellipsis transition-colors duration-300">
-                {userFavoritesCount}
-              </p>
-            </div>
+          {userData && (
+            <div className="flex items-center gap-3 bg-white dark:bg-dark-500 rounded-md shadow-button-light dark:shadow-button-dark">
+              {/* Wishlist */}
+              <div className="flex items-center gap-2 py-3 pl-5 hover:text-blue-300 dark:text-white-200">
+                <IconButton
+                  iconName="heart"
+                  variant="text"
+                  className="shadow-none"
+                  iconColor="inherit"
+                  iconHoverColor="inherit"
+                  iconWidth="21px"
+                  iconHeight="21px"
+                  iconStrokeWidth={1.8}
+                  href={PATH.FAVORITE}
+                />
+                <p className="min-w-[20px] max-w-[30px] truncate overflow-ellipsis transition-colors duration-300">
+                  {userFavoritesCount}
+                </p>
+              </div>
 
-            <div className="w-[1px] h-[60%] bg-gray-400"></div>
+              <div className="w-[1px] h-[60%] bg-gray-400"></div>
 
-            {/* Cart */}
-            <div className="flex items-center gap-2 py-3 pr-5 hover:text-blue-300 dark:text-white-200">
-              <IconButton
-                iconName="cart"
-                variant="text"
-                className="shadow-none"
-                iconColor="inherit"
-                iconHoverColor="inherit"
-                iconWidth="21px"
-                iconHeight="21px"
-                iconStrokeWidth={1.8}
-                href={PATH.CART}
-              />
-              <p className="min-w-[70px] max-w-[130px] truncate overflow-ellipsis transition-colors duration-300">
-                {formatCurrency(userCartTotalMoney)}
-              </p>
+              {/* Cart */}
+              <div className="flex items-center gap-2 py-3 pr-5 hover:text-blue-300 dark:text-white-200">
+                <IconButton
+                  iconName="cart"
+                  variant="text"
+                  className="shadow-none"
+                  iconColor="inherit"
+                  iconHoverColor="inherit"
+                  iconWidth="21px"
+                  iconHeight="21px"
+                  iconStrokeWidth={1.8}
+                  href={PATH.CART}
+                />
+                <p className="min-w-[70px] max-w-[130px] truncate overflow-ellipsis transition-colors duration-300">
+                  {formatCurrency(userCartTotalMoney)}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* User Avatar */}
           <ToolTip
@@ -117,9 +122,9 @@ const Header: React.FC = () => {
             openOnClick
             clickable
             opacity={1}
-            className="!p-0 !rounded-2xl dark:bg-dark-500 dark:text-dark-500 shadow-avatar-menu-light dark:shadow-avatar-menu-dark"
+            className="!p-0 !rounded-2xl !bg-white dark:!bg-dark-500 dark:text-dark-500 shadow-avatar-menu-light dark:shadow-avatar-menu-dark"
           >
-            <div className="w-[50px] h-[50px] rounded-md bg-dark">
+            {userData ? (
               <Image
                 src={userData?.avatar || ''}
                 alt={userData?.fullname || ''}
@@ -127,7 +132,9 @@ const Header: React.FC = () => {
                 height={50}
                 className="w-[50px] h-[50px] rounded-md"
               />
-            </div>
+            ) : (
+              <Icon name="menu" />
+            )}
           </ToolTip>
         </div>
       </div>
