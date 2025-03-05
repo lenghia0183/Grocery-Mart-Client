@@ -4,6 +4,8 @@ import { getCookie, setCookie } from 'cookies-next';
 
 import { ApiResponse } from '@/types/ApiResponse';
 import { getLocalStorageItem, setLocalStorageItem } from '@/utils/localStorage';
+import eventEmitter from '@/utils/eventEmitter';
+import { EVENT_EMITTER } from '@/constants/common';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL + '/api/' || '';
 const BASE_URL_GHN = process.env.NEXT_PUBLIC_BASE_URL_GHN || '';
@@ -60,7 +62,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
       if (response.status >= 200 && response.status < 300) {
         return response.data;
       } else if (response.status === 401) {
-        // triggerLogout();
+        eventEmitter.emit(EVENT_EMITTER.LOGOUT);
       }
       return Promise.reject(response);
     },
@@ -90,7 +92,7 @@ export const createInstance = (baseURL: string, customHeaders: Record<string, st
             return instance(originalRequest);
           }
         } catch (refreshError) {
-          //   triggerLogout();
+          eventEmitter.emit(EVENT_EMITTER.LOGOUT);
         }
       }
 

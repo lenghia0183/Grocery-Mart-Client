@@ -12,6 +12,8 @@ import { PATH } from '@/constants/path';
 import { nextApi } from '@/services/api/axios';
 import { useToast } from './toastProvider';
 import { useTranslations } from 'next-intl';
+import eventEmitter from '@/utils/eventEmitter';
+import { EVENT_EMITTER } from '@/constants/common';
 
 interface UserContextType {
   userData: UserData | null;
@@ -54,7 +56,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   }, [data]);
 
   useEffect(() => {
-    console.log('test');
     if (userFavoriteData?.data) {
       setUserFavoritesCount(userFavoriteData.data.totalResult || 0);
     }
@@ -91,8 +92,18 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       refreshToken: '',
     });
     success(tCommon('logoutSuccessful'));
-    router.push(PATH.LOGIN);
+    router.replace(PATH.LOGIN);
   };
+
+  useEffect(() => {
+    eventEmitter.once(EVENT_EMITTER.LOGOUT, () => {
+      logoutUser();
+    });
+    return () => {
+      eventEmitter.removeAllListeners(EVENT_EMITTER.LOGOUT);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <UserContext.Provider
