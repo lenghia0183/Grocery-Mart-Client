@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
 
   const accessToken = request.cookies.get('accessToken')?.value;
 
-  if (protectedRoutes.some((route) => pathname.startsWith(route)) && !accessToken) {
+  if (protectedRoutes.some((route) => pathname.includes(route)) && !accessToken) {
     const loginUrl = new URL(PATH.LOGIN, request.nextUrl.origin);
     loginUrl.searchParams.set('error', ERROR.UNAUTHENTICATED);
     return NextResponse.redirect(loginUrl);
