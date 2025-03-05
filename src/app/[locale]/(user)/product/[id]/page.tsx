@@ -20,7 +20,7 @@ const fetchProductDetails = async (id: string) => {
   return response?.data;
 };
 
-const ProductDetail = async ({ params }: { params: { id: string } }) => {
+const ProductDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
   const t = await getTranslations('productDetail');
