@@ -99,16 +99,16 @@ const TextArea = ({
       >
         {label && (
           <label htmlFor={name} className={clsx('block mb-1', { 'text-gray-500': disabled }, labelClassName)}>
-            {required && <span className="text-red-400 mr-1">*</span>} {label}
+            {required && <span className="text-red-400 dark:text-red-300 mr-1">*</span>} {label}
           </label>
         )}
         <div
           className={clsx(
             'flex items-center border-gray-300 border p-2 rounded-md bg-transparent text-dark dark:text-white-200',
             {
-              'border-red-400': error && !disabled,
+              'border-red-400 dark:border-red-300': error && !disabled,
               'hover:border-blue-400 group-focus-within:border-blue-400 ': !error && !disabled,
-              '!bg-gray-200 dark:!bg-gray-600 text-gray-300 dark:!text-gray-500 border-gray-300': disabled,
+              '!bg-gray-200 dark:!bg-gray-400 text-gray-300 dark:!text-gray-300 !border-gray-300': disabled,
             },
           )}
           onClick={handleDivClick}
@@ -137,7 +137,7 @@ const TextArea = ({
             </span>
           )}
         </div>
-        {error && <span className="text-red-400 text-xs">{error}</span>}
+        {error && <span className="text-red-400 dark:text-red-300 text-xs">{error}</span>}
       </div>
     );
   } else {
@@ -159,16 +159,16 @@ const TextArea = ({
       >
         {label && (
           <label htmlFor={name} className={clsx('mr-2', labelClassName)} style={{ width: labelWidth }}>
-            {required && <span className="text-red-400 mr-1">*</span>} {label}
+            {required && <span className="text-red-400 dark:text-red-300 mr-1">*</span>} {label}
           </label>
         )}
         <div
           className={clsx(
             'flex-grow flex items-center border-gray-300 border p-2 rounded-md bg-transparent text-dark dark:text-white-200',
             {
-              'border-red-400': error && !disabled,
+              'border-red-400 dark:border-red-300': error && !disabled,
               'hover:border-blue-400 group-focus-within:border-blue-400': !error && !disabled,
-              '!bg-gray-200 dark:!bg-gray-600 text-gray-300 dark:!text-gray-500 border-gray-300': disabled,
+              '!bg-gray-200 dark:!bg-gray-400 text-gray-300 dark:!text-gray-300 !border-gray-300': disabled,
             },
           )}
         >
@@ -196,7 +196,7 @@ const TextArea = ({
             </span>
           )}
         </div>
-        {error && <span className="text-red-400 text-xs">{error}</span>}
+        {error && <span className="text-red-400 dark:text-red-300 text-xs">{error}</span>}
       </div>
     );
   }

@@ -60,9 +60,9 @@ const Input: React.FC<IInputProps> = ({
           className={clsx(
             'w-full p-2 bg-transparent border rounded-md outline-none placeholder-gray-500  ',
             {
-              'border-red-400': error,
+              'border-red-400 dark:border-red-300': error && !disabled,
               'border-gray-500': !error,
-              '!bg-gray-200 dark:!bg-gray-600 text-gray-300 dark:!text-gray-500 !border-gray-300': disabled,
+              '!bg-gray-200 dark:!bg-gray-400 text-gray-300 dark:!text-gray-300 !border-gray-300': disabled,
             },
 
             className,
@@ -99,9 +99,9 @@ const Input: React.FC<IInputProps> = ({
         className={clsx(
           'flex items-center justify-center ml-1 rounded-md border',
           {
-            'border-red-400': error,
-            'border-gray-500': !error,
-            '!bg-gray-200 dark:!bg-gray-700 text-gray-300 dark:!text-gray-500 !border-gray-300': disabled,
+            'border-red-400 dark:border-red-300 text-red-400 dark:text-red-300': error,
+            'border-gray-500 text-gray-500': !error,
+            '!bg-gray-200 dark:!bg-gray-400 text-gray-300 dark:!text-gray-300 !border-gray-300': disabled,
           },
           iconClassName,
         )}

@@ -44,7 +44,7 @@ const Checkout = (): JSX.Element => {
     buyerName: userData?.fullname || '',
     buyerEmail: userData?.email || '',
     buyerPhone: userData?.phone || '',
-    recipientName: '',
+    recipientName: 'lecongnghia',
     recipientPhone: '',
     province: null,
     district: null,
@@ -164,8 +164,7 @@ const Checkout = (): JSX.Element => {
           });
         }}
       >
-        {({ values, resetForm, setFieldValue, errors }) => {
-          console.log('errors', errors);
+        {({ values, resetForm, setFieldValue }) => {
           return (
             <Form>
               <main className="p-14 bg-gray-100 dark:bg-dark-500">
@@ -308,7 +307,7 @@ const Checkout = (): JSX.Element => {
                               {t('shippingWithFee')} -{' '}
                               <span className="font-semibold">{formatCurrency(values.shippingFee)}</span>
                             </p>
-                            <p className="text-red-500 font-medium">{t('freeShipping')}</p>
+                            <p className="text-red-500 dark:text-red-300 font-medium">{t('freeShipping')}</p>
                           </div>
                           <Radio name="method" value="ghn" />
                         </div>

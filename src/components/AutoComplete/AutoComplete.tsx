@@ -278,7 +278,7 @@ const Autocomplete = <Item, Response = Item[]>({
         {label && (
           <label className={clsx('text-md mb-2', { 'text-gray-500': disabled })}>
             {' '}
-            {required && <span className="text-red-400 mr-1">*</span>}
+            {required && <span className="text-red-400 dark:text-red-300 mr-1">*</span>}
             {label}
           </label>
         )}
@@ -317,7 +317,7 @@ const Autocomplete = <Item, Response = Item[]>({
             })}
           />
         </div>
-        {error && <span className="text-red-400 text-xs">{error}</span>}
+        {error && !disabled && <span className="text-red-400 dark:text-red-300 text-xs">{error}</span>}
       </div>
     );
   } else {
@@ -336,7 +336,7 @@ const Autocomplete = <Item, Response = Item[]>({
               }}
             >
               {' '}
-              {required && <span className="text-red-400 mr-1">*</span>}
+              {required && <span className="text-red-400 dark:text-red-300 mr-1">*</span>}
               {label}
             </label>
           )}
@@ -376,7 +376,7 @@ const Autocomplete = <Item, Response = Item[]>({
             />
           </div>
         </div>
-        {error && <span className="text-red-400 text-xs">{error}</span>}
+        {error && !disabled && <span className="text-red-400 dark:text-red-300 text-xs">{error}</span>}
       </div>
     );
   }

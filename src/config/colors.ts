@@ -63,6 +63,7 @@ const colors: Colors = {
     400: 'rgb(210, 202, 202, 0.65)', // Đã có trước
     500: '#9e9da8', // Đã có trước
     600: '#f5f5f5', // đã dùng
+    700: '#8c8c8c', // đã dùng
   },
 
   green: {
