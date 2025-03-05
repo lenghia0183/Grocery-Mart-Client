@@ -120,7 +120,7 @@ const AvatarMenu = () => {
   };
 
   return (
-    <ul className="max-w-[240px] min-w-[210px] rounded-2xl overflow-hidden text-dark bg-white dark:bg-dark-500 dark:text-white-200 font-semibold text-base">
+    <ul className="max-w-[240px] min-w-[210px] rounded-xl overflow-hidden text-dark bg-white dark:bg-dark-500 dark:text-white-200 font-semibold text-base">
       {userData && (
         <li className="p-5 flex gap-5 items-center">
           <Image

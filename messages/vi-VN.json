@@ -234,7 +234,10 @@
     "addToCart": "Thêm vào giỏ hàng",
     "addProductToCartSuccessful": "Thêm sản phẩm vào giỏ hàng thành công",
     "addProductToFavoriteSuccessful": "Thêm sản phẩm vào danh sách yêu thích thành công",
-    "deleteProductToFavoriteSuccessful": "Xóa sản phẩm vào danh sách yêu thích thành công"
+    "deleteProductToFavoriteSuccessful": "Xóa sản phẩm vào danh sách yêu thích thành công",
+
+    "noReview": "Chưa có đánh giá nào.",
+    "buyToReview": "Hãy mua hàng và chia sẻ trải nghiệm của bạn để đánh giá sản phẩm này!"
   },
 
   "changePassword": {

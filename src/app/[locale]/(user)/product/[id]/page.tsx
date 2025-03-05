@@ -12,6 +12,7 @@ import RelatedProducts from '@/components/RelatedProductList';
 import { getTranslations } from 'next-intl/server';
 import { api } from '@/services/api/axios';
 import { ProductDetail as ProductDetailType } from '@/types/product';
+import ReviewList from '@/components/ReviewList';
 
 const fetchProductDetails = async (id: string) => {
   const response = await api.get<ProductDetailType>(`v1/product/${id}`);
@@ -81,14 +82,15 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
           </div>
         </div>
 
-        <Tabs className="sm:mt-5 mt-3" list={tabList} divider={true}>
+        <Tabs className="sm:mt-5 mt-3 mb-7" list={tabList} divider={true}>
           <div className="text-dark-400 text-lg flex flex-col gap-3">
             <LabelValue label={t('brand')} value={fakeProduct?.manufacturerId?.name} labelWidth="200px" />
             <LabelValue label={t('productCode')} value={fakeProduct?.code} labelWidth="200px" />
             <LabelValue label={t('productPrice')} value={formatCurrency(fakeProduct?.price)} labelWidth="200px" />
             <LabelValue label={t('productDescription')} value={fakeProduct?.description} labelWidth="200px" />
           </div>
-          <LabelValue label={t('announcement')} value={t('comingSoon')} labelWidth="200px" />
+          {/* <LabelValue label={t('announcement')} value={t('comingSoon')} labelWidth="200px" /> */}
+          <ReviewList productId={fakeProduct?._id || ''} />
         </Tabs>
       </div>
       <RelatedProducts />
