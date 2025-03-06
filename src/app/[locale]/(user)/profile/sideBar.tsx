@@ -11,15 +11,20 @@ import { usePathname } from '@/i18n/routing';
 import { UserData } from '@/types/user';
 import { formatRegisteredDate } from '@/utils/formatRegisteredDate';
 import { useTranslations } from 'next-intl';
+import Button from '@/components/Button';
+import { useUser } from '@/context/userProvider';
 
 interface SideBarProps {
   userData: UserData | null;
 }
 
 const SideBar = ({ userData }: SideBarProps): JSX.Element => {
+  const { logoutUser } = useUser();
+
   const pathname = usePathname();
 
   const t = useTranslations('profileSideBar');
+  const tCommon = useTranslations('common');
 
   const accountLinks = [
     { name: t('userInfo'), path: PATH.PROFILE_EDIT, icon: 'account' },
@@ -33,7 +38,7 @@ const SideBar = ({ userData }: SideBarProps): JSX.Element => {
   ];
 
   return (
-    <nav className="sm:pb-[200px] pb-[100px] bg-white dark:bg-dark-400 shadow-md rounded-xl overflow-hidden dark:text-white">
+    <nav className="sm:pb-[40px] pb-[30px] bg-white dark:bg-dark-400 shadow-md rounded-xl overflow-hidden dark:text-white">
       <div className="mb-4   relative">
         <Image src={images.avatarCover} alt="grocery-mart" height={250} width={250} className="h-[250px] w-full" />
         <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center justify-center w-full">
@@ -95,6 +100,18 @@ const SideBar = ({ userData }: SideBarProps): JSX.Element => {
             </li>
           ))}
         </ul>
+
+        <Button
+          variant="outlined"
+          textColor="blue-400"
+          borderColor="blue-400"
+          textHoverColor="blue-500"
+          borderHoverColor="blue-500"
+          className="mt-[120px] !w-[80%] mx-auto"
+          onClick={logoutUser}
+        >
+          {tCommon('logout')}
+        </Button>
       </div>
     </nav>
   );

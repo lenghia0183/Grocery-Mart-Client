@@ -17,7 +17,7 @@ interface MenuItem {
   value?: string;
   action?: () => void;
   to?: string;
-  // Nếu true: hiển thị khi có userData, false: hiển thị khi không có userData
+
   requiresUser?: boolean;
 }
 

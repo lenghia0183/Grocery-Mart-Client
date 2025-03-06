@@ -2,7 +2,7 @@
 
 import Footer from '@/components/Footer';
 import GoToTop from '@/components/GoToTop';
-import Header from '@/components/Header';
+import Header from '@/components/Header/Header';
 
 import { Suspense } from 'react';
 

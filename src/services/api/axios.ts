@@ -8,6 +8,8 @@ import eventEmitter from '@/utils/eventEmitter';
 import { EVENT_EMITTER } from '@/constants/common';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL + '/api/' || '';
+const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN + '/api/' || '';
+
 const BASE_URL_GHN = process.env.NEXT_PUBLIC_BASE_URL_GHN || '';
 const TOKEN_GHN = process.env.NEXT_PUBLIC_GHN_API_KEY || '';
 const SHOP_ID_GHN = process.env.NEXT_PUBLIC_GHN_SHOP_ID || '';
@@ -198,7 +200,7 @@ const instanceGhn = createInstance(BASE_URL_GHN, {
   Token: TOKEN_GHN,
   ShopId: SHOP_ID_GHN,
 });
-const nextApiInstance = createInstance('http://localhost:8001/api');
+const nextApiInstance = createInstance(DOMAIN);
 
 const api = createApi(instance);
 export const nextApi = createApi(nextApiInstance);

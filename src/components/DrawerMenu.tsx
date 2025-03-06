@@ -30,7 +30,6 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({
   height = '100%',
   renderContent,
   renderTitle = null,
-
   animationDuration = 1000,
   disableScroll = true,
   autoCloseTimeout = null,
@@ -149,7 +148,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({
     <>
       <div className={overlayClasses} onClick={handleOverlayClick} style={{ backgroundColor: overlayColor }} />
       <div className={drawerClasses} style={drawerStyle}>
-        {renderTitle && <div className="p-4">{renderTitle()}</div>}
+        {renderTitle && <div className="">{renderTitle()}</div>}
         <div>{renderContent()}</div>
       </div>
     </>
