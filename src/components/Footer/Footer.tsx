@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import Logo from '@/components/Logo';
-
 import EmailSignup from './EmailSignUp';
 import Icon from '@/components/Icon';
 
@@ -77,9 +76,9 @@ export default function Footer() {
   return (
     <footer className="bg-blue-200 dark:bg-dark-400 dark:text-white-200 text-dark py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Cột Logo, mô tả, form */}
-          <div className="col-span-3">
+          <div className="xl:col-span-3 col-span-full">
             <Logo />
             <p className="mt-4 text-sm leading-relaxed">{t('desc01')}</p>
             <p className="mt-10 text-sm leading-relaxed">{t('desc02')}</p>
@@ -88,7 +87,7 @@ export default function Footer() {
 
           {/* Các mục của footer */}
           {footerSections.map((section) => (
-            <div key={section.title} className="col-span-2">
+            <div key={section.title} className="xl:col-span-2 md:col-span-6 col-span-full">
               <h3 className="text-lg font-semibold border-b pb-2 mb-4">{section.title}</h3>
               <ul className="space-y-2 text-[15px]">
                 {section.links.map((item, idx) => (
@@ -119,7 +118,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col md:flex-row justify-between items-center border-t border-gray-300 pt-6 text-sm">
+        <div className="xl:mt-12 mt-10 flex flex-col md:flex-row justify-between items-center border-t border-gray-300 pt-6 text-sm">
           <p>{t('copyright')}</p>
           <div className="flex space-x-4">
             <Link href="#" className="w-8 h-8 bg-blue-300 flex items-center justify-center rounded-lg">

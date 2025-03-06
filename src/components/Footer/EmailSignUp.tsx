@@ -27,8 +27,13 @@ const EmailSignup = () => {
     >
       {() => {
         return (
-          <Form className="mt-6 flex space-x-2">
-            <TextField name="email" label="" inputContainerClassName="bg-white border-gray-500 border rounded-lg" />
+          <Form className="mt-6 flex space-x-2 w-full">
+            <TextField
+              name="email"
+              label=""
+              className="flex-1"
+              inputContainerClassName="bg-white border-gray-500 border rounded-lg"
+            />
             <Button
               height="45px"
               size="small"
