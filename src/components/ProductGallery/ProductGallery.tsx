@@ -35,7 +35,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
   };
 
   const navSliderSettings = {
-    slidesToShow: 5,
+    slidesToShow: 4,
     swipeToSlide: true,
     focusOnSelect: true,
     asNavFor: nav1 || undefined,

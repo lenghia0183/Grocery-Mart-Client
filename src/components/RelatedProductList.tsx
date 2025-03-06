@@ -55,7 +55,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
     responsive: [
       {
         breakpoint: 1024,
-        settings: { slidesToShow: 2 },
+        settings: { slidesToShow: 3 },
       },
       {
         breakpoint: 480,
@@ -71,10 +71,10 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
         <Divider marginBottom="30px" />
 
         {isLoadingProductData ? (
-          <ProductListSkeleton count={5} className="grid-cols-5 mt-3" />
+          <ProductListSkeleton count={5} className="xl:!grid-cols-5 md:!grid-cols-3 !grid-cols-1 mt-3" />
         ) : (
           <section className={clsx('', className)}>
-            {(productData?.data?.products?.length || 0) > 4 ? (
+            {(productData?.data?.products?.length || 0) > 1 ? (
               <div className="relative">
                 <IconButton
                   type="button"
@@ -113,7 +113,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
             ) : (
               <div className="flex justify-center items-center gap-4">
                 {productData?.data?.products.map((item) => (
-                  <div className="w-[18%]" key={item._id}>
+                  <div className="xl:w-[18%] md:w-[32%] w-[90%]" key={item._id}>
                     <ProductCard data={item} className="dark!shadow-none !shadow-md" />
                   </div>
                 ))}

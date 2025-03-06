@@ -38,12 +38,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
 
   return (
     <WithLoading isLoading={isMutatingAddProductToCart || isMutatingAddProductToFavoriteList}>
-      <Formik initialValues={initialValues} onSubmit={(values) => console.log('Submit', values)}>
+      <Formik initialValues={initialValues} onSubmit={() => {}}>
         {({ values, resetForm, setFieldValue }) => {
           return (
             <Form>
               <p className="text-2xl font-medium mt-3 dark:text-white-200">{t('quantity')}</p>
-              <div className="flex mt-3">
+              <div className="flex xl:flex-row flex-col mt-3 xl:gap-0 gap-5">
                 {/* left column */}
                 <div className="flex-1">
                   <QuantityInput name="quantity" width="140px" height="50px" buttonClassName="dark:text-white-200" />
@@ -52,7 +52,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                 {/* right column */}
                 <div className="border border-gray-500 p-7 rounded-md flex-1">
                   <LabelValue
-                    labelClassName="!font-normal "
+                    labelClassName="!font-normal"
                     value={<p className="bg-green-100 px-1 rounded-sm ">0%</p>}
                     label={formatCurrency(product?.price)}
                   />
@@ -63,9 +63,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product }) => {
                     label={formatCurrency(product?.price)}
                   />
 
-                  <div className="flex gap-5 mt-5">
+                  <div className="flex xl:gap-5 gap-2 mt-5">
                     <Button
-                      size="large"
+                      size="medium"
                       onClick={() => {
                         if (!product?._id) return;
                         addProductToCart(

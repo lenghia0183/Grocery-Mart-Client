@@ -49,7 +49,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ productId }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6 gap-3">
         {reviewData.comments.map((comment: Review, index: number) => (
           <div key={index} className="flex items-start space-x-4 p-4 rounded-lg shadow-md bg-gray-600 dark:bg-dark-400">
             <div className="flex-shrink-0">

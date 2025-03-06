@@ -35,14 +35,14 @@ const ProductDetail = async ({ params }: { params: Promise<{ id: string }> }) =>
   return (
     <div className="dark:bg-dark-500 py-14">
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
           {/* Left Column */}
-          <div className="col-span-5">
+          <div className="xl:col-span-5 col-span-full">
             <ProductGallery images={fakeProduct?.images || []} />
           </div>
 
           {/* Right Column */}
-          <div className="col-span-7 bg-gray-600 dark:bg-dark-400 p-14 flex flex-col gap-4 rounded-xl">
+          <div className="xl:col-span-7 col-span-full bg-gray-600 dark:bg-dark-400 xl:p-14 p-7 flex flex-col gap-4 rounded-xl">
             <h1 className="text-[28px] dark:text-white-200 font-semibold">{fakeProduct?.name || ''}</h1>
 
             <div className="flex text-lg flex-col gap-y-3">
@@ -53,7 +53,7 @@ const ProductDetail = async ({ params }: { params: Promise<{ id: string }> }) =>
                 value={fakeProduct?.inStock ? t('inStock') : t('outOfStock')}
               />
 
-              <div className="flex items-center gap-2">
+              <div className="flex xl:flex-row flex-col xl:items-center gap-2">
                 <LabelValue
                   labelClassName="!font-normal dark:text-white-200"
                   valueClassName="text-blue-500 dark:text-blue-400"
@@ -61,7 +61,7 @@ const ProductDetail = async ({ params }: { params: Promise<{ id: string }> }) =>
                   value={fakeProduct?.manufacturerId?.name}
                 />
 
-                <div className="w-[2px] bg-dark-300 h-[20px]"></div>
+                <div className="w-[2px] bg-dark-300 h-[20px] xl:block hidden"></div>
 
                 <LabelValue
                   labelClassName="!font-normal dark:text-white-200"
@@ -84,10 +84,10 @@ const ProductDetail = async ({ params }: { params: Promise<{ id: string }> }) =>
 
         <Tabs className="sm:mt-5 mt-3 mb-7" list={tabList} divider={true}>
           <div className="text-dark-400 text-lg flex flex-col gap-3">
-            <LabelValue label={t('brand')} value={fakeProduct?.manufacturerId?.name} labelWidth="200px" />
-            <LabelValue label={t('productCode')} value={fakeProduct?.code} labelWidth="200px" />
-            <LabelValue label={t('productPrice')} value={formatCurrency(fakeProduct?.price)} labelWidth="200px" />
-            <LabelValue label={t('productDescription')} value={fakeProduct?.description} labelWidth="200px" />
+            <LabelValue label={t('brand')} value={fakeProduct?.manufacturerId?.name} labelWidth="150px" />
+            <LabelValue label={t('productCode')} value={fakeProduct?.code} labelWidth="150px" />
+            <LabelValue label={t('productPrice')} value={formatCurrency(fakeProduct?.price)} labelWidth="150px" />
+            <LabelValue label={t('productDescription')} value={fakeProduct?.description} labelWidth="150px" />
           </div>
           {/* <LabelValue label={t('announcement')} value={t('comingSoon')} labelWidth="200px" /> */}
           <ReviewList productId={fakeProduct?._id || ''} />

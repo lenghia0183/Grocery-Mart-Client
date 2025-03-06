@@ -5,26 +5,26 @@ const ProductDetailSkeleton = () => {
   return (
     <div className="dark:bg-dark-500 py-14">
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
           {/* Cột bên trái - Hình ảnh sản phẩm */}
-          <div className="col-span-5">
+          <div className="xl:col-span-5 col-span-full">
             {/* Ảnh sản phẩm chính */}
             <div className="w-full aspect-square bg-gray-200 dark:bg-gray-500 animate-pulse rounded-md"></div>
             {/* Ảnh nhỏ bên dưới */}
-            <div className="flex mt-3 gap-2">
-              {Array(5)
+            <div className="flex mt-3 justify-between m-auto items-center">
+              {Array(4)
                 .fill(null)
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="w-[20%] aspect-square bg-gray-200 dark:bg-gray-500 animate-pulse rounded-md"
+                    className="w-[22%] aspect-square bg-gray-200 dark:bg-gray-500 animate-pulse rounded-md"
                   ></div>
                 ))}
             </div>
           </div>
 
           {/* Cột bên phải - Thông tin sản phẩm */}
-          <div className="col-span-7 bg-gray-600 dark:bg-dark-400 p-14 flex flex-col gap-4 rounded-xl">
+          <div className="xl:col-span-7 col-span-full bg-gray-600 dark:bg-dark-400 p-14 flex flex-col gap-4 rounded-xl">
             {/* Tiêu đề sản phẩm */}
             <div className="h-6 w-3/4 bg-gray-300 dark:bg-gray-500 animate-pulse rounded"></div>
 
@@ -82,7 +82,9 @@ const ProductDetailSkeleton = () => {
           <div className="h-10 w-64 bg-gray-200 dark:bg-gray-500 animate-pulse rounded mb-3"></div>
           {/* Danh sách sản phẩm */}
 
-          <ProductListSkeleton count={5} className="grid-cols-5" />
+          <div className="p-5 md:p-2">
+            <ProductListSkeleton count={5} className="xl:!grid-cols-5 md:!grid-cols-3 !grid-cols-1" />
+          </div>
         </div>
       </div>
     </div>
