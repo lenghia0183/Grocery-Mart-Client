@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/constants/path';
@@ -17,9 +17,12 @@ import IconButton from '@/components/IconButton';
 import Logo from '@/components/Logo';
 import DrawerMenu from '../DrawerMenu';
 import Button from '@/components/Button';
+import { usePathname } from '@/i18n/routing';
 
 const Header: React.FC = () => {
   const t = useTranslations();
+
+  const pathname = usePathname();
 
   const { userData, userFavoritesCount, userCartTotalMoney } = useUser();
 
@@ -43,6 +46,10 @@ const Header: React.FC = () => {
       href: PATH.PRODUCTS,
     },
   ];
+
+  useEffect(() => {
+    setIsOpenDrawerMenu(false);
+  }, [pathname]);
 
   return (
     <header className="bg-blue-200 dark:bg-dark-400 shadow-sm shadow-slate-300 dark:shadow-none">
@@ -162,7 +169,7 @@ const Header: React.FC = () => {
         handleOverlayClick={() => setIsOpenDrawerMenu(false)}
         width="100%"
         position="top"
-        animationDuration={300}
+        animationDuration={500}
         className="bh-white dark:bg-dark-500 text-dark dark:text-white-200"
         renderTitle={() => (
           <div className="flex justify-between items-center p-5">

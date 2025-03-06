@@ -17,7 +17,7 @@ const ProductPage = async ({
 
   return (
     <div className="bg-gray-600 dark:bg-dark-500 py-14">
-      <div className="container mx-auto grid xl:grid-cols-12 grid-cols-1 mt-10">
+      <div className="container mx-auto grid xl:grid-cols-12 grid-cols-1 xl:mt-10 -mt-5">
         <aside className="xl:col-span-3 xl:block hidden col-span-full xl:mr-16">
           <ProductFilterSideBar />
         </aside>
@@ -31,10 +31,12 @@ const ProductPage = async ({
             <ProductFilterTopBar />
           </div>
 
-          <Suspense fallback={<ProductListSkeleton />}>
+          <Suspense
+            fallback={<ProductListSkeleton className="xl:!grid-cols-4 md:!grid-cols-2 !grid-cols-1 !gap-3 px-5" />}
+          >
             <ProductList
-              className="p-0"
-              listClassName="xl:!grid-cols-4 !gap-3"
+              className="px-5"
+              listClassName="xl:!grid-cols-4 md:!grid-cols-2 !grid-cols-1 !gap-3"
               page={page}
               filters={filters}
               keyword={keyword}
