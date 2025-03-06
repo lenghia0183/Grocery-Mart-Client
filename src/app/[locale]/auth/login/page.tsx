@@ -19,7 +19,7 @@ const LoginPage: React.FC = async () => {
           </div>
         </div>
 
-        <div className="xl:col-span-6 col-span-full md:h-screen xl:p-24 md:p-20  py-10 text-center flex flex-col justify-center">
+        <div className="xl:col-span-6 col-span-full md:h-screen flex-shrink-0 flex-1 xl:p-24 md:p-20  py-20 text-center flex flex-col justify-center">
           <Logo className="mx-auto" />
 
           <h2 className="text-[30px] mt-10 dark:text-white-200 text-gray-300">{t('helloAgain')}</h2>
