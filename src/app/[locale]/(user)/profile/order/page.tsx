@@ -66,68 +66,72 @@ function Order() {
 
   return (
     <WithLoading isLoading={isMutatingUpdateOrderStatus}>
-      <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
+      <div className="p-4 sm:p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
         <h2 className="text-2xl font-medium">{t('title')}</h2>
         <Divider />
-        <div className="sm:mt-5 mt-3 w-full">
+        <div className="mt-3 sm:mt-5 w-full">
           <Tabs
             className="w-full"
             list={ORDER_STATUS_LIST}
-            getOptionLabel={(val) => {
-              return tCommon(val.label);
-            }}
+            getOptionLabel={(val) => tCommon(val.label)}
             divider={true}
             value={tab}
             onChange={(val) => {
               setTab(val || '');
             }}
           >
-            <div className="text-dark-400 dark:text-white-200 text-lg flex flex-col gap-3">
+            <div className="text-dark-400 dark:text-white-200 text-base sm:text-lg flex flex-col gap-3">
               {orderData?.data?.orders?.map((item) => (
-                <div className="p-5 shadow-md bg-gray-100 dark:bg-dark-500" key={item._id}>
+                <div className="p-4 sm:p-5 shadow-md bg-gray-100 dark:bg-dark-500 rounded-lg" key={item._id}>
+                  {/* Thông tin đơn hàng */}
                   <div className="flex flex-col gap-2">
                     <LabelValue
-                      className="!text-base"
+                      className="text-sm sm:text-base"
                       label={t('paymentMethod')}
                       value={item.paymentMethod === PAYMENT_METHOD.BANK ? t('onlinePayment') : t('cod')}
                     />
                     <LabelValue
-                      className="!text-base"
+                      className="text-sm sm:text-base"
                       label={t('paymentStatus')}
                       value={item?.paymentMethod === PAYMENT_METHOD.BANK && item?.isPaid ? t('paid') : t('unPaid')}
                     />
-                    <LabelValue className="!text-base" label={t('buyerName')} value={item.buyerName} />
-                    <LabelValue className="!text-base" label={t('recipientName')} value={item.recipientName} />
+                    <LabelValue className="text-sm sm:text-base" label={t('buyerName')} value={item.buyerName} />
                     <LabelValue
-                      className="!text-base"
+                      className="text-sm sm:text-base"
+                      label={t('recipientName')}
+                      value={item.recipientName}
+                    />
+                    <LabelValue
+                      className="text-sm sm:text-base"
                       label={t('address')}
                       value={`${item.address.street}, ${item.address.ward.wardName}, ${item.address.district.districtName}, ${item.address.province.provinceName}`}
                     />
                   </div>
 
-                  <h2 className="text-2xl text-center mt-5 text-yellow">{t('productList')}</h2>
+                  {/* Danh sách sản phẩm */}
+                  <h2 className="text-xl sm:text-2xl text-center mt-5 text-yellow">{t('productList')}</h2>
                   <Divider length="80%" className="mx-auto" />
                   <Accordion key={item._id} minHeight="180px">
                     {item.cartDetails.map((cartItem) => (
-                      <div key={cartItem._id}>
-                        <div className="flex justify-between items-start py-3">
-                          <div className="flex gap-3 xl:w-1/2 w-3/4 text-lg font-medium text-left ">
+                      <div key={cartItem._id} className="mb-3">
+                        <div className="flex flex-col sm:flex-row justify-between items-center py-3">
+                          <div className="flex gap-3 w-full sm:w-1/2 text-base sm:text-lg font-medium text-left">
                             <Image
                               src={cartItem.productId.images[0]}
-                              alt={''}
-                              className="w-[100px] h-[100px]"
+                              alt={cartItem.productId.name}
+                              className="w-20 h-20 sm:w-[100px] sm:h-[100px] object-cover"
                               width={50}
                               height={50}
                             />
-                            <p>{cartItem.productId.name}</p>
+                            <p className="break-words">{cartItem.productId.name}</p>
                           </div>
-                          <div className="xl:flex gap-4">
-                            <p className="text-lg text-center">{cartItem.quantity}</p>
-                            <p className="text-lg text-center">x</p>
-                            <p className="text-lg ">{formatCurrency(cartItem.productId.price)}</p>
+                          <div className="flex gap-4 items-center mt-2 sm:mt-0">
+                            <p className="text-base sm:text-lg text-center">{cartItem.quantity}</p>
+                            <p className="text-base sm:text-lg text-center">x</p>
+                            <p className="text-base sm:text-lg">{formatCurrency(cartItem.productId.price)}</p>
                           </div>
                         </div>
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
                           <Button
                             variant="outlined"
                             textColor="blue-500 dark:blue-400"
@@ -156,38 +160,39 @@ function Order() {
                             </Button>
                           )}
                         </div>
-
                         <Divider color="dark-200" borderStyle="dashed" />
                       </div>
                     ))}
                   </Accordion>
 
-                  <div className="flex flex-col gap-2">
+                  {/* Tổng tiền đơn hàng */}
+                  <div className="flex flex-col gap-2 mt-4">
                     <LabelValue
-                      labelWidth="200px"
+                      labelWidth="170px"
                       label={t('totalItemsPrice')}
-                      labelClassName="!text-base"
+                      labelClassName="text-sm sm:text-base"
                       valueClassName="text-blue-500 dark:text-blue-400"
                       value={formatCurrency(item.totalAmount - item?.shippingFee)}
                     />
                     <LabelValue
-                      labelWidth="200px"
+                      labelWidth="170px"
                       label={t('shippingFee')}
-                      labelClassName="!text-base"
+                      labelClassName="text-sm sm:text-base"
                       valueClassName="text-blue-500 dark:text-blue-400"
                       value={formatCurrency(item?.shippingFee)}
                     />
                     <LabelValue
-                      labelWidth="200px"
+                      labelWidth="170px"
                       label={t('totalPayment')}
-                      labelClassName="!text-base"
+                      labelClassName="text-sm sm:text-base"
                       valueClassName="text-blue-500 dark:text-blue-400"
                       value={formatCurrency(item.totalAmount)}
                     />
                   </div>
 
+                  {/* Các hành động */}
                   <div className="mt-7 ml-auto flex">
-                    <div className="flex gap-3 ml-auto">
+                    <div className="flex gap-3 ml-auto flex-wrap">
                       {item.status === ORDER_STATUS.PENDING && (
                         <Button
                           variant="outlined"
