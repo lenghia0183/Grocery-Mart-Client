@@ -1,6 +1,5 @@
 'use server';
 
-import { getTranslations } from 'next-intl/server';
 import clsx from 'clsx';
 import Pagination from './Pagination';
 
@@ -44,16 +43,12 @@ const fetchProducts = async (page: number, filters?: ProductFilter, keyword?: st
 };
 
 const ProductList = async ({ className, listClassName, page = 1, filters, keyword }: ProductListProps) => {
-  const t = await getTranslations('home');
-
   const productResponse = await fetchProducts(page, filters, keyword);
   const productList = productResponse?.products || [];
 
   return (
     <div className={clsx('container', className)}>
-      <h2 className="mt-10 mb-5 text-2xl font-semibold text-dark dark:text-white-200">{t('latest')}</h2>
-
-      <ul className={clsx('grid grid-cols-5 gap-7', listClassName)}>
+      <ul className={clsx('grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 xl:gap-7 gap-3', listClassName)}>
         {productList.map((product) => (
           <ProductCard key={product._id} data={product} />
         ))}
