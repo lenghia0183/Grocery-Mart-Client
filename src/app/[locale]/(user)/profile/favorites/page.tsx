@@ -17,11 +17,11 @@ const Profile = (): JSX.Element => {
   if (isLoadingFavoriteData) return <FavoriteListSkeleton />;
 
   return (
-    <div className="p-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white">
+    <div className="md:p-7 px-5 py-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white">
       <h2 className="text-2xl font-medium">{t('title')}</h2>
       <Divider />
 
-      <div className="grid grid-cols-4 gap-3 mt-7">
+      <div className="grid xl:grid-cols-4 md:grid-cols-3 md:px-0 px-3 gap-3 mt-7">
         {favoriteData?.data?.favorites.map((item) => {
           return <ProductCard key={item?._id} data={item} />;
         })}

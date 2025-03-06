@@ -37,7 +37,7 @@ const ChangeAddress = (): JSX.Element => {
 
   return (
     <WithLoading isLoading={isMutatingUpdateUserData}>
-      <div className="p-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
+      <div className="md:p-7 px-5 py-7 bg-white dark:bg-dark-400 dark:text-white shadow-md rounded-lg">
         <h2 className="text-2xl font-medium">{t('title')}</h2>
         <Divider />
 
@@ -81,7 +81,7 @@ const ChangeAddress = (): JSX.Element => {
         >
           {({ values }) => (
             <Form className="flex flex-col">
-              <div className="grid grid-cols-2 grid-rows-2 gap-7 mt-5">
+              <div className="grid xl:grid-cols-2 grid-rows-2 gap-7 mt-5">
                 <Autocomplete
                   name="province"
                   label={t('province')}

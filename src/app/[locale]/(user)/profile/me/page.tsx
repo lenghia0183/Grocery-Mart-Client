@@ -35,8 +35,8 @@ const Profile = (): JSX.Element => {
 
   return (
     <WithLoading isLoading={isMutatingUpdateUserData}>
-      <div className="p-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white">
-        <h2 className="text-2xl font-medium">Thông tin cá nhân</h2>
+      <div className="md:p-7 px-5 py-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white">
+        <h2 className="text-2xl font-medium">{t('title')}</h2>
         <Divider />
 
         <Formik
@@ -64,11 +64,11 @@ const Profile = (): JSX.Element => {
         >
           {() => (
             <Form className="flex flex-col">
-              <div className="grid grid-cols-2 gap-7 mt-5">
-                <TextField name="email" label={t('email')} placeholder="Email" required disabled />
-                <TextField name="name" label={t('name')} placeholder="Họ và tên" required />
-                <TextField name="phone" label={t('phone')} placeholder="Số điện thoại" required />
-                <TextField name="displayName" label={t('displayName')} placeholder="Tên hiển thị" />
+              <div className="grid xl:grid-cols-2 gap-7 mt-5">
+                <TextField name="email" label={t('email')} placeholder={t('email')} required disabled />
+                <TextField name="name" label={t('name')} placeholder={t('name')} required />
+                <TextField name="phone" label={t('phone')} placeholder={t('phone')} required />
+                <TextField name="displayName" label={t('displayName')} placeholder={t('displayName')} />
               </div>
               <div className="flex gap-4 ml-auto mt-10">
                 <Button bgColor="gray-300" bgHoverColor="none" rounded type="reset">

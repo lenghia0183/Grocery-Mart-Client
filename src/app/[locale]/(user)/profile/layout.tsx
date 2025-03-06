@@ -9,11 +9,11 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
 
   return (
     <div className="bg-gray-100 dark:bg-dark-500">
-      <div className="grid grid-cols-12 container gap-7 py-14">
-        <div className="col-span-3">
+      <div className="grid xl:grid-cols-12 grid-cols-1 container gap-7 py-14">
+        <div className="xl:col-span-3 col-span-full">
           {isLoading ? <ProfileSideBarSkeleton /> : <SideBar userData={userData || null} />}
         </div>
-        <div className="col-span-9">{children}</div>
+        <div className="xl:col-span-9 col-span-full">{children}</div>
       </div>
     </div>
   );

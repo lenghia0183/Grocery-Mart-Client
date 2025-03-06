@@ -283,6 +283,7 @@
   },
 
   "editUser": {
+    "title": "Thông tin cá nhân",
     "updateSuccessful": "Cập nhật thông tin thành công",
     "name": "Họ và tên",
     "displayName": "Tên hiển thị",

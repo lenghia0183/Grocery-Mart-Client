@@ -34,7 +34,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
     dots: true,
     slidesToShow: 5,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 3000,
     arrows: false,
     dotsClass: 'absolute left-1/2 -translate-x-1/2',
@@ -65,7 +65,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
   };
 
   return (
-    <div className="dark:bg-dark-500 bg-gray-100 p-10">
+    <div className="dark:bg-dark-500 bg-gray-100 py-5">
       <div className="container">
         <h3 className="text-2xl font-semibold text-blue">{t('relatedProduct')}</h3>
         <Divider marginBottom="30px" />
@@ -73,7 +73,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
         {isLoadingProductData ? (
           <ProductListSkeleton count={5} className="xl:!grid-cols-5 md:!grid-cols-3 !grid-cols-1 mt-3" />
         ) : (
-          <section className={clsx('', className)}>
+          <section className={clsx('px-3', className)}>
             {(productData?.data?.products?.length || 0) > 1 ? (
               <div className="relative">
                 <IconButton
