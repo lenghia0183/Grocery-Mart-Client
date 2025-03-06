@@ -103,7 +103,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
               alt={`Grocery Mart`}
               priority
               loading="eager"
-              className="w-full h-full aspect-[6/2] rounded-[25px] object-cover"
+              className="w-full h-full  aspect-[6/3] md:aspect-[10/4] xl:aspect-[8/3] rounded-[25px] object-cover"
             />
           ))}
         </Slider>
