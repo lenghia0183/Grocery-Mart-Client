@@ -8,6 +8,10 @@ import clsx from 'clsx';
 import Button from '@/components/Button';
 import { ProductFilter, ProductFilterFormValues } from '@/types/product';
 
+interface ProductFilterTopBarProps {
+  className?: string;
+}
+
 const priceOptions = [
   { label: 'Giá: Tăng dần', value: 'price:asc' },
   { label: 'Giá: Giảm dần', value: 'price:desc' },
@@ -19,7 +23,7 @@ const displayOptions = [
   { label: 'Đánh giá cao nhất', value: 'ratings:desc' },
 ];
 
-const ProductFilterTopBar = ({}) => {
+const ProductFilterTopBar = ({ className }: ProductFilterTopBarProps) => {
   const { filters, setFilters } = useQueryState<ProductFilter>();
 
   return (
@@ -30,28 +34,32 @@ const ProductFilterTopBar = ({}) => {
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <div className="flex gap-x-4 bg-white dark:bg-dark-400 shadow-md rounded-md xl:h-[80px] px-3 xl:py-2 mb-7 mt-7 py-6 xl:mt-0">
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="text-lg font-medium hidden sm:block dark:text-gray-500">Hiển thị theo</div>
+          <div className={clsx(className)}>
+            <div className="flex flex-col xl:flex-row items-center gap-4">
+              <div className="text-lg font-medium dark:text-white-200 w-full xl:w-fit">Hiển thị theo</div>
 
-              {displayOptions.concat(priceOptions).map((option) => (
-                <Button
-                  type="submit"
-                  key={option.value}
-                  className={clsx('hover:-translate-y-1', { '-translate-y-1': values.displayOption === option.value })}
-                  bgColor={values.displayOption === option.value ? 'gray-500' : 'gray-200'}
-                  height="50px"
-                  onClick={() => {
-                    setFieldValue('displayOption', option.value);
-                    setFilters({
-                      ...filters,
-                      displayOption: option.value,
-                    });
-                  }}
-                >
-                  {option.label}
-                </Button>
-              ))}
+              <div className="flex flex-wrap gap-2 w-full xl:w-auto">
+                {displayOptions.concat(priceOptions).map((option) => (
+                  <Button
+                    key={option.value}
+                    type="submit"
+                    className={clsx('hover:-translate-y-1 w-full xl:w-auto', {
+                      '-translate-y-1': values.displayOption === option.value,
+                    })}
+                    bgColor={values.displayOption === option.value ? 'gray-500' : 'gray-200'}
+                    height="50px"
+                    onClick={() => {
+                      setFieldValue('displayOption', option.value);
+                      setFilters({
+                        ...filters,
+                        displayOption: option.value,
+                      });
+                    }}
+                  >
+                    {option.label}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </Form>

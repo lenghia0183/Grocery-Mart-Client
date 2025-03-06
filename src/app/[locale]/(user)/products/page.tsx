@@ -6,6 +6,7 @@ import { getQueryState } from '@/utils/getQueryState';
 
 import ProductListSkeleton from '@/components/Skeletons/ProductListSkeleton';
 import { ProductFilter } from '@/types/product';
+import FilterDrawer from './FilterDrawer';
 
 const ProductPage = async ({
   searchParams,
@@ -17,12 +18,18 @@ const ProductPage = async ({
   return (
     <div className="bg-gray-600 dark:bg-dark-500 py-14">
       <div className="container mx-auto grid xl:grid-cols-12 grid-cols-1 mt-10">
-        <aside className="xl:col-span-3 col-span-full xl:mr-16">
+        <aside className="xl:col-span-3 xl:block hidden col-span-full xl:mr-16">
           <ProductFilterSideBar />
         </aside>
 
+        <div className="xl:hidden">
+          <FilterDrawer />
+        </div>
+
         <main className="xl:col-span-9 col-span-full">
-          <ProductFilterTopBar />
+          <div className="xl:block hidden bg-white dark:bg-dark-400 shadow-md rounded-md px-3 py-4 sm:py-6 mb-7 mt-7">
+            <ProductFilterTopBar />
+          </div>
 
           <Suspense fallback={<ProductListSkeleton />}>
             <ProductList
