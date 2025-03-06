@@ -11,11 +11,14 @@ import ProductFilterTopBar from './ProductFilterTopBar';
 import Accordion from '@/components/Accordion';
 import Icon from '@/components/Icon';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 const FilterDrawer = () => {
   const [isOpenFilterDrawer, setIsOpenFilterDrawer] = useState(false);
 
   const searchParam = useSearchParams();
+
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     setIsOpenFilterDrawer(false);
@@ -36,7 +39,7 @@ const FilterDrawer = () => {
           setIsOpenFilterDrawer(true);
         }}
       >
-        Mở bộ lọc
+        {tCommon('showFilter')}
       </Button>
 
       <DrawerMenu

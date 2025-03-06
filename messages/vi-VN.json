@@ -36,6 +36,9 @@
     "review": "Đánh giá",
     "showMore": "Xem thiểm",
     "hidden": "Thu gọn",
+    "showFilter": "Mở bộ lọc",
+    "apply": "Áp dụng",
+    "search": "Tìm kiếm",
 
     "pending": "Chờ xác nhận",
     "confirmed": "Đã xác nhận",
@@ -48,6 +51,21 @@
     "3star": "3 sao",
     "4star": "4 sao",
     "5star": "5 sao",
+
+    "filter": {
+      "title": "Bộ lọc",
+      "price:asc": "Giá tăng dần",
+      "price:desc": "Giá giảm dần",
+      "createdAt:desc": "Mới nhât",
+      "bestSeller": "Bán chạy nhất",
+      "ratings:desc": "Đánh giá cao nhât",
+      "categoryList": "Danh mục sản phẩm",
+      "byManufacturer": "Theo thương hiêu",
+      "byPrice": "Theo giá",
+      "byReview": "Theo đánh giá",
+      "minPrice": "Giá tối thiểu",
+      "maxPrice": "Giá tối đa"
+    },
 
     "unAuthenticationError": "Bạn cần đăng nhập để sử dụng tính năng này!"
   },

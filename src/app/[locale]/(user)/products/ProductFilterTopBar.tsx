@@ -7,24 +7,27 @@ import { useQueryState } from '@/hooks/useQueryState';
 import clsx from 'clsx';
 import Button from '@/components/Button';
 import { ProductFilter, ProductFilterFormValues } from '@/types/product';
+import { useTranslations } from 'next-intl';
 
 interface ProductFilterTopBarProps {
   className?: string;
 }
 
-const priceOptions = [
-  { label: 'Giá: Tăng dần', value: 'price:asc' },
-  { label: 'Giá: Giảm dần', value: 'price:desc' },
-];
-
-const displayOptions = [
-  { label: 'Mới nhất', value: 'createdAt:desc' },
-  { label: 'Bán chạy nhất', value: 'bestSeller' },
-  { label: 'Đánh giá cao nhất', value: 'ratings:desc' },
-];
-
 const ProductFilterTopBar = ({ className }: ProductFilterTopBarProps) => {
+  const tCommon = useTranslations('common.filter');
+
   const { filters, setFilters } = useQueryState<ProductFilter>();
+
+  const priceOptions = [
+    { label: tCommon('price:asc'), value: 'price:asc' },
+    { label: tCommon('price:desc'), value: 'price:desc' },
+  ];
+
+  const displayOptions = [
+    { label: tCommon('createdAt:desc'), value: 'createdAt:desc' },
+    // { label: tCommon('bestSeller'), value: 'bestSeller' },
+    { label: tCommon('ratings:desc'), value: 'ratings:desc' },
+  ];
 
   return (
     <Formik

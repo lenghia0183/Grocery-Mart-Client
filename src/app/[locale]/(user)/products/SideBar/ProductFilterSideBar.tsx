@@ -16,6 +16,7 @@ import Divider from '@/components/Divider';
 import ManufacturerList from './ManufacturerList';
 import CategoryList from './CategoryList';
 import { ProductFilter, ProductFilterFormValues } from '@/types/product';
+import { useTranslations } from 'next-intl';
 
 const DEFAULT_FILTER_VALUES: ProductFilter = {
   minRating: 1,
@@ -27,14 +28,14 @@ const DEFAULT_FILTER_VALUES: ProductFilter = {
 };
 
 const ProductFilterSideBar: React.FC = () => {
+  const tCommon = useTranslations('common');
+
   const ratings = [1, 2, 3, 4, 5];
 
   const { keyword, filters, setMultiple } = useQueryState<ProductFilter>({
     keyword: '',
     filters: DEFAULT_FILTER_VALUES,
   });
-
-  console.log('filter side bar', filters);
 
   return (
     <Formik
@@ -67,13 +68,14 @@ const ProductFilterSideBar: React.FC = () => {
               inputContainerClassName="border-dark dark:border-white"
               inputClassName="rounded dark:text-white-200"
               labelClassName="dark:text-white-200"
-              label="Tìm kiếm"
+              label={tCommon('search')}
             />
 
             {/* Danh mục sản phẩm */}
             <div className="rounded-md   mt-5">
               <h3 className="text-xl font-medium text-dark dark:text-white-200 flex items-center gap-2">
-                <Icon name="category" size={0.8} color="dark dark:white" strokeWidth={2} /> Danh mục sản phẩm
+                <Icon name="category" size={0.8} color="dark dark:white" strokeWidth={2} />{' '}
+                {tCommon('filter.categoryList')}
               </h3>
               {/* <div className="h-[1px] bg-dark dark:bg-white mt-4 mb-3"></div> */}
 
@@ -84,15 +86,15 @@ const ProductFilterSideBar: React.FC = () => {
 
             {/* Bộ lọc */}
             <div className="  mt-5">
-              <h3 className="text-2xl font-medium text-dark dark:text-white-200 flex items-center gap-2">
-                <Icon name="filter" size={0.8} color="dark dark:white" strokeWidth={2} /> Bộ lọc
+              <h3 className="text-xl font-medium text-dark dark:text-white-200 flex items-center gap-2">
+                <Icon name="filter" size={0.8} color="dark dark:white" strokeWidth={2} /> {tCommon('filter.title')}
               </h3>
 
               <Divider marginBottom="15px" marginTop="12px" />
 
               <div className=" ">
                 <h3 className="text-lg font-medium text-dark dark:text-white-200 flex items-center gap-2">
-                  <Icon name="vendor" size={1.5} /> Theo thương hiệu
+                  <Icon name="vendor" size={1.5} /> {tCommon('filter.byManufacturer')}
                 </h3>
 
                 <ManufacturerList />
@@ -101,14 +103,15 @@ const ProductFilterSideBar: React.FC = () => {
               <Divider marginBottom="15px" marginTop="12px" />
 
               <h3 className="text-lg font-medium text-dark dark:text-white-200 flex items-center gap-2 ">
-                <Icon name="coin" size={1.5} /> Theo giá sản phẩm
+                <Icon name="coin" size={1.5} />
+                {tCommon('filter.byPrice')}
               </h3>
 
               <div className="flex items-center mt-6">
                 <TextField
                   name="minPrice"
                   label=""
-                  placeholder="Giá tối thiểu"
+                  placeholder={tCommon('filter.minPrice')}
                   inputContainerClassName="border-dark dark:border-white"
                   inputClassName="dark:text-white-200"
                 />
@@ -116,14 +119,14 @@ const ProductFilterSideBar: React.FC = () => {
                 <TextField
                   name="maxPrice"
                   label=""
-                  placeholder="Giá tối đa"
+                  placeholder={tCommon('filter.maxPrice')}
                   inputContainerClassName="border-dark dark:border-white"
                   inputClassName="dark:text-white-200"
                 />
               </div>
 
               <Button onClick={() => {}} full className="mt-5 hover:text-dark">
-                Áp dụng
+                {tCommon('apply')}
               </Button>
             </div>
 
@@ -132,7 +135,7 @@ const ProductFilterSideBar: React.FC = () => {
             {/* Đánh giá */}
             <div className="">
               <h3 className="text-lg font-medium text-dark dark:text-white-200 flex items-center gap-2">
-                Theo dánh giá
+                {tCommon('filter.byReview')}
               </h3>
 
               <div className="flex flex-col gap-2 mt-2 px-2">
@@ -166,7 +169,7 @@ const ProductFilterSideBar: React.FC = () => {
               <Divider marginBottom="15px" marginTop="12px" />
 
               <Button type="submit" full className="mt-5 hover:text-dark">
-                Tìm kiếm
+                {tCommon('search')}
               </Button>
 
               <Button
@@ -180,7 +183,7 @@ const ProductFilterSideBar: React.FC = () => {
                   });
                 }}
               >
-                Hủy bỏ
+                {tCommon('cancel')}
               </Button>
             </div>
           </Form>
