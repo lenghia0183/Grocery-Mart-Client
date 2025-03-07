@@ -37,17 +37,23 @@ const CartItem = ({ cartId, cartDetail }: CartItemProps): JSX.Element => {
                 alt={cartDetail?.productId.name}
                 width={100}
                 height={100}
-                className="w-[150px] h-[150px] bg-transparent rounded-md"
+                className="md:w-[150px] md:h-[150px] w-[100px] h-[100px] aspect-square  bg-transparent rounded-md"
               />
 
-              <div className="flex justify-between flex-1">
+              <div className="flex md:flex-row flex-col justify-between flex-1">
                 <div className="flex flex-col justify-between">
-                  <h2 className="text-xl font-semibold w-[80%] line-clamp-2 dark:text-white-200">
+                  <h2 className="text-md font-semibold w-[80%] line-clamp-2 dark:text-white-200">
                     {cartDetail?.productId.name}
                   </h2>
                   <div className="flex items-center gap-2">
                     <p className="text-gray-500 text-lg">{formatCurrency(cartDetail?.productId.price)}</p>
-                    <Divider vertical={true} length="20px" thickness="2px" color="gray-500" />
+                    <Divider
+                      vertical={true}
+                      length="20px"
+                      thickness="2px"
+                      color="gray-500"
+                      // className="md:block hidden"
+                    />
                     <p
                       className={clsx('text-lg', {
                         'text-green-400 dark:text-green-300': cartDetail?.productId.inStock,
@@ -58,8 +64,8 @@ const CartItem = ({ cartId, cartDetail }: CartItemProps): JSX.Element => {
                     </p>
                   </div>
 
-                  <div className="flex gap-3">
-                    <p className="p-3 border border-gray-500 rounded-md">
+                  <div className="flex gap-3 md:flex-row md:items-center flex-col items-start">
+                    <p className="p-2 border border-gray-500 rounded-md">
                       {cartDetail?.productId?.manufacturerId?.name}
                     </p>
                     <QuantityInput
@@ -90,21 +96,11 @@ const CartItem = ({ cartId, cartDetail }: CartItemProps): JSX.Element => {
                   </div>
                 </div>
 
-                <div className="flex flex-col justify-between ">
+                <div className="flex md:flex-col flex-row justify-between items-center md:mt-0 mt-5">
                   <p className="text-right text-xl font-semibold">
                     {formatCurrency(cartDetail?.productId.price * values.quantity)}
                   </p>
                   <div className="flex gap-5">
-                    {/* <Button
-                    variant="text"
-                    size="zeroPadding"
-                    bgHoverColor="none"
-                    textColor={product?.isFavorite ? 'red-500' : 'gray'}
-                    startIcon={<Icon name="heart" color={product?.isFavorite ? 'red-500' : 'gray'} />}
-                  >
-                    {tCommon('like')}
-                  </Button> */}
-
                     <Button
                       variant="text"
                       size="zeroPadding"
