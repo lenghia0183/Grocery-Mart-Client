@@ -47,7 +47,7 @@ const ProductList = async ({ className, listClassName, page = 1, filters, keywor
   const productList = productResponse?.products || [];
 
   return (
-    <div className={clsx('container', className)}>
+    <div className={clsx('', className)}>
       <ul className={clsx('grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 xl:gap-7 gap-3', listClassName)}>
         {productList.map((product) => (
           <ProductCard key={product._id} data={product} />

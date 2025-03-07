@@ -4,14 +4,17 @@ import ProductCardSkeleton from './productCardSkeleton';
 interface ProductListSkeletonProps {
   count?: number;
   className?: string;
+  listClassName?: string;
 }
 
-const ProductListSkeleton = ({ count = 8, className }: ProductListSkeletonProps): JSX.Element => {
+const ProductListSkeleton = ({ count = 8, className, listClassName }: ProductListSkeletonProps): JSX.Element => {
   return (
-    <div className={clsx('grid grid-cols-4 gap-3 mt-4', className)}>
-      {Array.from({ length: count }).map((_, index) => (
-        <ProductCardSkeleton key={index} />
-      ))}
+    <div className={clsx('', className)}>
+      <div className={clsx('grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 xl:gap-7 gap-3', listClassName)}>
+        {Array.from({ length: count }).map((_, index) => (
+          <ProductCardSkeleton key={index} />
+        ))}
+      </div>
     </div>
   );
 };

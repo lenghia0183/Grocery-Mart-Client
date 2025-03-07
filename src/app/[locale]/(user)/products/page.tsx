@@ -32,11 +32,15 @@ const ProductPage = async ({
           </div>
 
           <Suspense
-            fallback={<ProductListSkeleton className="xl:!grid-cols-4 md:!grid-cols-2 !grid-cols-1 !gap-3 px-5" />}
+            fallback={
+              <ProductListSkeleton
+                className=""
+                listClassName="!grid-cols-1 md:!grid-cols-3 xl:!grid-cols-4 !gap-3 md:px-0 px-6"
+              />
+            }
           >
             <ProductList
-              className="px-5"
-              listClassName="xl:!grid-cols-4 md:!grid-cols-2 !grid-cols-1 !gap-3"
+              listClassName="!grid-cols-1 md:!grid-cols-3 xl:!grid-cols-4 !gap-3 md:px-0 px-6"
               page={page}
               filters={filters}
               keyword={keyword}

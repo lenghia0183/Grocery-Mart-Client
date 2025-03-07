@@ -11,6 +11,7 @@ import { ProductDetail } from '@/types/product';
 import { useGetProduct } from '@/services/api/https/product';
 import ProductListSkeleton from './Skeletons/ProductListSkeleton';
 import { useTranslations } from 'next-intl';
+import { useResponsiveValue } from '@/hooks/useResponsiveValue';
 
 interface RelatedProductsProps {
   className?: string;
@@ -18,7 +19,7 @@ interface RelatedProductsProps {
 }
 
 const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product }) => {
-  const { data: productData, isLoading: isLoadingProductData } = useGetProduct({
+  const { data: productResponse, isLoading: isLoadingProducts } = useGetProduct({
     page: 1,
     limit: 8,
     categoryId: product?.categoryId?._id || '',
@@ -26,9 +27,16 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
 
   const t = useTranslations('productDetail');
 
-  const slider = useRef<Slider>(null);
+  const minProductsCount = { xl: 4, md: 3, base: 1 };
+  const currentMinProducts = useResponsiveValue(minProductsCount);
+
+  const skeletonCountConfig = { xl: 5, md: 3, base: 1 };
+  const responsiveSkeletonCount = useResponsiveValue(skeletonCountConfig);
+
+  const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const settings = {
+
+  const sliderSettings = {
     infinite: true,
     speed: 500,
     dots: true,
@@ -43,12 +51,10 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
         <ul className="flex space-x-5 justify-center"> {dots} </ul>
       </div>
     ),
-    customPaging: (i: number) => (
+    customPaging: (index: number) => (
       <button
-        className={clsx('w-[10px] h-[10px] rounded-full', i === currentSlide ? 'bg-blue-400' : 'bg-gray-400')}
-        style={{
-          color: 'transparent',
-        }}
+        className={clsx('w-[10px] h-[10px] rounded-full', index === currentSlide ? 'bg-blue-400' : 'bg-gray-400')}
+        style={{ color: 'transparent' }}
       ></button>
     ),
     beforeChange: (_: number, next: number) => setCurrentSlide(next),
@@ -70,11 +76,14 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
         <h3 className="text-2xl font-semibold text-blue">{t('relatedProduct')}</h3>
         <Divider marginBottom="30px" />
 
-        {isLoadingProductData ? (
-          <ProductListSkeleton count={5} className="xl:!grid-cols-5 md:!grid-cols-3 !grid-cols-1 mt-3" />
+        {isLoadingProducts ? (
+          <ProductListSkeleton
+            count={responsiveSkeletonCount}
+            listClassName="xl:!grid-cols-5 md:!grid-cols-3 !grid-cols-1 mt-3"
+          />
         ) : (
           <section className={clsx('px-3', className)}>
-            {(productData?.data?.products?.length || 0) > 1 ? (
+            {(productResponse?.data?.products?.length || 0) > currentMinProducts ? (
               <div className="relative">
                 <IconButton
                   type="button"
@@ -86,7 +95,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
                   iconColor="white"
                   bgHoverColor="yellow"
                   iconSize={1.5}
-                  onClick={() => slider.current?.slickPrev()}
+                  onClick={() => sliderRef.current?.slickPrev()}
                 />
 
                 <IconButton
@@ -99,12 +108,12 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
                   iconColor="white"
                   bgHoverColor="yellow"
                   iconSize={1.5}
-                  onClick={() => slider.current?.slickNext()}
+                  onClick={() => sliderRef.current?.slickNext()}
                 />
 
-                <Slider ref={slider} {...settings}>
-                  {productData?.data?.products.map((item) => (
-                    <div key={item._id} className="p-2">
+                <Slider ref={sliderRef} {...sliderSettings}>
+                  {productResponse?.data?.products.map((item) => (
+                    <div key={item._id} className="p-3">
                       <ProductCard data={item} className="dark!shadow-none !shadow-md" />
                     </div>
                   ))}
@@ -112,7 +121,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ className, product })
               </div>
             ) : (
               <div className="flex justify-center items-center gap-4">
-                {productData?.data?.products.map((item) => (
+                {productResponse?.data?.products.map((item) => (
                   <div className="xl:w-[18%] md:w-[32%] w-[90%]" key={item._id}>
                     <ProductCard data={item} className="dark!shadow-none !shadow-md" />
                   </div>

@@ -26,11 +26,17 @@ export default async function Hone({
         fallback={
           <ProductListSkeleton
             count={10}
-            className="container !grid-cols-2 md:!grid-cols-3 xl:!grid-cols-5 xl:gap-7 gap-3"
+            className="container"
+            listClassName="!grid-cols-1 md:!grid-cols-3 xl:!grid-cols-5 md:px-0 px-6"
           />
         }
       >
-        <ProductList page={page} filters={{ limit: 10, minRating: 1 }} />
+        <ProductList
+          page={page}
+          filters={{ limit: 10, minRating: 1 }}
+          className="container"
+          listClassName="!grid-cols-1 md:!grid-cols-3 xl:!grid-cols-5 md:px-0 px-6"
+        />
       </Suspense>
     </main>
   );
