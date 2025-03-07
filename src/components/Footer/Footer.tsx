@@ -75,7 +75,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-blue-200 dark:bg-dark-400 dark:text-white-200 text-dark py-12">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Cột Logo, mô tả, form */}
           <div className="xl:col-span-3 col-span-full">

@@ -44,7 +44,7 @@ const Checkout = (): JSX.Element => {
     buyerName: userData?.fullname || '',
     buyerEmail: userData?.email || '',
     buyerPhone: userData?.phone || '',
-    recipientName: 'lecongnghia',
+    recipientName: '',
     recipientPhone: '',
     province: null,
     district: null,
@@ -167,10 +167,10 @@ const Checkout = (): JSX.Element => {
         {({ values, resetForm, setFieldValue }) => {
           return (
             <Form>
-              <main className="p-14 bg-gray-100 dark:bg-dark-500">
-                <div className="container grid grid-cols-12 gap-5">
+              <main className="py-14 bg-gray-100 dark:bg-dark-500">
+                <div className="container grid xl:grid-cols-12 col-span-full gap-5">
                   {/* Thông tin khách hàng */}
-                  <div className="col-span-8 p-10 bg-white dark:bg-dark-400 shadow-md rounded-lg text-dark dark:text-white-200">
+                  <div className="xl:col-span-8 col-span-full md:p-10 p-5 bg-white dark:bg-dark-400 shadow-md rounded-lg text-dark dark:text-white-200">
                     <h2 className="text-2xl font-medium">{t('customerInfo')}</h2>
                     <Divider />
 
@@ -235,9 +235,9 @@ const Checkout = (): JSX.Element => {
                     {/* Thông tin giao hàng */}
                     <h2 className="mt-10 text-2xl font-medium">{t('shippingInfo')}</h2>
                     <Divider />
-                    <div className="grid grid-cols-12 gap-7 mt-7">
+                    <div className="grid xl:grid-cols-12 grid-cols-1 gap-7 mt-7">
                       {/* Địa chỉ giao hàng */}
-                      <div className="col-span-6">
+                      <div className="xl:col-span-6 col-span-full">
                         <h3 className="text-xl font-medium">{t('shippingAddress')}</h3>
                         <div className="flex flex-col gap-7 mt-7">
                           <Autocomplete<ProvinceData, ApiResponse<ProvinceData[]>>
@@ -298,7 +298,7 @@ const Checkout = (): JSX.Element => {
                       </div>
 
                       {/* Đơn vị vận chuyển */}
-                      <div className="col-span-6">
+                      <div className="xl:col-span-6 col-span-full">
                         <h3 className="text-xl font-medium">{t('shippingCompany')}</h3>
                         <div className="flex items-center gap-5 p-5 mt-7 border border-dashed">
                           <div className="flex-shrink-0">
@@ -320,12 +320,15 @@ const Checkout = (): JSX.Element => {
                     <h2 className="mt-10 text-2xl font-medium">{t('paymentMethod')}</h2>
                     <Divider />
 
-                    <RadioGroup name="paymentMethod" className="grid grid-cols-12 gap-7 text-dark dark:text-white-200">
+                    <RadioGroup
+                      name="paymentMethod"
+                      className="grid xl:grid-cols-12 grid-cols-1 gap-7 text-dark dark:text-white-200"
+                    >
                       {/* cod */}
 
                       <Radio
                         value="cod"
-                        className="col-span-6 h-fit !flex-shrink-0"
+                        className="xl:col-span-6 col-span-full h-fit !flex-shrink-0"
                         width="unset"
                         labelClassName="w-full"
                         label={
@@ -336,8 +339,8 @@ const Checkout = (): JSX.Element => {
                         }
                       />
 
-                      <div className="col-span-6">
-                        <div className="flex items-center gap-3">
+                      <div className="xl:col-span-6 col-span-full gap-y-7 !flex-shrink-0">
+                        <div className="flex items-center gap-3 flex-shrink-0">
                           <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white-200  rounded-sm flex-shrink-0">
                             <Image src={images.bankingMethod} width={60} alt="" />
                             <p>{t('onlinePayment')}</p>
@@ -368,7 +371,7 @@ const Checkout = (): JSX.Element => {
                   </div>
 
                   {/* Tóm tắt đơn hàng */}
-                  <div className="col-span-4 text-dark dark:text-white-200">
+                  <div className="xl:col-span-4 col-span-full text-dark dark:text-white-200">
                     <div className="py-10 px-5 bg-white dark:bg-dark-400 rounded-md  border-gray-400 shadow-md ">
                       <h2 className="text-2xl font-medium">{t('productList')}</h2>
                       <Divider />
