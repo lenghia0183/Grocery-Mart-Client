@@ -21,6 +21,7 @@ export interface ChangeUserDataFormValues {
   phone: string;
   displayName?: string;
   email: string;
+  avatar?: File | null;
 }
 
 export interface ChangeUserDataBody {
@@ -32,6 +33,7 @@ export interface ChangeUserDataBody {
     ward: WardData | null;
     street: string;
   };
+  avatar?: File;
 }
 
 export interface ChangeAddressFormValues {
