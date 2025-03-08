@@ -8,7 +8,7 @@ import { getQueryState } from '@/utils/getQueryState';
 import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
-export const revalidate = 60 * 15; // 15 phút (900 giây)
+export const revalidate = 900; // 15 phút (900 giây)
 
 export async function generateStaticParams() {
   return [1, 2, 3].map((page) => ({ searchParams: { page: page.toString() } }));
