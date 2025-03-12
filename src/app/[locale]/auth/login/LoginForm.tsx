@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/constants/path';
 import { LoginFormValues, LoginResponse } from '@/types/auth';
-import { useLogin } from '@/services/api/https/auth';
+import { useLogin, useSocialLogin } from '@/services/api/https/auth';
 import { ApiResponse } from '@/types/ApiResponse';
 import { useToast } from '@/context/toastProvider';
 import { getLoginValidationSchema } from './validation';
@@ -18,6 +18,8 @@ import { nextApi } from '@/services/api/axios';
 import { useUser } from '@/context/userProvider';
 import { ERROR } from '@/constants/common';
 import { usePathname, useRouter } from '@/i18n/routing';
+import { GoogleAuthProvider, signInWithPopup, UserCredential } from 'firebase/auth';
+import { auth } from '@/firebase';
 
 const LoginForm: React.FC = () => {
   const t = useTranslations('login.form');
@@ -46,13 +48,53 @@ const LoginForm: React.FC = () => {
     }
   }, [errorParams, info, router, searchParams, tCommon, pathname]);
 
-  const { success, error } = useToast();
+  const { success, error: errorToast } = useToast();
   const { trigger: handleLogin, isMutating } = useLogin();
+  const { trigger: handleSocialLogin, isMutating: isMutatingSocialLogin } = useSocialLogin();
 
   const initialValues: LoginFormValues = {
     email: '',
     password: '',
     showPassword: false,
+  };
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result: UserCredential = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
+
+      handleSocialLogin(
+        { idToken },
+        {
+          onSuccess: async (response: ApiResponse<LoginResponse>) => {
+            if (response.code === 200) {
+              const res = await nextApi.post('/auth/set-cookie', {
+                accessToken: response.data?.accessToken,
+                refreshToken: response.data?.refreshToken,
+              });
+
+              if (res.code === 200) {
+                router.push(PATH.HOME);
+                loginUser(response?.data);
+                success(t('successful'));
+              } else {
+                errorToast(res.message);
+              }
+            } else {
+              errorToast(response.message);
+            }
+          },
+          onError: () => {
+            errorToast(tCommon('hasErrorTryAgainLater'));
+          },
+        },
+      );
+    } catch (error) {
+      errorToast(tCommon('hasErrorTryAgainLater'));
+      console.log('error', error);
+    }
   };
 
   return (
@@ -63,7 +105,7 @@ const LoginForm: React.FC = () => {
         handleLogin(
           { email: values.email, password: values.password },
           {
-            onSuccess: async (response: ApiResponse<LoginResponse>) => {
+            onSuccess: async (response) => {
               if (response.code === 200) {
                 const res = await nextApi.post('/auth/set-cookie', {
                   accessToken: response.data?.accessToken,
@@ -75,14 +117,14 @@ const LoginForm: React.FC = () => {
                   loginUser(response?.data);
                   success(t('successful'));
                 } else {
-                  error(res.message);
+                  errorToast(res.message);
                 }
               } else {
-                error(response.message);
+                errorToast(response.message);
               }
             },
             onError: () => {
-              error(tCommon('hasErrorTryAgainLater'));
+              errorToast(tCommon('hasErrorTryAgainLater'));
             },
           },
         );
@@ -96,7 +138,7 @@ const LoginForm: React.FC = () => {
             type="email"
             placeholder={t('email')}
             rightIcon={<Icon name="email" />}
-            disabled={isMutating}
+            disabled={isMutating || isMutatingSocialLogin}
           />
 
           <TextField
@@ -106,19 +148,19 @@ const LoginForm: React.FC = () => {
             placeholder={t('password')}
             rightIcon={<Icon name="password" />}
             className="mt-6"
-            disabled={isMutating}
+            disabled={isMutating || isMutatingSocialLogin}
           />
 
           <div className="flex justify-between mt-6">
-            <CheckBox name="showPassword" label={t('showPassword')} disabled={isMutating} />
+            <CheckBox name="showPassword" label={t('showPassword')} disabled={isMutating || isMutatingSocialLogin} />
 
             <Button variant="text" size="zeroPadding" textColor="blue-500 dark:white" bgHoverColor="none">
               {t('forgotPassword')}
             </Button>
           </div>
           <div className="mt-6 flex flex-col gap-5">
-            <Button type="submit" full disabled={isMutating}>
-              {isMutating ? t('loggingIn') : t('login')}
+            <Button type="submit" full disabled={isMutating || isMutatingSocialLogin}>
+              {isMutating || isMutatingSocialLogin ? t('loggingIn') : t('login')}
             </Button>
 
             <Button
@@ -130,9 +172,10 @@ const LoginForm: React.FC = () => {
               borderColor="blue-500 dark:white"
               bgHoverColor="none"
               startIcon={<Icon name="gmail" color="inherit" />}
-              disabled={isMutating}
+              disabled={isMutating || isMutatingSocialLogin}
+              onClick={handleGoogleLogin}
             >
-              {isMutating ? t('loggingIn') : t('loginWithGoogle')}
+              {isMutating || isMutatingSocialLogin ? t('loggingIn') : t('loginWithGoogle')}
             </Button>
 
             <div className="flex gap-2 m-auto">

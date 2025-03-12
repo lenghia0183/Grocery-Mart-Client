@@ -11,6 +11,10 @@ export interface LoginBody {
   password: string;
 }
 
+export interface SocialLoginBody {
+  idToken: string;
+}
+
 export interface LoginResponse {
   user: UserData;
   accessToken: string;

@@ -18,7 +18,6 @@ const Profile = (): JSX.Element => {
 
   return (
     <>
-      <FavoriteListSkeleton />
       <div className="md:p-7 px-5 py-7 bg-white dark:bg-dark-400 shadow-md rounded-lg dark:text-white">
         <h2 className="text-2xl font-medium">{t('title')}</h2>
         <Divider />
