@@ -18,6 +18,10 @@ import Logo from '@/components/Logo';
 import DrawerMenu from '../DrawerMenu';
 import Button from '@/components/Button';
 import { usePathname } from '@/i18n/routing';
+import { generateServerQueryUrl } from '@/utils/generateUrl';
+import { CATEGORY_ID } from '@/constants/common';
+import { useQueryState } from '@/hooks/useQueryState';
+import { ProductFilter } from '@/types/product';
 
 const Header: React.FC = () => {
   const t = useTranslations();
@@ -25,6 +29,7 @@ const Header: React.FC = () => {
   const pathname = usePathname();
 
   const { userData, userFavoritesCount, userCartTotalMoney } = useUser();
+  const { filters } = useQueryState<ProductFilter>();
 
   const [isOpenDrawerMenu, setIsOpenDrawerMenu] = useState(false);
 
@@ -35,15 +40,25 @@ const Header: React.FC = () => {
     },
     {
       label: t('pageTitle.coffee'),
-      href: PATH.PRODUCTS,
+      categoryId: CATEGORY_ID.COFFEE,
+      href: generateServerQueryUrl('/products', {
+        filters: { category: CATEGORY_ID.COFFEE },
+      }),
     },
     {
       label: t('pageTitle.tea'),
-      href: PATH.PRODUCTS,
+      categoryId: CATEGORY_ID.TEA,
+
+      href: generateServerQueryUrl('/products', {
+        filters: { category: CATEGORY_ID.TEA },
+      }),
     },
     {
       label: t('pageTitle.cacao'),
-      href: PATH.PRODUCTS,
+      categoryId: CATEGORY_ID.CACAO,
+      href: generateServerQueryUrl('/products', {
+        filters: { category: CATEGORY_ID.CACAO },
+      }),
     },
   ];
 
@@ -63,7 +78,8 @@ const Header: React.FC = () => {
                 key={index}
                 href={item.href}
                 variant="text"
-                className="px-[15px] text-lg text-dark dark:text-white-200"
+                textColor={item.categoryId === filters.category ? 'blue-500' : 'dark dark:white-200'}
+                className="px-[15px] text-lg"
               >
                 {item.label}
               </Button>

@@ -43,6 +43,7 @@ const ProductFilterSideBar: React.FC = () => {
         keyword,
         ...filters,
       }}
+      enableReinitialize={true}
       onSubmit={(values: ProductFilterFormValues) => {
         // console.log('values', values);
         setMultiple({

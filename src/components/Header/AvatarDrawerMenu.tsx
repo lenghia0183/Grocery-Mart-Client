@@ -13,6 +13,10 @@ import Icon from '@/components/Icon';
 import Image from '@/components/Image';
 import Button from '@/components/Button';
 import Divider from '../Divider';
+import { generateServerQueryUrl } from '@/utils';
+import { CATEGORY_ID } from '@/constants/common';
+import { useQueryState } from '@/hooks/useQueryState';
+import { ProductFilter } from '@/types/product';
 
 interface MenuItem {
   label: string;
@@ -31,6 +35,8 @@ const AvatarDrawerMenu: React.FC = () => {
   const { logoutUser, userData } = useUser();
   const tCommon = useTranslations('common');
   const t = useTranslations();
+
+  const { filters } = useQueryState<ProductFilter>();
 
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
@@ -129,15 +135,24 @@ const AvatarDrawerMenu: React.FC = () => {
     },
     {
       label: t('pageTitle.coffee'),
-      href: PATH.PRODUCTS,
+      categoryId: CATEGORY_ID.COFFEE,
+      href: generateServerQueryUrl('/products', {
+        filters: { category: CATEGORY_ID.COFFEE },
+      }),
     },
     {
       label: t('pageTitle.tea'),
-      href: PATH.PRODUCTS,
+      categoryId: CATEGORY_ID.TEA,
+      href: generateServerQueryUrl('/products', {
+        filters: { category: CATEGORY_ID.TEA },
+      }),
     },
     {
       label: t('pageTitle.cacao'),
-      href: PATH.PRODUCTS,
+      categoryId: CATEGORY_ID.CACAO,
+      href: generateServerQueryUrl('/products', {
+        filters: { category: CATEGORY_ID.CACAO },
+      }),
     },
   ];
 
@@ -216,9 +231,9 @@ const AvatarDrawerMenu: React.FC = () => {
               key={index}
               to={item.href}
               variant="outlined"
-              borderColor="gray-500"
-              textColor="gray-500"
-              bgHoverColor="gray-400"
+              borderColor={item.categoryId == filters.category ? 'blue' : 'gray-500'}
+              textColor={item.categoryId == filters.category ? 'blue' : 'gray-500'}
+              bgHoverColor={item.categoryId == filters.category ? '' : 'gray-400'}
               full
             >
               {item.label}

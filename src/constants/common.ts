@@ -50,3 +50,9 @@ export const ERROR = {
 export const EVENT_EMITTER = {
   LOGOUT: 'logout',
 };
+
+export const CATEGORY_ID = {
+  CACAO: '67d15f75649d62411760b5e5',
+  TEA: '67d15f0e649d62411760b5da',
+  COFFEE: '67d1597f2e777d99a23ef8f2',
+};

@@ -1,9 +1,19 @@
+'use client';
+
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import Logo from '@/components/Logo';
 import EmailSignup from './EmailSignUp';
 import Icon from '@/components/Icon';
+import { generateServerQueryUrl } from '@/utils';
+import { CATEGORY_ID } from '@/constants/common';
+import { useQueryState } from '@/hooks/useQueryState';
+import { ProductFilter } from '@/types/product';
+import clsx from 'clsx';
+import { PATH } from '@/constants/path';
+
+import { usePathname } from '@/i18n/routing';
 
 type FooterSection = {
   title: string;
@@ -12,20 +22,44 @@ type FooterSection = {
     href?: string;
     value?: string;
     icon?: React.ReactNode;
+    categoryId?: string;
   }>;
 };
 
 export default function Footer() {
   const t = useTranslations('footer');
 
+  const { filters } = useQueryState<ProductFilter>();
+  const pathname = usePathname();
+
+  console.log('pathname', pathname);
+
   const footerSections: FooterSection[] = [
     {
       title: t('store.title'),
       links: [
-        { label: t('store.home'), href: '/' },
-        { label: t('store.coffee'), href: '/' },
-        { label: t('store.tea'), href: '/' },
-        { label: t('store.cocoa'), href: '/' },
+        { label: t('store.home'), href: PATH.HOME },
+        {
+          label: t('store.coffee'),
+          categoryId: CATEGORY_ID.COFFEE,
+          href: generateServerQueryUrl('/products', {
+            filters: { category: CATEGORY_ID.COFFEE },
+          }),
+        },
+        {
+          label: t('store.tea'),
+          categoryId: CATEGORY_ID.TEA,
+          href: generateServerQueryUrl('/products', {
+            filters: { category: CATEGORY_ID.TEA },
+          }),
+        },
+        {
+          label: t('store.cocoa'),
+          categoryId: CATEGORY_ID.CACAO,
+          href: generateServerQueryUrl('/products', {
+            filters: { category: CATEGORY_ID.CACAO },
+          }),
+        },
       ],
     },
     {
@@ -90,29 +124,43 @@ export default function Footer() {
             <div key={section.title} className="xl:col-span-2 md:col-span-6 col-span-full">
               <h3 className="text-lg font-semibold border-b pb-2 mb-4">{section.title}</h3>
               <ul className="space-y-2 text-[15px]">
-                {section.links.map((item, idx) => (
-                  <li key={idx}>
-                    {item.value ? (
-                      <div className="mt-5">
-                        <div className="flex items-center gap-2">
-                          {item.icon && item.icon}
-                          <p>{item.label}</p>
+                {section.links.map((item, idx) => {
+                  return (
+                    <li key={idx}>
+                      {item.value ? (
+                        <div className="mt-5">
+                          <div className="flex items-center gap-2">
+                            {item.icon && item.icon}
+                            <p>{item.label}</p>
+                          </div>
+                          {item.href ? (
+                            <Link
+                              href={item.href}
+                              className={clsx('hover:text-blue mt-2', {
+                                'text-blue-500': item.categoryId && item.categoryId === filters.category,
+                                '!text-blue-500':
+                                  item.href === pathname || (item.href === PATH.HOME && pathname === '/'),
+                              })}
+                            >
+                              {item.value}
+                            </Link>
+                          ) : (
+                            <div>{item.value}</div>
+                          )}
                         </div>
-                        {item.href ? (
-                          <Link href={item.href} className="hover:text-blue mt-2">
-                            {item.value}
-                          </Link>
-                        ) : (
-                          <div>{item.value}</div>
-                        )}
-                      </div>
-                    ) : (
-                      <Link href={item.href!} className="hover:text-blue">
-                        {item.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
+                      ) : (
+                        <Link
+                          href={item.href!}
+                          className={clsx('hover:text-blue', {
+                            'text-blue-500': item.categoryId && item.categoryId === filters.category,
+                          })}
+                        >
+                          {item.label}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
