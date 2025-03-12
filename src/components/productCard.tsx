@@ -4,10 +4,12 @@ import { FC, useEffect, useState } from 'react';
 import Icon from './Icon';
 import Image from './Image';
 import clsx from 'clsx';
-import formatCurrency from '@/utils/formatCurrency';
+
 import { Product } from '@/types/product';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path';
+import formatNumber from '@/utils/formatNumber';
+import formatCurrency from '@/utils/formatCurrency';
 
 interface ProductCardProps {
   className?: string;
@@ -52,7 +54,7 @@ const ProductCard: FC<ProductCardProps> = ({ data, className }) => {
           <span className="text-base font-semibold">{formatCurrency(productData?.price)}</span>
           <div className="flex items-center gap-1">
             <Icon name="star" color="yellow-500" width="18px" height="18px" />
-            <span className="text-base font-medium">{productData?.ratings}</span>
+            <span className="text-base font-medium">{formatNumber(productData?.ratings)}</span>
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ import { getTranslations } from 'next-intl/server';
 import { api } from '@/services/api/axios';
 import { ProductDetail as ProductDetailType } from '@/types/product';
 import ReviewList from '@/components/ReviewList';
+import formatNumber from '@/utils/formatNumber';
 
 const fetchProductDetails = async (id: string) => {
   const response = await api.get<ProductDetailType>(`v1/product/${id}`);
@@ -72,7 +73,7 @@ const ProductDetail = async ({ params }: { params: Promise<{ id: string }> }) =>
               </div>
 
               <div className="flex items-center gap-2 dark:text-white-200">
-                <Icon name="star" color="yellow" />({fakeProduct?.ratings}) 350 {t('reviews')}
+                <Icon name="star" color="yellow" />({formatNumber(fakeProduct?.ratings)}) 350 {t('reviews')}
               </div>
 
               <p className="dark:text-white-200">{fakeProduct?.description}</p>
