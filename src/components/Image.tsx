@@ -43,6 +43,7 @@ const Image = ({
       style={style}
       onLoad={onLoad}
       onError={handleError}
+      quality={100}
       {...props}
     />
   );

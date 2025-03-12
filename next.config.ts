@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       'www.crispoconfetti.com',
       'img.freepik.com',
       'hitly.vn',
+      'lh3.googleusercontent.com',
     ],
   },
   webpack(config) {

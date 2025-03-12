@@ -15,7 +15,7 @@ const TOKEN_GHN = process.env.NEXT_PUBLIC_GHN_API_KEY || '';
 const SHOP_ID_GHN = process.env.NEXT_PUBLIC_GHN_SHOP_ID || '';
 const isDevelopment = process.env.NEXT_PUBLIC_ENV === 'development';
 
-const REFRESH_TOKEN_URL = 'auth/refresh-tokens';
+const REFRESH_TOKEN_URL = 'auth/refresh-token';
 const HEADERS_MULTIPLE_PART = {
   'Content-Type': 'multipart/form-data; boundary=something',
 };
