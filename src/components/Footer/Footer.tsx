@@ -28,7 +28,6 @@ type FooterSection = {
 
 export default function Footer() {
   const t = useTranslations('footer');
-
   const { filters } = useQueryState<ProductFilter>();
   const pathname = usePathname();
 
@@ -65,7 +64,7 @@ export default function Footer() {
     {
       title: t('help.title'),
       links: [
-        { label: t('help.storeLocation'), href: '/' },
+        { label: t('help.storeLocation'), href: 'https://maps.app.goo.gl/QdtWcvAjhXmXNqQ96' },
         { label: t('help.orderStatus'), href: '/' },
       ],
     },
@@ -134,20 +133,46 @@ export default function Footer() {
                             <p>{item.label}</p>
                           </div>
                           {item.href ? (
-                            <Link
-                              href={item.href}
-                              className={clsx('hover:text-blue mt-2', {
-                                'text-blue-500': item.categoryId && item.categoryId === filters.category,
-                                '!text-blue-500':
-                                  item.href === pathname || (item.href === PATH.HOME && pathname === '/'),
-                              })}
-                            >
-                              {item.value}
-                            </Link>
+                            item.href.startsWith('http') ? (
+                              <a
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={clsx('hover:text-blue mt-2', {
+                                  'text-blue-500': item.categoryId && item.categoryId === filters.category,
+                                  '!text-blue-500':
+                                    item.href === pathname || (item.href === PATH.HOME && pathname === '/'),
+                                })}
+                              >
+                                {item.value}
+                              </a>
+                            ) : (
+                              <Link
+                                href={item.href}
+                                className={clsx('hover:text-blue mt-2', {
+                                  'text-blue-500': item.categoryId && item.categoryId === filters.category,
+                                  '!text-blue-500':
+                                    item.href === pathname || (item.href === PATH.HOME && pathname === '/'),
+                                })}
+                              >
+                                {item.value}
+                              </Link>
+                            )
                           ) : (
                             <div>{item.value}</div>
                           )}
                         </div>
+                      ) : item.href?.startsWith('http') ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={clsx('hover:text-blue', {
+                            'text-blue-500': item.categoryId && item.categoryId === filters.category,
+                          })}
+                        >
+                          {item.label}
+                        </a>
                       ) : (
                         <Link
                           href={item.href!}
