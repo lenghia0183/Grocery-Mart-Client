@@ -4,7 +4,11 @@ export const getQueryState = async <TFilters = Record<string, unknown>, TQuickFi
   query: Record<string, string | string[] | undefined> | Promise<Record<string, string | string[] | undefined>>,
   initialQuery: Partial<QueryState<TFilters, TQuickFilters>> = { order: 'asc', pageSize: 8 },
   prefix: string = '',
-): Promise<QueryState<TFilters, TQuickFilters>> => {
+): Promise<
+  QueryState<TFilters, TQuickFilters> & {
+    generateUrl: (pathname: string, params?: Partial<QueryState<TFilters, TQuickFilters>>) => string;
+  }
+> => {
   const resolvedQuery = query instanceof Promise ? await query : query;
 
   const initialQueryPrefix = Object.fromEntries(
@@ -24,6 +28,21 @@ export const getQueryState = async <TFilters = Record<string, unknown>, TQuickFi
     ...resolvedQuery,
   };
 
+  const generateUrl = (pathname: string, params: Partial<QueryState<TFilters, TQuickFilters>> = {}): string => {
+    const searchParams = new URLSearchParams();
+
+    const mergedParams = { ...queryObj, ...params };
+
+    Object.entries(mergedParams).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        const prefixedKey = `${prefix}${key}`;
+        searchParams.set(prefixedKey, typeof value === 'object' ? JSON.stringify(value) : String(value));
+      }
+    });
+
+    return `${pathname}?${searchParams.toString()}`;
+  };
+
   const filters = jsonParse<TFilters>(queryObj[`${prefix}filters`] as string, {} as TFilters);
   const quickFilters = jsonParse<TQuickFilters>(queryObj[`${prefix}quickFilters`] as string, {} as TQuickFilters);
 
@@ -36,5 +55,6 @@ export const getQueryState = async <TFilters = Record<string, unknown>, TQuickFi
     tab: String(queryObj[`${prefix}tab`] ?? initialQueryPrefix[`${prefix}tab`] ?? ''),
     order: String(queryObj[`${prefix}order`] ?? 'asc'),
     orderBy: String(queryObj[`${prefix}orderBy`] ?? ''),
+    generateUrl,
   };
 };

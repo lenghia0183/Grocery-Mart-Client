@@ -20,7 +20,7 @@ const CategoryList = ({
   return (
     <Accordion minHeight="240px">
       {data.categories.map(({ name, image, _id }: { name: string; image: string; _id: string }) => (
-        <div
+        <button
           key={_id}
           onClick={() => setFieldValue('category', _id)}
           className={clsx('cursor-pointer flex items-center gap-3 py-2 transition-all dark:text-white-200', {
@@ -31,7 +31,7 @@ const CategoryList = ({
             <Image src={image} alt={name} width={30} height={30} />
           </div>
           <p className="text-base font-normal">{name}</p>
-        </div>
+        </button>
       ))}
     </Accordion>
   );
